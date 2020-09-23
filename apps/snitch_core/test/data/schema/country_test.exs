@@ -52,7 +52,7 @@ defmodule Snitch.Data.Schema.CountryTest do
       changeset = Country.changeset(%Country{}, @valid_attrs)
 
       {:error, changeset} = Repo.insert(changeset)
-      assert [iso: {"has already been taken", []}] = changeset.errors
+      assert [iso: {"has already been taken", _}] = changeset.errors
     end
 
     test "with duplicate iso3" do
@@ -68,7 +68,7 @@ defmodule Snitch.Data.Schema.CountryTest do
         })
 
       {:error, changeset} = Repo.insert(changeset)
-      assert [iso3: {"has already been taken", []}] = changeset.errors
+      assert [iso3: {"has already been taken", _}] = changeset.errors
     end
 
     test "with duplicate name" do
@@ -84,7 +84,7 @@ defmodule Snitch.Data.Schema.CountryTest do
         })
 
       {:error, changeset} = Repo.insert(changeset)
-      assert [name: {"has already been taken", []}] = changeset.errors
+      assert [name: {"has already been taken", _}] = changeset.errors
     end
 
     test "with duplicate numcode" do
@@ -100,7 +100,7 @@ defmodule Snitch.Data.Schema.CountryTest do
         })
 
       {:error, changeset} = Repo.insert(changeset)
-      assert [numcode: {"has already been taken", []}] = changeset.errors
+      assert [numcode: {"has already been taken", _}] = changeset.errors
     end
 
     test "with all empty" do

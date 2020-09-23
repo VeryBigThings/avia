@@ -70,7 +70,7 @@ defmodule AdminAppWeb.OrderController do
       {:error, _} ->
         conn
         |> put_flash(:error, "No such order exists with given number")
-        |> redirect(to: dashboard_path(conn, :index))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
     end
   end
 
@@ -87,7 +87,7 @@ defmodule AdminAppWeb.OrderController do
 
       {:error, _} ->
         put_flash(conn, :error, "update failed!")
-        redirect(conn, to: order_path(conn, :show, order.number))
+        redirect(conn, to: Routes.order_path(conn, :show, order.number))
     end
   end
 
@@ -98,12 +98,12 @@ defmodule AdminAppWeb.OrderController do
       {:ok, message} ->
         conn
         |> put_flash(:info, message)
-        |> redirect(to: order_path(conn, :show, order.number))
+        |> redirect(to: Routes.Routes.order_path(conn, :show, order.number))
 
       {:error, message} ->
         conn
         |> put_flash(:error, message)
-        |> redirect(to: order_path(conn, :show, order.number))
+        |> redirect(to: Routes.Routes.order_path(conn, :show, order.number))
     end
   end
 
@@ -114,12 +114,12 @@ defmodule AdminAppWeb.OrderController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Order Payment marked as #{state}")
-        |> redirect(to: order_path(conn, :show, order.number))
+        |> redirect(to: Routes.Routes.order_path(conn, :show, order.number))
 
       {:error, _} ->
         conn
         |> put_flash(:error, "Update failed!")
-        |> redirect(to: order_path(conn, :show, order.number))
+        |> redirect(to: Routes.Routes.order_path(conn, :show, order.number))
     end
   end
 
@@ -127,7 +127,7 @@ defmodule AdminAppWeb.OrderController do
     current_user = Guardian.Plug.current_resource(conn)
     {:ok, order} = Order.create(%{line_items: [], user_id: current_user.id})
 
-    redirect(conn, to: order_path(conn, :show, order.id))
+    redirect(conn, to: Routes.order_path(conn, :show, order.id))
   end
 
   def show_invoice(conn, params) do
@@ -176,12 +176,12 @@ defmodule AdminAppWeb.OrderController do
 
     case Order.update(%{line_items: updated_list}, order) do
       {:ok, order} ->
-        redirect(conn, to: order_path(conn, :show, order.id))
+        redirect(conn, to: Routes.order_path(conn, :show, order.id))
 
       {:error, error} ->
         %{errors: [line_items: {error_text, _}]} = error
         conn = put_flash(conn, :error, error_text)
-        redirect(conn, to: order_path(conn, :show, order.id))
+        redirect(conn, to: Routes.order_path(conn, :show, order.id))
     end
 
     render(conn, "edit.html", %{order: order, search: [], update_item: update_item})
@@ -197,12 +197,12 @@ defmodule AdminAppWeb.OrderController do
 
     case Order.update(%{line_items: new_item_list}, order) do
       {:ok, order} ->
-        redirect(conn, to: order_path(conn, :show, order.id))
+        redirect(conn, to: Routes.order_path(conn, :show, order.id))
 
       {:error, error} ->
         %{errors: [line_items: {error_text, _}]} = error
         conn = put_flash(conn, :error, error_text)
-        redirect(conn, to: order_path(conn, :show, order.id))
+        redirect(conn, to: Routes.order_path(conn, :show, order.id))
     end
   end
 
@@ -220,7 +220,7 @@ defmodule AdminAppWeb.OrderController do
         order
       )
 
-    redirect(conn, to: order_path(conn, :show, order.id))
+    redirect(conn, to: Routes.order_path(conn, :show, order.id))
   end
 
   def address_add_index(conn, params) do
@@ -265,7 +265,7 @@ defmodule AdminAppWeb.OrderController do
 
     case transition.valid? do
       true ->
-        redirect(conn, to: order_path(conn, :show, order.id))
+        redirect(conn, to: Routes.order_path(conn, :show, order.id))
 
       false ->
         conn = put_flash(conn, :error, transition.errors[:error])
@@ -305,7 +305,7 @@ defmodule AdminAppWeb.OrderController do
 
     conn
     |> put_flash(:info, "Your request is accepted. Data will be emailed shortly")
-    |> redirect(to: dashboard_path(conn, :index))
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   defp remove_line_item(edit_item, line_items) do

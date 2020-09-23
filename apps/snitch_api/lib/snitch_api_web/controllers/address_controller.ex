@@ -25,7 +25,7 @@ defmodule SnitchApiWeb.AddressController do
     with {:ok, %Address{} = address} <- Checkout.create_address(address_params) do
       conn
       |> put_status(200)
-      |> put_resp_header("location", address_path(conn, :show, address))
+      |> put_resp_header("location", Routes.address_path(conn, :show, address))
       |> render("show.json-api", data: address)
     end
   end

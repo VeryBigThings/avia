@@ -21,8 +21,9 @@ defmodule AdminAppWeb do
     quote do
       use Phoenix.Controller, log: false, namespace: AdminAppWeb
       import Plug.Conn
-      import AdminAppWeb.Router.Helpers
       import AdminAppWeb.Gettext
+
+      alias AdminAppWeb.Router.Helpers, as: Routes
 
       def action(conn, _) do
         args = [conn, conn.params]
@@ -53,12 +54,13 @@ defmodule AdminAppWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import AdminAppWeb.Router.Helpers
       import AdminAppWeb.ErrorHelpers
       import AdminAppWeb.Gettext
       import AdminAppWeb.InputHelpers
       import AdminAppWeb.PaginationHelpers
       import AdminAppWeb.DataHelpers
+
+      alias AdminAppWeb.Router.Helpers, as: Routes
     end
   end
 

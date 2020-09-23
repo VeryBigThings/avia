@@ -36,11 +36,11 @@ defmodule Snitch.Data.Model.PromotionAdjustment do
   @spec create(map) :: {:ok, PromotionAdjustment.t()} | {:error, Ecto.Changeset.t()}
   def create(params) do
     Multi.new()
-    |> Multi.run(:adjustment, fn _ ->
+    |> Multi.run(:adjustment, fn _, _ ->
       params = set_adjustment_params(params)
       Adjustment.create(params)
     end)
-    |> Multi.run(:promo_adj, fn %{adjustment: adjustment} ->
+    |> Multi.run(:promo_adj, fn _, %{adjustment: adjustment} ->
       params = set_promo_adjustment_params(params, adjustment)
       QH.create(PromotionAdjustment, params, Repo)
     end)
@@ -140,10 +140,10 @@ defmodule Snitch.Data.Model.PromotionAdjustment do
 
   defp activate_adjustments(prev_eligible_ids, current_adjustment_ids) do
     Multi.new()
-    |> Multi.run(:remove_eligible_adjustments, fn _ ->
+    |> Multi.run(:remove_eligible_adjustments, fn _, _ ->
       {:ok, update_adjustments(prev_eligible_ids, false)}
     end)
-    |> Multi.run(:activate_new_adjustments, fn _ ->
+    |> Multi.run(:activate_new_adjustments, fn _, _ ->
       {:ok, update_adjustments(current_adjustment_ids, true)}
     end)
     |> Repo.transaction()

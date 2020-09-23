@@ -44,6 +44,6 @@ defmodule Snitch.Domain.AccountTest do
   test "user unauthenticated bad password", %{valid_attrs: va} do
     assert {:ok, _} = Account.register(va)
     {:error, message} = Account.authenticate(va.email, "catwoman")
-    assert message == :not_found
+    assert message == "invalid password"
   end
 end

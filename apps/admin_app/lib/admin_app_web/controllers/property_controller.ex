@@ -18,7 +18,7 @@ defmodule AdminAppWeb.PropertyController do
   def create(conn, %{"property" => params}) do
     case PropertyModel.create(params) do
       {:ok, _} ->
-        redirect(conn, to: property_path(conn, :index))
+        redirect(conn, to: Routes.property_path(conn, :index))
 
       {:error, changeset} ->
         render(conn, "new.html", changeset: %{changeset | action: :new})
@@ -34,7 +34,7 @@ defmodule AdminAppWeb.PropertyController do
       err when err in [:error, nil] ->
         conn
         |> put_flash(:info, "Property not found")
-        |> redirect(to: property_path(conn, :index))
+        |> redirect(to: Routes.Routes.property_path(conn, :index))
     end
   end
 
@@ -51,7 +51,7 @@ defmodule AdminAppWeb.PropertyController do
       :error ->
         conn
         |> put_flash(:info, "Property not found")
-        |> redirect(to: property_path(conn, :index))
+        |> redirect(to: Routes.Routes.property_path(conn, :index))
     end
   end
 
@@ -61,23 +61,23 @@ defmodule AdminAppWeb.PropertyController do
          {:ok, property} <- PropertyModel.delete(id) do
       conn
       |> put_flash(:info, "Property #{property.name} deleted successfully")
-      |> redirect(to: property_path(conn, :index))
+      |> redirect(to: Routes.Routes.property_path(conn, :index))
     else
       {:error, _} ->
         conn
         |> put_flash(:error, "Failed to delete property")
-        |> redirect(to: property_path(conn, :index))
+        |> redirect(to: Routes.Routes.property_path(conn, :index))
 
       false ->
         conn
         |> put_flash(:error, "Property with associated products cannot be deleted")
-        |> redirect(to: property_path(conn, :index))
+        |> redirect(to: Routes.Routes.property_path(conn, :index))
 
       :error ->
         conn
         |> halt()
         |> put_flash(:info, "Property not found")
-        |> redirect(to: property_path(conn, :index))
+        |> redirect(to: Routes.Routes.property_path(conn, :index))
     end
   end
 end

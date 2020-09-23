@@ -4,7 +4,6 @@ defmodule Snitch.Domain.Account do
   """
   alias Snitch.Data.Model.User
   alias Snitch.Data.Schema.User, as: UserSchema
-  alias Comeonin.Argon2
   alias Snitch.Core.Tools.MultiTenancy.Repo
 
   @doc """
@@ -33,14 +32,9 @@ defmodule Snitch.Domain.Account do
 
   defp verify_email(nil, _) do
     # To make user enumeration difficult.
-    Argon2.dummy_checkpw()
+    Argon2.no_user_verify()
     {:error, :not_found}
   end
 
-  defp verify_email(user, password) do
-    verify_password(user, Argon2.checkpw(password, user.password_hash))
-  end
-
-  defp verify_password(user, true = _password_matches), do: {:ok, user}
-  defp verify_password(_user, _), do: {:error, :not_found}
+  defp verify_email(user, password), do: Argon2.check_pass(user, password)
 end

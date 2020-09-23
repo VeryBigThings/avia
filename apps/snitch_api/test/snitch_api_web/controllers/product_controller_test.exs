@@ -3,10 +3,8 @@ defmodule SnitchApiWeb.ProductControllerTest do
 
   import Snitch.Factory
 
-  alias Snitch.Data.Schema.Product
-  alias Snitch.Core.Tools.MultiTenancy.Repo
   alias Snitch.Tools.ElasticsearchCluster, as: ESCluster
-  alias Elasticsearch.{Index, Cluster}
+  alias Elasticsearch.Index
   alias Snitch.Tools.ElasticSearch.Product.Store, as: ProductStore
 
   setup %{conn: conn} do

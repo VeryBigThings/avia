@@ -1,5 +1,5 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
-<%= if  @conn.request_path == product_path(@conn, :new) do %>
+<%= if  @conn.request_path == Routes.product_path(@conn, :new) do %>
   <div style="margin-bottom:1rem">
     <span>Product Category </span>
     <span class="badge badge-secondary"><%= get_product_category(@conn.params["taxon_id"]) %></span>
@@ -9,7 +9,7 @@
    <li class="nav-item">
       <a class="nav-link active" href="#tab1default" data-toggle="tab">Product Detail</a>
    </li>
-   <%= if  @conn.request_path != product_path(@conn, :new) do %>
+   <%= if  @conn.request_path != Routes.product_path(@conn, :new) do %>
    <%= unless is_child_product(@parent_product) do %>
     <li class="nav-item">
       <a class="nav-link" href="#inventory_tab" data-toggle="tab">Inventory</a>
@@ -32,7 +32,7 @@
   <div class="tab-pane p-3 fade in active show p-3" id="tab1default">
     <%= form_for @changeset, @action, [multipart: true], fn f ->  %>
     <%= hidden_input f, :id %>
-    <%= if  @conn.request_path == product_path(@conn, :new) do %>
+    <%= if  @conn.request_path == Routes.product_path(@conn, :new) do %>
     <%= hidden_input :taxon_id, :taxon_id, value: get_taxon(@conn), name: "product[taxon_id]" %>
     <% end %>
     <%= hidden_input :publish_redirection, :publish_redirection, value: false, name: "product[publish_redirection]", id: "publish_redirection" %>
@@ -89,7 +89,7 @@
       <%= if tax_class_id_check(@changeset) do %>
         <div class="form-group row ">
           <%= select_input f, :tax_class_id, formatted_list(:tax_class), nil, is_horizontal: true, description: "Select the tax class this product belongs to. The tax for product would be calculated based on that." %>
-        </div>  
+        </div>
       <% end %>
       <div class="form-group row ">
       <%= select_input f, :brand_id, get_brand_options(@brands), nil, is_horizontal: true, description: "Select branch of the product Eg. Levi's.", prompt: "Choose your brand" %>
@@ -119,7 +119,7 @@
 
     <div class="form-group row stickformbutton">
       <div class="col-sm-10">
-        <%= button("Cancel", to: product_path(@conn, :index), method: "get",  type: "button",
+        <%= button("Cancel", to: Routes.product_path(@conn, :index), method: "get",  type: "button",
           class: "btn btn-secondary btn-outline-secondary submit-btn float-left") %>
           <div class="float-right">
             <%= submit "Save", class: "btn  btn-primary submit-btn", id: "form-save-btn" %>
@@ -130,9 +130,9 @@
     <% end %>
   </div>
 
-  <%= if  @conn.request_path != product_path(@conn, :new) and !is_child_product(@parent_product) do %>
+  <%= if  @conn.request_path != Routes.product_path(@conn, :new) and !is_child_product(@parent_product) do %>
     <div class="tab-pane p-3 fade in show p-3" id="inventory_tab">
-      <%= form_for @changeset, product_path(@conn, :update_inventory_tracking, @parent_product), [multipart: true, method: "patch"], fn f ->  %>
+      <%= form_for @changeset, Routes.product_path(@conn, :update_inventory_tracking, @parent_product), [multipart: true, method: "patch"], fn f ->  %>
       <fieldset id="inventory_tracking" data-selected="<%= @parent_product.inventory_tracking %>" >
       <div class="custom-control custom-radio">
         <input type="radio" class="custom-control-input" id="inventory_track_none" value="none" name="product[inventory_tracking]" >
@@ -196,7 +196,7 @@
     </fieldset>
         <div class="form-group row stickformbutton">
           <div class="col-sm-10">
-            <%= button("Cancel", to: product_path(@conn, :index), method: "get",  type: "button",
+            <%= button("Cancel", to: Routes.product_path(@conn, :index), method: "get",  type: "button",
             class: "btn btn-secondary btn-outline-secondary submit-btn float-left") %>
             <div class="float-right">
               <%= submit "Save", class: "btn  btn-primary submit-btn", id: "form-save-btn" %>
@@ -207,7 +207,7 @@
     </div>
   <% end %>
 
-  <%= if  @conn.request_path != product_path(@conn, :new) do %>
+  <%= if  @conn.request_path != Routes.product_path(@conn, :new) do %>
     <%= if !is_child_product(@parent_product) do %>
       <div class="tab-pane fade p-3" id="options_tab" >
       <div class="row">
@@ -304,11 +304,11 @@
                               <td><%= get_total_stock(variant) %></td>
                             <% end %>
                             <td>
-                              <%= link("Edit", to: product_path(@conn, :edit, variant.id), class: "btn btn-primary") %>
+                              <%= link("Edit", to: Routes.product_path(@conn, :edit, variant.id), class: "btn btn-primary") %>
                               <%= if is_variant_tracking_enabled(@parent_product) do %>
                                 <button name="variant_stock_add" type="button" class="btn btn-primary" data-prdouct-id="<%= variant.id %>">Add stock</button>
                               <% end %>
-                              <%= link("Delete", to: product_path(@conn, :delete_variant, variant.id, %{parent_id: @parent_product.id}), class: "btn btn-danger", method: "delete") %>
+                              <%= link("Delete", to: Routes.product_path(@conn, :delete_variant, variant.id, %{parent_id: @parent_product.id}), class: "btn btn-danger", method: "delete") %>
                             </td>
                           </tr>
                         <% end %>
@@ -398,7 +398,7 @@
     <% end %>
   <% end %>
 
-  <%= if  @conn.request_path != product_path(@conn, :new) do %>
+  <%= if  @conn.request_path != Routes.product_path(@conn, :new) do %>
   <div class="tab-pane fade p-3" id="tab3default">
     <div>
       <input id="product-id" name="product-id" type="hidden" value="<%= @parent_product.id %>" >
@@ -449,7 +449,7 @@
         </div>
         <div class="form-group row stickformbutton">
           <div class="col-sm-10">
-            <%= button("Cancel", to: product_path(@conn, :index), method: "get", type: "button",
+            <%= button("Cancel", to: Routes.product_path(@conn, :index), method: "get", type: "button",
               class: "btn btn-secondary btn-outline-secondary submit-btn float-left") %>
           </div>
         </div>
@@ -458,7 +458,7 @@
   </div>
   <% end %>
 
-  <%= if  @conn.request_path != product_path(@conn, :new) do %>
+  <%= if  @conn.request_path != Routes.product_path(@conn, :new) do %>
     <div class="tab-pane fade pt-2"  id="tab5default">
       <%= render "property_index.html",
               conn: @conn

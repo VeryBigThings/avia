@@ -110,7 +110,7 @@
         <div class="dropdown-menu p-0 ">
           <!--<a class="dropdown-item" href="#">Back to store</a>
           <a class="dropdown-item" href="#">Account</a>-->
-          <%= link("LogOut", to: session_path(@conn, :new), method: :delete, class: "dropdown-item")%>
+          <%= link("LogOut", to: Routes.session_path(@conn, :new), method: :delete, class: "dropdown-item")%>
         </div>
       </li>
       <li>

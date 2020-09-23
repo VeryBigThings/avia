@@ -23,8 +23,9 @@ defmodule AdminAppWeb.AuthorizePlug do
 
   import Plug.Conn
   import Phoenix.Controller
-  import AdminAppWeb.Router.Helpers
+
   alias AdminAppWeb.RoleHelper
+  alias AdminAppWeb.Router.Helpers, as: Routes
 
   def init(_params) do
   end
@@ -40,7 +41,7 @@ defmodule AdminAppWeb.AuthorizePlug do
     else
       conn
       |> put_flash(:error, "you are unauthorized to access this!")
-      |> redirect(to: session_path(conn, :new))
+      |> redirect(to: Routes.Routes.session_path(conn, :new))
       |> halt()
     end
   end

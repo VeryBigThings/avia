@@ -108,8 +108,8 @@ defmodule Avia.Etsy.Importer do
 
   defp timestamps() do
     %{
-      inserted_at: Ecto.DateTime.utc(),
-      updated_at: Ecto.DateTime.utc()
+      inserted_at: DateTime.utc_now(),
+      updated_at: DateTime.utc_now()
     }
   end
 
@@ -265,7 +265,7 @@ defmodule Avia.Etsy.Importer do
   end
 
   def get_key(keyname) do
-    case System.get_env(keyname) do
+    case System.fetch_env!(keyname) do
       nil -> {:error, :not_found}
       value -> {:ok, value}
     end

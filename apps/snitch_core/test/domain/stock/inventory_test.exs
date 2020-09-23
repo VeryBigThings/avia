@@ -52,10 +52,7 @@ defmodule Snitch.Domain.PackageItemTest do
 
       refute changeset.valid?
 
-      assert changeset.errors == [
-               count_on_hand:
-                 {"must be greater than %{number}", [validation: :number, number: -1]}
-             ]
+      assert [count_on_hand: {"must be greater than %{number}", _}] = changeset.errors
     end
   end
 
@@ -116,10 +113,7 @@ defmodule Snitch.Domain.PackageItemTest do
 
       refute changeset.valid?
 
-      assert changeset.errors == [
-               count_on_hand:
-                 {"must be greater than %{number}", [validation: :number, number: -1]}
-             ]
+      assert [count_on_hand: {"must be greater than %{number}", _}] = changeset.errors
     end
   end
 
@@ -194,11 +188,7 @@ defmodule Snitch.Domain.PackageItemTest do
       {:error, changeset} = Inventory.reduce_stock(parent_product.id, stock_location.id, 7)
 
       refute changeset.valid?
-
-      assert changeset.errors == [
-               count_on_hand:
-                 {"must be greater than %{number}", [validation: :number, number: -1]}
-             ]
+      assert [count_on_hand: {"must be greater than %{number}", _}] = changeset.errors
     end
 
     test "stock reduce for product with variant and variant tracking" do
@@ -227,11 +217,7 @@ defmodule Snitch.Domain.PackageItemTest do
       {:error, changeset} = Inventory.reduce_stock(variant.id, stock_location.id, 10)
 
       refute changeset.valid?
-
-      assert changeset.errors == [
-               count_on_hand:
-                 {"must be greater than %{number}", [validation: :number, number: -1]}
-             ]
+      assert [count_on_hand: {"must be greater than %{number}", _}] = changeset.errors
     end
   end
 end

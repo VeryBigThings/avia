@@ -105,7 +105,7 @@ defmodule Snitch.Data.Model.HostedPaymentTest do
                HostedPayment.update(hosted_payment, hosted_params, payment_params)
 
       assert updated_payment.state == payment_params.state
-      assert Money.reduce(updated_payment.amount) == payment.amount
+      assert Money.normalize(updated_payment.amount) == payment.amount
       assert updated_hosted_payment.transaction_id == hosted_params.transaction_id
     end
 

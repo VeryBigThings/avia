@@ -23,7 +23,7 @@ defmodule AdminAppWeb.Tax.TaxRateController do
 
   def create(conn, %{"tax_rate" => params, "tax_zone_id" => tax_zone_id}) do
     with {:ok, _tax_rate} <- TaxRate.create(params) do
-      redirect(conn, to: tax_zone_tax_rate_path(conn, :index, tax_zone_id))
+      redirect(conn, to: Routes.tax_zone_tax_rate_path(conn, :index, tax_zone_id))
     else
       {:error, changeset} ->
         render(conn, "new.html",
@@ -43,7 +43,7 @@ defmodule AdminAppWeb.Tax.TaxRateController do
         conn
         |> put_flash(:error, "tax zone not found")
 
-        redirect(conn, to: tax_zone_tax_rate_path(conn, :index, tax_zone_id))
+        redirect(conn, to: Routes.tax_zone_tax_rate_path(conn, :index, tax_zone_id))
     end
   end
 
@@ -51,7 +51,7 @@ defmodule AdminAppWeb.Tax.TaxRateController do
     tax_rate = id |> TaxRate.get() |> get(conn)
 
     with {:ok, _config} <- TaxRate.update(tax_rate, params) do
-      redirect(conn, to: tax_zone_tax_rate_path(conn, :index, tax_zone_id))
+      redirect(conn, to: Routes.tax_zone_tax_rate_path(conn, :index, tax_zone_id))
     else
       {:error, changeset} ->
         render(conn, "edit.html",
@@ -66,12 +66,12 @@ defmodule AdminAppWeb.Tax.TaxRateController do
     with {:ok, _data} <- id |> String.to_integer() |> TaxRate.delete() do
       conn
       |> put_flash(:info, "tax zone deleted")
-      |> redirect(to: tax_zone_tax_rate_path(conn, :index, tax_zone_id))
+      |> redirect(to: Routes.Routes.tax_zone_tax_rate_path(conn, :index, tax_zone_id))
     else
       {:error, message} ->
         conn
         |> put_flash(:error, message)
-        |> redirect(to: tax_zone_tax_rate_path(conn, :index, tax_zone_id))
+        |> redirect(to: Routes.Routes.tax_zone_tax_rate_path(conn, :index, tax_zone_id))
     end
   end
 
@@ -91,6 +91,6 @@ defmodule AdminAppWeb.Tax.TaxRateController do
   defp get({:error, message}, conn) do
     conn
     |> put_flash(:error, message)
-    |> redirect(to: tax_zone_path(conn, :index))
+    |> redirect(to: Routes.tax_zone_path(conn, :index))
   end
 end

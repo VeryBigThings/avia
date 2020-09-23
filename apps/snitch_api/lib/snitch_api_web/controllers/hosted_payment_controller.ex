@@ -9,8 +9,6 @@ defmodule SnitchApiWeb.HostedPaymentController do
   plug(SnitchApiWeb.Plug.DataToAttributes)
   action_fallback(SnitchApiWeb.FallbackController)
 
-  @base_url Application.fetch_env!(:snitch_api, :hosted_payment_url)
-
   def payubiz_request_url(conn, params) do
     {params, url} = payubiz_params_setup(params)
     params = Keyword.put(params, :hash, generate_payubiz_hash(params))
@@ -171,8 +169,8 @@ defmodule SnitchApiWeb.HostedPaymentController do
   defp payubiz_params_setup(params) do
     source = Provider.provider(:payubiz)
     query_string = "?order_id=#{params["order_id"]}&payment_id=#{params["payment_id"]}"
-    surl = @base_url <> "#{source}/success" <> query_string
-    furl = @base_url <> "#{source}/success" <> query_string
+    surl = base_url() <> "#{source}/success" <> query_string
+    furl = base_url() <> "#{source}/success" <> query_string
     preferences = HostedPayment.get_payment_preferences(params["payment_method_id"])
     urls = PayuBiz.get_url()
 
@@ -221,4 +219,6 @@ defmodule SnitchApiWeb.HostedPaymentController do
 
     Base.encode16(:crypto.hash(:sha512, hash_string), case: :lower)
   end
+
+  defp base_url, do: Application.fetch_env!(:snitch_api, :hosted_payment_url)
 end

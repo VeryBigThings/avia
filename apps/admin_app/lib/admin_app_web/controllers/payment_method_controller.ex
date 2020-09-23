@@ -23,7 +23,7 @@ defmodule AdminAppWeb.PaymentMethodController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Payment Method created!")
-        |> redirect(to: payment_method_path(conn, :index))
+        |> redirect(to: Routes.payment_method_path(conn, :index))
 
       {:error, changeset} ->
         conn
@@ -39,12 +39,12 @@ defmodule AdminAppWeb.PaymentMethodController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Deleted successfully!")
-        |> redirect(to: payment_method_path(conn, :index))
+        |> redirect(to: Routes.payment_method_path(conn, :index))
 
       {:error, _} ->
         conn
         |> put_flash(:error, "not found")
-        |> redirect(to: payment_method_path(conn, :index))
+        |> redirect(to: Routes.payment_method_path(conn, :index))
     end
   end
 
@@ -55,7 +55,7 @@ defmodule AdminAppWeb.PaymentMethodController do
       {:error, msg} ->
         conn
         |> put_flash(:error, "Sorry method not found")
-        |> redirect(to: payment_method_path(conn, :index))
+        |> redirect(to: Routes.payment_method_path(conn, :index))
 
       {:ok, payment_method} ->
         changeset = PaymentMethodSchema.update_changeset(payment_method, %{})
@@ -71,7 +71,7 @@ defmodule AdminAppWeb.PaymentMethodController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Updated Successfully!")
-        |> redirect(to: payment_method_path(conn, :index))
+        |> redirect(to: Routes.payment_method_path(conn, :index))
 
       {:error, changeset} ->
         render(

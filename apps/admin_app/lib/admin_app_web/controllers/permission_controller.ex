@@ -16,7 +16,7 @@ defmodule AdminAppWeb.PermissionController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Permission created!")
-        |> redirect(to: permission_path(conn, :index))
+        |> redirect(to: Routes.permission_path(conn, :index))
 
       {:error, changeset} ->
         conn
@@ -35,7 +35,7 @@ defmodule AdminAppWeb.PermissionController do
       {:error, msg} ->
         conn
         |> put_flash(:error, "Sorry not found")
-        |> redirect(to: permission_path(conn, :index))
+        |> redirect(to: Routes.permission_path(conn, :index))
 
       {:ok, permission} ->
         changeset = PermissionSchema.update_changeset(permission, %{})
@@ -52,7 +52,7 @@ defmodule AdminAppWeb.PermissionController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "permission updated successfully!")
-        |> redirect(to: permission_path(conn, :index))
+        |> redirect(to: Routes.permission_path(conn, :index))
 
       {:error, changeset} ->
         conn
@@ -78,7 +78,7 @@ defmodule AdminAppWeb.PermissionController do
           put_flash(conn, :error, "Error! #{error}")
       end
 
-    redirect(conn, to: permission_path(conn, :index))
+    redirect(conn, to: Routes.permission_path(conn, :index))
   end
 
   ################ Private Functions ###############

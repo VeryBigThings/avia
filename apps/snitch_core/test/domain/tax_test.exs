@@ -174,7 +174,7 @@ defmodule Snitch.Domain.TaxTest do
     @tag state_count: 3
     test "tax is 0 if, zone is set but no tax rates are set", context do
       zone = insert(:zone, zone_type: "S")
-      %{tax_class: tax_class, product: product, states: states, stock_item: stock_item} = context
+      %{tax_class: _, product: product, states: states, stock_item: stock_item} = context
       [state_1, state_2, _] = states
       setup_state_zone_members(zone, states)
       billing_address = address_manifest(:billing, state_1)
@@ -201,11 +201,11 @@ defmodule Snitch.Domain.TaxTest do
       assert %{original_amount: tax_less_amount, tax: tax} =
                Tax.calculate(:package_item, line_item, order, stock_item.stock_location)
 
-      %{amount: calculated_amount, tax: tax_value} =
+      %{amount: calculated_amount, tax: _} =
         excluded_tax_calculation(line_item.unit_price, 5, line_item.quantity)
 
       assert calculated_amount == tax_less_amount
-      assert tax == Money.new!(currency, 0)
+      assert tax == Money.new!(currency(), 0)
     end
 
     @tag state_count: 1
@@ -304,7 +304,7 @@ defmodule Snitch.Domain.TaxTest do
           country: state_1.country
         )
 
-      tax_class = insert(:tax_class)
+      insert(:tax_class)
 
       tax_params = %{
         zone: zone,
@@ -409,12 +409,6 @@ defmodule Snitch.Domain.TaxTest do
   defp setup_state_zone_members(zone, states) do
     Enum.each(states, fn state ->
       insert(:state_zone_member, zone: zone, state: state)
-    end)
-  end
-
-  defp setup_country_zone_members(zone, countries) do
-    Enum.each(countries, fn country ->
-      insert(:country_zone_member, zone: zone, country: country)
     end)
   end
 

@@ -7,9 +7,9 @@
         <i class="fa fa-cog"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" >
-          <%= link("Edit", to: tax_class_path(@conn, :edit, @tax_class.id), 
+          <%= link("Edit", to: Routes.tax_class_path(@conn, :edit, @tax_class.id),
             class: "dropdown-item", id: "edit-class-button") %>
-          <%= link("Delete", to: tax_class_path(@conn, :delete, @tax_class.id),
+          <%= link("Delete", to: Routes.tax_class_path(@conn, :delete, @tax_class.id),
               method: :delete, data: [confirm: "Are you sure to delete"], class: "dropdown-item") %>
         </div>
       </div>

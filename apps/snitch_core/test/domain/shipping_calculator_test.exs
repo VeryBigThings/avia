@@ -2,9 +2,8 @@ defmodule Snitch.Domain.ShippingCalculatorTest do
   use ExUnit.Case, async: true
   use Snitch.DataCase
 
-  import Mox
   import Snitch.Factory
-  alias Snitch.Data.Schema.{Package, ShippingRule}
+  alias Snitch.Data.Schema.Package
   alias Snitch.Domain.ShippingCalculator
 
   setup do

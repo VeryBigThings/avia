@@ -27,9 +27,7 @@ defmodule Snitch.Tools.Helper.Query do
     {:error, "#{schema}_not_found" |> String.to_atom()}
   end
 
-  defp handle_get(response, schema) do
-    {:ok, response}
-  end
+  defp handle_get(response, _schema), do: {:ok, response}
 
   @spec create(module, map, Ecto.Repo.t()) ::
           {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}

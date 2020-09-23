@@ -1,7 +1,9 @@
-use Mix.Config
+import Config
 
-config :snitch_core, ecto_repos: [Snitch.Repo]
-config :ecto, :json_library, Jason
+config :snitch_core,
+  ecto_repos: [Snitch.Repo]
+
+config :snitch_core, Snitch.Repo, migration_timestamps: [type: :utc_datetime_usec]
 
 config :arc,
   bucket: {:system, "BUCKET_NAME"},
@@ -33,8 +35,6 @@ config :triplex,
 
 config :snitch_core, Snitch.Tools.ElasticsearchCluster,
   url: System.get_env("ELASTIC_HOST"),
-  # username: "username",
-  # password: "password",
   api: Elasticsearch.API.HTTP,
   json_library: Poison,
   indexes: %{
@@ -46,5 +46,7 @@ config :snitch_core, Snitch.Tools.ElasticsearchCluster,
       bulk_wait_interval: 15_000
     }
   }
+
+config :ex_money, default_cldr_backend: Snitch.Cldr
 
 import_config "#{Mix.env()}.exs"

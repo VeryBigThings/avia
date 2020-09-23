@@ -44,7 +44,7 @@ defmodule Snitch.Data.Model.HostedPayment do
 
     Multi.new()
     |> MultiQuery.insert(:payment, payment_changeset)
-    |> Multi.run(:hosted_payment, fn %{payment: payment} ->
+    |> Multi.run(:hosted_payment, fn _, %{payment: payment} ->
       hosted_method_params = Map.put(hosted_method_params, :payment_id, payment.id)
       QH.create(HostedPayment, hosted_method_params, Repo)
     end)
@@ -78,7 +78,7 @@ defmodule Snitch.Data.Model.HostedPayment do
 
     Multi.new()
     |> MultiQuery.update(:hosted_payment, hosted_payment_changeset)
-    |> Multi.run(:payment, fn _ ->
+    |> Multi.run(:payment, fn _, _ ->
       PaymentModel.update(nil, Map.put(payment_params, :id, hosted_payment.payment_id))
     end)
     |> Repo.transaction()

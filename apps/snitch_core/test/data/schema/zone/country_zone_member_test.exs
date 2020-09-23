@@ -44,7 +44,7 @@ defmodule Snitch.Data.Schema.CountryZoneMemberTest do
         })
 
       assert {:error, %Ecto.Changeset{errors: errors}} = Repo.insert(new_country_zone)
-      assert errors == [zone_id: {"does not refer a country zone", []}]
+      assert [zone_id: {"does not refer a country zone", _}] = errors
     end
 
     test "don't allow duplicate countries in a given zone", %{countries: [country]} do

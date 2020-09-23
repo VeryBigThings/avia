@@ -1,6 +1,5 @@
 defmodule AdminAppWeb.Router do
   use AdminAppWeb, :router
-  use Sentry.Plug
   import Snitch.Core.Tools.MultiTenancy.Repo, only: [get_prefix: 0]
 
   @secret_key_base Application.get_env(:admin_app, AdminAppWeb.Endpoint)[:secret_key_base]

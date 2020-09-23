@@ -16,7 +16,7 @@ defmodule AdminAppWeb.RoleController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Role created!!")
-        |> redirect(to: role_path(conn, :index))
+        |> redirect(to: Routes.role_path(conn, :index))
 
       {:error, changeset} ->
         changeset = update_in(changeset.data, &Repo.preload(&1, :permissions))
@@ -43,7 +43,7 @@ defmodule AdminAppWeb.RoleController do
       {:error, _} ->
         conn
         |> put_flash(:error, "Sorry role not found")
-        |> redirect(to: role_path(conn, :index))
+        |> redirect(to: Routes.role_path(conn, :index))
 
       {:ok, role} ->
         role = role |> Repo.preload(:permissions)
@@ -63,7 +63,7 @@ defmodule AdminAppWeb.RoleController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Role updated successfully")
-        |> redirect(to: role_path(conn, :index))
+        |> redirect(to: Routes.role_path(conn, :index))
 
       {:error, changeset} ->
         conn
@@ -79,12 +79,12 @@ defmodule AdminAppWeb.RoleController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Role deleted successfully!!")
-        |> redirect(to: role_path(conn, :index))
+        |> redirect(to: Routes.role_path(conn, :index))
 
       {:error, _} ->
         conn
         |> put_flash(:error, "role not found")
-        |> redirect(to: role_path(conn, :index))
+        |> redirect(to: Routes.role_path(conn, :index))
     end
   end
 

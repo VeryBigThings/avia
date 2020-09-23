@@ -21,7 +21,7 @@ defmodule AdminAppWeb.StockLocationController do
       _ ->
         conn
         |> put_flash(:error, "Stock Location not found")
-        |> redirect(to: stock_location_path(conn, :index))
+        |> redirect(to: Routes.stock_location_path(conn, :index))
     end
   end
 
@@ -36,7 +36,7 @@ defmodule AdminAppWeb.StockLocationController do
 
       conn
       |> put_flash(:info, "Stock Location created successfully")
-      |> redirect(to: stock_location_path(conn, :index))
+      |> redirect(to: Routes.stock_location_path(conn, :index))
     else
       {:error, changeset} ->
         conn
@@ -79,7 +79,7 @@ defmodule AdminAppWeb.StockLocationController do
       _ ->
         conn
         |> put_flash(:error, "Stock Location not found")
-        |> redirect(to: stock_location_path(conn, :index))
+        |> redirect(to: Routes.stock_location_path(conn, :index))
     end
   end
 
@@ -90,7 +90,7 @@ defmodule AdminAppWeb.StockLocationController do
     with {:ok, _} <- SLModel.update(stock_location_params, stock_location) do
       conn
       |> put_flash(:info, "Stock Location updated successfully")
-      |> redirect(to: stock_location_path(conn, :index))
+      |> redirect(to: Routes.stock_location_path(conn, :index))
     else
       {:error, changeset} ->
         conn
@@ -108,12 +108,12 @@ defmodule AdminAppWeb.StockLocationController do
          {:ok, _} <- SLModel.delete(id) do
       conn
       |> put_flash(:info, "Stock Location deleted successfully")
-      |> redirect(to: stock_location_path(conn, :index))
+      |> redirect(to: Routes.stock_location_path(conn, :index))
     else
       {:error, _} ->
         conn
         |> put_flash(:error, "Stock Location not found")
-        |> redirect(to: stock_location_path(conn, :index))
+        |> redirect(to: Routes.stock_location_path(conn, :index))
     end
   end
 end

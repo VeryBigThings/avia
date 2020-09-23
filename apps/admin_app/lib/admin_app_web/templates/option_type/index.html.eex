@@ -4,7 +4,7 @@
          <h2>Option Types</h2>
       </div>
       <div class="col-2 p-0 float-right text-right">
-         <%= link(raw("<i class='fas fa-plus'></i> Add an Option Type"), to: option_type_path(@conn, :new), 
+         <%= link(raw("<i class='fas fa-plus'></i> Add an Option Type"), to: Routes.option_type_path(@conn, :new),
             class: "btn btn-primary float-right")%>
       </div>
    </div>
@@ -34,8 +34,8 @@
                   <i class="fa fa-cog"></i>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
-                     <%= link("Edit", to: option_type_path(@conn, :edit, item.id), class: "dropdown-item")%>
-                     <%= link("Delete", to: option_type_path(@conn, :delete, item.id), method: :delete, 
+                     <%= link("Edit", to: Routes.option_type_path(@conn, :edit, item.id), class: "dropdown-item")%>
+                     <%= link("Delete", to: Routes.option_type_path(@conn, :delete, item.id), method: :delete,
                         data: [confirm: "Are you sure?"], class: "dropdown-item")%>
                   </div>
                </div>

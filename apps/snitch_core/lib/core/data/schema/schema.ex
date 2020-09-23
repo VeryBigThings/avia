@@ -9,6 +9,8 @@ defmodule Snitch.Data.Schema do
       import Ecto.Changeset
       import Snitch.Tools.Validations
       alias Snitch.Core.Tools.MultiTenancy.Repo
+
+      @timestamps_opts [type: :utc_datetime_usec]
     end
   end
 end

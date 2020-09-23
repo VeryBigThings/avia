@@ -1,5 +1,5 @@
 <h4 class="p-3 m-0">Tax Zone</h4>
-<%= button("+ Add Tax Zone", to: tax_zone_path(@conn, :new), method: "get", class: "btn btn-primary submit") %>
+<%= button("+ Add Tax Zone", to: Routes.tax_zone_path(@conn, :new), method: "get", class: "btn btn-primary submit") %>
 <br><br>
 <ul class="list-group">
 </ul>
@@ -41,10 +41,10 @@
                   <i class="fa fa-cog"></i>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" >
-                     <%= link("Edit", to: tax_zone_path(@conn, :edit, tax_zone.id), class: "dropdown-item") %>
+                     <%= link("Edit", to: Routes.tax_zone_path(@conn, :edit, tax_zone.id), class: "dropdown-item") %>
                      <%= unless tax_zone.is_default do %>
-                        <%= link("Delete", to: tax_zone_path(@conn, :delete, tax_zone.id),
-                        method: :delete, data: [confirm: "Are you sure to delete"], class: "dropdown-item") %>  
+                        <%= link("Delete", to: Routes.tax_zone_path(@conn, :delete, tax_zone.id),
+                        method: :delete, data: [confirm: "Are you sure to delete"], class: "dropdown-item") %>
                      <% end %>
                   </div>
                </div>

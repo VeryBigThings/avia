@@ -23,7 +23,7 @@ defmodule Snitch.Data.Schema.Permission do
   end
 
   @create_fields ~w(code description)a
-  @update_fields ~w(description)
+  @update_fields ~w(description)a
 
   @doc """
   Returns a `Permission` changeset to `create` a permission.

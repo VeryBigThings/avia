@@ -37,7 +37,7 @@ defmodule AdminAppWeb.VariationThemeController do
       {:error, _} ->
         conn
         |> put_flash(:info, "Variation theme not found")
-        |> redirect(to: variation_theme_path(conn, :index))
+        |> redirect(to: Routes.variation_theme_path(conn, :index))
     end
   end
 
@@ -50,7 +50,7 @@ defmodule AdminAppWeb.VariationThemeController do
       {:error, :variation_theme_not_found} ->
         conn
         |> put_flash(:info, "Variation theme not found")
-        |> redirect(to: variation_theme_path(conn, :index))
+        |> redirect(to: Routes.variation_theme_path(conn, :index))
 
       {:error, changeset} ->
         render(conn, "edit.html", changeset: %{changeset | action: :edit})
@@ -62,12 +62,12 @@ defmodule AdminAppWeb.VariationThemeController do
       {:ok, theme} ->
         conn
         |> put_flash(:info, "Variation theme #{theme.name} deleted successfully")
-        |> redirect(to: variation_theme_path(conn, :index))
+        |> redirect(to: Routes.variation_theme_path(conn, :index))
 
       {:error, _} ->
         conn
         |> put_flash(:error, "Failed to delete Variation theme")
-        |> redirect(to: variation_theme_path(conn, :index))
+        |> redirect(to: Routes.variation_theme_path(conn, :index))
     end
   end
 

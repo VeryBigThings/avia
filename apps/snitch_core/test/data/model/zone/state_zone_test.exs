@@ -34,8 +34,8 @@ defmodule Snitch.Data.Model.StateZoneTest do
       assert {:error, :members, %{errors: errors}, %{zone: zone}} =
                StateZone.create("foo", "bar", ordered_state_ids)
 
-      assert nil == Repo.get(Zone, zone.id)
-      assert errors == [state_id: {"does not exist", []}]
+      refute Repo.get(Zone, zone.id)
+      assert [state_id: {"does not exist", _}] = errors
     end
   end
 
@@ -82,7 +82,7 @@ defmodule Snitch.Data.Model.StateZoneTest do
       assert {:error, :added, %{errors: errors}, %{zone: updated_zone}} =
                StateZone.update(zone, %{}, [-1])
 
-      assert errors == [state_id: {"does not exist", []}]
+      assert [state_id: {"does not exist", _}] = errors
       assert old_state_ids == StateZone.member_ids(updated_zone)
     end
   end

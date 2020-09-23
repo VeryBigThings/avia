@@ -46,7 +46,7 @@ defmodule Snitch.Data.Model.CardPayment do
 
     Multi.new()
     |> MultiQuery.insert(:payment, payment_changeset)
-    |> Multi.run(:card_payment, fn %{payment: payment} ->
+    |> Multi.run(:card_payment, fn _, %{payment: payment} ->
       all_card_params = Map.put(card_params, :payment_id, payment.id)
       QH.create(CardPayment, all_card_params, Repo)
     end)
@@ -72,7 +72,7 @@ defmodule Snitch.Data.Model.CardPayment do
 
     Multi.new()
     |> MultiQuery.update(:card_payment, card_payment_changeset)
-    |> Multi.run(:payment, fn _ ->
+    |> Multi.run(:payment, fn _, _ ->
       PaymentModel.update(nil, Map.put(payment_params, :id, card_payment.payment_id))
     end)
     |> Repo.transaction()

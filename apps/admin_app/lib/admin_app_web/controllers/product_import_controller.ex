@@ -19,7 +19,7 @@ defmodule AdminAppWeb.ProductImportController do
       _ ->
         conn
         |> put_flash(:error, "Failed to authorize Avia app")
-        |> redirect(to: product_path(conn, :index))
+        |> redirect(to: Routes.Routes.product_path(conn, :index))
     end
   end
 
@@ -36,7 +36,7 @@ defmodule AdminAppWeb.ProductImportController do
       _ ->
         conn
         |> put_flash(:error, "Failed to get acess token")
-        |> redirect(to: product_path(conn, :index))
+        |> redirect(to: Routes.Routes.product_path(conn, :index))
     end
   end
 

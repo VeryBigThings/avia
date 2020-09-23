@@ -9,7 +9,7 @@ defmodule SnitchApi.Mixfile do
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
       lockfile: "../../mix.lock",
-      elixir: "~> 1.7.2",
+      elixir: "~> 1.10.4",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -36,28 +36,30 @@ defmodule SnitchApi.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.0"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
+      {:phoenix, "~> 1.5.4"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:gettext, "~> 0.18"},
+      {:cowboy, "~> 2.8"},
       {:snitch_core, "~> 0.0.1", in_umbrella: true},
-      {:plug, "~> 1.0"},
-      {:corsica, "~> 1.0"},
+      {:plug, "~> 1.10"},
+      {:corsica, "~> 1.1"},
       {:uuid, "~> 1.1"},
       {:ja_serializer, "~> 0.13.0"},
-      {:recase, "~> 0.2"},
+      {:recase, "~> 0.6"},
 
       # Authentication
       {:guardian, "~> 1.0"},
-      {:inflex, "~> 1.10.0"},
+      {:inflex, "~> 1.4"},
 
       # http client
       {:httpoison, "~> 0.13"},
       {:snitch_payments, github: "aviacommerce/avia_payments", branch: "develop"},
 
       # html parser
-      {:floki, "~> 0.20.0"},
-      {:jason, "~> 1.1"}
+      {:floki, "~> 0.28"},
+      {:jason, "~> 1.1"},
+      {:sentry, "~> 7.2"},
+      {:vbt, git: "git@github.com:VeryBigThings/elixir_common_private"}
     ]
   end
 end

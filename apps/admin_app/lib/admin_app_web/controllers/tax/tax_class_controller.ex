@@ -16,12 +16,12 @@ defmodule AdminAppWeb.Tax.TaxClassController do
     with {:ok, _data} <- id |> String.to_integer() |> TaxClass.delete() do
       conn
       |> put_flash(:info, "tax class deleted")
-      |> redirect(to: tax_class_path(conn, :index))
+      |> redirect(to: Routes.tax_class_path(conn, :index))
     else
       {:error, message} ->
         conn
         |> put_flash(:error, message)
-        |> redirect(to: tax_class_path(conn, :index))
+        |> redirect(to: Routes.tax_class_path(conn, :index))
     end
   end
 

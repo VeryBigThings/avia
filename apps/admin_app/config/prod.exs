@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For production, we often load configuration from external
 # sources, such as your system environment. For this reason,
@@ -19,10 +19,6 @@ config :admin_app, AdminAppWeb.Endpoint,
   server: true,
   cache_static_manifest: "priv/static/cache_manifest.json",
   version: Application.spec(:admin_app, :vsn),
-  secret_key_base: System.get_env("PHOENIX_SECRET_KEY_BASE"),
-  session_cookie_name: System.get_env("SESSION_COOKIE_NAME"),
-  session_cookie_signing_salt: System.get_env("SESSION_COOKIE_SIGNING_SALT"),
-  session_cookie_encryption_salt: System.get_env("SESSION_COOKIE_ENCRYPTION_SALT"),
   check_origin: false
 
 # Do not print debug messages in production
@@ -38,8 +34,8 @@ config :logger, level: :info
 #       url: [host: "example.com", port: 443],
 #       https: [:inet6,
 #               port: 443,
-#               keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-#               certfile: System.get_env("SOME_APP_SSL_CERT_PATH")]
+#               keyfile: System.fetch_env!("SOME_APP_SSL_KEY_PATH"),
+#               certfile: System.fetch_env!("SOME_APP_SSL_CERT_PATH")]
 #
 # Where those two env variables return an absolute path to
 # the key and cert in disk or a relative path inside priv,

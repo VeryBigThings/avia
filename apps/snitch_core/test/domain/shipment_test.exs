@@ -2,11 +2,11 @@ defmodule Snitch.Domain.ShipmentTest do
   use ExUnit.Case, async: true
   use Snitch.DataCase
 
-  import Mox, only: [expect: 3, expect: 4, verify_on_exit!: 1]
+  import Mox, only: [verify_on_exit!: 1]
   import Snitch.Factory
   import Snitch.Tools.Helper.{Order, Stock, Zone, Shipment}
 
-  alias Snitch.Data.Schema.{Address, Order, Package, StockItem, StockLocation, Variant, Product}
+  alias Snitch.Data.Schema.{Address, Order, Package, StockItem, StockLocation, Product}
   alias Snitch.Domain.Shipment
 
   @zone_manifest %{

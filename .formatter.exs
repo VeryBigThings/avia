@@ -1,4 +1,5 @@
 [
+  import_deps: [:phoenix],
   inputs: [
     "apps/*/{lib,config}/**/*.{ex,exs}", # lib and config
     "apps/*/test/**/*.{ex,exs}", # tests

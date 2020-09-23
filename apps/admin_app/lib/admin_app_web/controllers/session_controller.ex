@@ -40,7 +40,7 @@ defmodule AdminAppWeb.SessionController do
   def delete(conn, _params) do
     conn
     |> Plug.sign_out()
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
   def password_reset(conn, _params) do
@@ -58,12 +58,12 @@ defmodule AdminAppWeb.SessionController do
       {:ok, user_id} ->
         conn
         |> put_flash(:info, "You can now update your password")
-        |> redirect(to: session_path(conn, :edit, user_id))
+        |> redirect(to: Routes.session_path(conn, :edit, user_id))
 
       {:error, _} ->
         conn
         |> put_flash(:error, "Password token expired, please try again")
-        |> redirect(to: session_path(conn, :new))
+        |> redirect(to: Routes.session_path(conn, :new))
     end
   end
 
@@ -89,7 +89,7 @@ defmodule AdminAppWeb.SessionController do
   defp mail_verified_user(nil, conn) do
     conn
     |> put_flash(:error, "Sorry, we don't know that email address. Try again?")
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
   defp send_mail(token, mail, url) do
@@ -116,32 +116,32 @@ defmodule AdminAppWeb.SessionController do
   defp update_user_result({:ok, _}, conn) do
     conn
     |> put_flash(:info, "A password reset email has been sent you. Please check")
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
   defp update_user_result({:error, _}, conn) do
     conn
     |> put_flash(:error, "Please try again")
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
   defp login({:ok, %{role: %{name: "user"}}}, conn) do
     conn
     |> put_flash(:error, "Incorrect email/password")
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
   defp login({:ok, user}, conn) do
     conn
     |> Plug.sign_in(user)
     |> put_flash(:info, "You are logged in!")
-    |> redirect(to: dashboard_path(conn, :index))
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 
   defp login({:error, _}, conn) do
     conn
     |> put_flash(:error, "Incorrect email/password")
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
   defp tokenize(%UserSchema{id: user_id}) do
@@ -163,12 +163,12 @@ defmodule AdminAppWeb.SessionController do
   defp update_password_result({:ok, _}, conn) do
     conn
     |> put_flash(:info, "Password updated successfully!")
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
   defp update_password_result({:error, _}, conn) do
     conn
     |> put_flash(:error, "Error occured")
-    |> redirect(to: session_path(conn, :new))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 end

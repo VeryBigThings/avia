@@ -3,17 +3,19 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-use Mix.Config
+import Config
 
 # General application configuration
 config :admin_app, namespace: AdminApp
 
+config :phoenix, :json_library, Jason
+
 # Configures the endpoint
 config :admin_app, AdminAppWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "o7U+x3aM3mqN1vY+PGIbxEN+QBeMP7rwgCpyrbYfEUkAY6I12cxKvwEt/zJeGjgR",
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   render_errors: [view: AdminAppWeb.ErrorView, accepts: ~w(html json json-api)],
-  pubsub: [name: AdminApp.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: AdminApp.PubSub,
   token_maximum_age: System.get_env("TOKEN_MAXIMUM_AGE"),
   sendgrid_sender_mail: System.get_env("SENDGRID_SENDER_EMAIL"),
   password_reset_salt: System.get_env("PASSWORD_RESET_SALT"),

@@ -93,8 +93,8 @@
               Export Products
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-              <%= link("CSV", to: product_path(@conn, :export_product, %{"format" => "csv"}), class: "dropdown-item")%>
-              <%= link("XLSX", to: product_path(@conn, :export_product, %{"format" => "xlsx"}), class: "dropdown-item")%>
+              <%= link("CSV", to: Routes.product_path(@conn, :export_product, %{"format" => "csv"}), class: "dropdown-item")%>
+              <%= link("XLSX", to: Routes.product_path(@conn, :export_product, %{"format" => "xlsx"}), class: "dropdown-item")%>
             </div>
           </div>
         </div>

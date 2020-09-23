@@ -1,6 +1,6 @@
 <%= render "_form.html",
     changeset: @changeset,
     conn: @conn,
-    action: general_settings_path(@conn, :create),
-    method: "post" 
+    action: Routes.general_settings_path(@conn, :create),
+    method: "post"
 %>

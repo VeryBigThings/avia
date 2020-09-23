@@ -3,12 +3,10 @@ defmodule Snitch.Seed.VariationTheme do
   alias Snitch.Data.Schema.VariationTheme
   alias Snitch.Data.Schema.OptionType
 
-  defp get_option_type do
-    Repo.all(OptionType)
-  end
+  defp get_option_type, do: Repo.all(OptionType)
 
   def seed!() do
-    option_types = get_option_type
+    option_types = get_option_type()
 
     for i <- 1..length(option_types),
         do: option_types |> Combination.combine(i) |> create_variations

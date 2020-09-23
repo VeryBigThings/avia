@@ -1,16 +1,14 @@
 defmodule Snitch.Seed.Users do
   @moduledoc false
 
-  alias Comeonin.Argon2
-  alias Ecto.DateTime
   alias Snitch.Data.Model.{Country, State}
   alias Snitch.Data.Schema.{Address, User, Role}
   alias Snitch.Core.Tools.MultiTenancy.Repo
 
   require Logger
 
-  @user_passwd Argon2.hashpwsalt("avenger")
-  @admin_passwd Argon2.hashpwsalt("wizard123")
+  @user_passwd Argon2.hash_pwd_salt("avenger")
+  @admin_passwd Argon2.hash_pwd_salt("wizard123")
 
   def seed_users! do
     admin_role = Repo.get_by!(Role, name: "admin")
@@ -31,8 +29,8 @@ defmodule Snitch.Seed.Users do
       password_hash: pwd_hash,
       is_admin: admin,
       role_id: role_id,
-      inserted_at: DateTime.utc(),
-      updated_at: DateTime.utc()
+      inserted_at: DateTime.utc_now(),
+      updated_at: DateTime.utc_now()
     }
   end
 

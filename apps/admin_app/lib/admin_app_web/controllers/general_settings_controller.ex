@@ -73,7 +73,7 @@ defmodule AdminAppWeb.GeneralSettingsController do
           {:ok, general_configuration} ->
             conn
             |> put_flash(:info, "General configuration updated successfully")
-            |> redirect(to: general_settings_path(conn, :index))
+            |> redirect(to: Routes.Routes.general_settings_path(conn, :index))
 
           {:error, changeset} ->
             conn
@@ -120,6 +120,6 @@ defmodule AdminAppWeb.GeneralSettingsController do
   defp handle_nil_response(conn) do
     conn
     |> put_flash(:error, "General configuration does not exist")
-    |> redirect(to: general_settings_path(conn, :index))
+    |> redirect(to: Routes.Routes.general_settings_path(conn, :index))
   end
 end

@@ -33,7 +33,7 @@ defmodule AdminAppWeb.OptionTypeController do
       err when err in [:error, nil] ->
         conn
         |> put_flash(:info, "Option Type not found")
-        |> redirect(to: option_type_path(conn, :index))
+        |> redirect(to: Routes.option_type_path(conn, :index))
     end
   end
 
@@ -51,7 +51,7 @@ defmodule AdminAppWeb.OptionTypeController do
         conn
         |> halt()
         |> put_flash(:info, "Option Type not found")
-        |> redirect(to: option_type_path(conn, :index))
+        |> redirect(to: Routes.option_type_path(conn, :index))
     end
   end
 
@@ -61,23 +61,23 @@ defmodule AdminAppWeb.OptionTypeController do
          {:ok, option_type} <- OTModel.delete(id) do
       conn
       |> put_flash(:info, "Option type #{option_type.name} deleted successfully")
-      |> redirect(to: option_type_path(conn, :index))
+      |> redirect(to: Routes.option_type_path(conn, :index))
     else
       true ->
         conn
         |> put_flash(:error, "Option type associated to variation theme. Deletion not allowed")
-        |> redirect(to: option_type_path(conn, :index))
+        |> redirect(to: Routes.option_type_path(conn, :index))
 
       {:error, _} ->
         conn
         |> put_flash(:error, "Failed to delete option type")
-        |> redirect(to: option_type_path(conn, :index))
+        |> redirect(to: Routes.option_type_path(conn, :index))
 
       :error ->
         conn
         |> halt()
         |> put_flash(:info, "Option Type not found")
-        |> redirect(to: option_type_path(conn, :index))
+        |> redirect(to: Routes.option_type_path(conn, :index))
     end
   end
 end

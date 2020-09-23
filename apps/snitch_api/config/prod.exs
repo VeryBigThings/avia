@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For production, we often load configuration from external
 # sources, such as your system environment. For this reason,
@@ -17,11 +17,7 @@ config :snitch_api, SnitchApiWeb.Endpoint,
   load_from_system_env: true,
   url: [host: {:system, "HOST"}, port: {:system, "API_PORT"}],
   server: true,
-  version: Application.spec(:snitch_api, :vsn),
-  secret_key_base: System.get_env("PHOENIX_SECRET_KEY_BASE"),
-  session_cookie_name: System.get_env("SESSION_COOKIE_NAME"),
-  session_cookie_signing_salt: System.get_env("SESSION_COOKIE_SIGNING_SALT"),
-  session_cookie_encryption_salt: System.get_env("SESSION_COOKIE_ENCRYPTION_SALT")
+  version: Application.spec(:snitch_api, :vsn)
 
 # Do not print debug messages in production
 config :logger, level: :info

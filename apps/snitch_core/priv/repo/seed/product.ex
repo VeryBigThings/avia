@@ -2,11 +2,9 @@ defmodule Snitch.Seed.Product do
   @moduledoc """
   Seeds Products with variants and their images.
   """
-  alias Ecto.DateTime
   alias Snitch.Core.Tools.MultiTenancy.Repo
 
   alias Snitch.Data.Schema.{
-    Image,
     Product,
     ShippingCategory,
     StockItem,
@@ -76,8 +74,8 @@ defmodule Snitch.Seed.Product do
               stock_location_id: location.id,
               count_on_hand: 10,
               backorderable: true,
-              inserted_at: Ecto.DateTime.utc(),
-              updated_at: Ecto.DateTime.utc()
+              inserted_at: DateTime.utc_now(),
+              updated_at: DateTime.utc_now()
             }
           end)
         end)
@@ -87,10 +85,10 @@ defmodule Snitch.Seed.Product do
     end
   end
 
-  def variant_image(url, variant_id) do
+  def variant_image(_url, variant_id) do
     %{
-      inserted_at: Ecto.DateTime.utc(),
-      updated_at: Ecto.DateTime.utc(),
+      inserted_at: DateTime.utc_now(),
+      updated_at: DateTime.utc_now(),
       variant_id: variant_id
     }
   end

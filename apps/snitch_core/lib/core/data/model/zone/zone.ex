@@ -46,7 +46,7 @@ defmodule Snitch.Data.Model.Zone do
   def creation_multi(zone_changeset, member_ids) do
     Multi.new()
     |> MultiQuery.insert(:zone, zone_changeset)
-    |> Multi.run(:members, fn %{zone: zone} ->
+    |> Multi.run(:members, fn _, %{zone: zone} ->
       if member_ids != [] do
         multi_run_insert_members(member_ids, zone)
       end
@@ -65,7 +65,7 @@ defmodule Snitch.Data.Model.Zone do
 
     Multi.new()
     |> MultiQuery.update(:zone, zone_changeset)
-    |> Multi.run(:added, fn _ ->
+    |> Multi.run(:added, fn _, _ ->
       multi_run_insert_members(added, zone)
     end)
     |> Multi.append(remove_members_multi(removed, zone))

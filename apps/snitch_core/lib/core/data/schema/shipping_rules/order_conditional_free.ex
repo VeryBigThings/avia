@@ -32,7 +32,7 @@ defmodule Snitch.Data.Schema.ShippingRule.OrderConditionalFree do
 
     min_amount = Money.new!(currency_code, rule.preferences["amount"])
 
-    if Money.cmp!(min_amount, total_order_cost) == :lt do
+    if Money.compare(min_amount, total_order_cost) == :lt do
       {:halt, Money.new!(currency_code, 0)}
     else
       {:cont, prev_cost}

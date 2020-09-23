@@ -117,10 +117,10 @@ defmodule Snitch.Data.Schema.PackageTest do
       }
 
       cs = Package.update_changeset(package, bad_params)
-      refute cs.valid?
-      assert {"is invalid", [type: :map, validation: :cast]} == cs.errors[:tracking]
 
-      assert {"is invalid", [type: {:array, :map}]} == cs.errors[:shipping_methods]
+      refute cs.valid?
+      assert {"is invalid", _} = cs.errors[:tracking]
+      assert {"is invalid", _} = cs.errors[:shipping_methods]
     end
   end
 end

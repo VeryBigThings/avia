@@ -42,7 +42,7 @@
                 <label class="control-label"><b> Logo </b></label>
                 <%= file_input f, :image, class: "form-control file-upload__input", id: "store-logo" %>
             </div>
-            <%= button("Cancel", to: general_settings_path(@conn, :index), method: "get", type: "button",
+            <%= button("Cancel", to: Routes.general_settings_path(@conn, :index), method: "get", type: "button",
             class: "btn btn-secondary btn-outline-secondary submit-btn float-left") %>
             <%= submit "Submit", class: "btn btn-primary float-right"%>
         <% end %>

@@ -20,7 +20,7 @@ defmodule AdminAppWeb.ProductBrandController do
     params = handle_params(params)
 
     with {:ok, _} <- ProductBrandModel.create(params) do
-      redirect(conn, to: product_brand_path(conn, :index))
+      redirect(conn, to: Routes.product_brand_path(conn, :index))
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: %{changeset | action: :new})
@@ -28,7 +28,7 @@ defmodule AdminAppWeb.ProductBrandController do
       {:error, message} ->
         conn
         |> put_flash(:error, message)
-        |> redirect(to: product_brand_path(conn, :new))
+        |> redirect(to: Routes.Routes.product_brand_path(conn, :new))
     end
   end
 
@@ -41,7 +41,7 @@ defmodule AdminAppWeb.ProductBrandController do
       {:error, _} ->
         conn
         |> put_flash(:info, "Product Brand not found")
-        |> redirect(to: product_brand_path(conn, :index))
+        |> redirect(to: Routes.Routes.product_brand_path(conn, :index))
     end
   end
 
@@ -53,12 +53,12 @@ defmodule AdminAppWeb.ProductBrandController do
          {:ok, _} <- ProductBrandModel.update(brand, params) do
       conn
       |> put_flash(:info, "Product Brand update successfully")
-      |> redirect(to: product_brand_path(conn, :index))
+      |> redirect(to: Routes.Routes.product_brand_path(conn, :index))
     else
       {:error, :product_brand_not_found} ->
         conn
         |> put_flash(:info, "Product Brand not found")
-        |> redirect(to: product_brand_path(conn, :index))
+        |> redirect(to: Routes.Routes.product_brand_path(conn, :index))
 
       {:error, changeset} ->
         render(conn, "edit.html", changeset: %{changeset | action: :edit})
@@ -81,17 +81,17 @@ defmodule AdminAppWeb.ProductBrandController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Product Brand deleted successfully")
-        |> redirect(to: product_brand_path(conn, :index))
+        |> redirect(to: Routes.Routes.product_brand_path(conn, :index))
 
       {:error, :not_found} ->
         conn
         |> put_flash(:error, "Failed to delete Product Brand")
-        |> redirect(to: product_brand_path(conn, :index))
+        |> redirect(to: Routes.Routes.product_brand_path(conn, :index))
 
       {:error, changeset} ->
         conn
         |> put_flash(:error, "Cannot delete as products are associated")
-        |> redirect(to: product_brand_path(conn, :index))
+        |> redirect(to: Routes.Routes.product_brand_path(conn, :index))
     end
   end
 end

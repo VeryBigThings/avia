@@ -21,7 +21,7 @@ defmodule SnitchApiWeb.LineItemController do
 
       conn
       |> put_status(200)
-      |> put_resp_header("location", line_item_path(conn, :show, line_item.id))
+      |> put_resp_header("location", Routes.line_item_path(conn, :show, line_item.id))
       |> render(
         SnitchApiWeb.OrderView,
         "show.json-api",
@@ -39,7 +39,7 @@ defmodule SnitchApiWeb.LineItemController do
 
       conn
       |> put_status(200)
-      |> put_resp_header("location", line_item_path(conn, :show, line_item.id))
+      |> put_resp_header("location", Routes.line_item_path(conn, :show, line_item.id))
       |> render(
         SnitchApiWeb.OrderView,
         "show.json-api",
@@ -59,7 +59,7 @@ defmodule SnitchApiWeb.LineItemController do
 
       conn
       |> put_status(200)
-      |> put_resp_header("location", line_item_path(conn, :show, line_item.id))
+      |> put_resp_header("location", Routes.line_item_path(conn, :show, line_item.id))
       |> render(
         SnitchApiWeb.OrderView,
         "show.json-api",
@@ -95,7 +95,7 @@ defmodule SnitchApiWeb.LineItemController do
 
       conn
       |> put_status(200)
-      |> put_resp_header("location", line_item_path(conn, :show, line_item))
+      |> put_resp_header("location", Routes.line_item_path(conn, :show, line_item))
       |> render("show.json-api", data: line_item)
     end
   end

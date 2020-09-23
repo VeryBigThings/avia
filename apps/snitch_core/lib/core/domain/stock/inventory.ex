@@ -88,10 +88,10 @@ defmodule Snitch.Domain.Inventory do
     {:ok, stock_item} = check_stock(product.id, stock_params["stock_location_id"])
 
     Ecto.Multi.new()
-    |> Ecto.Multi.run(:inventory_tracking, fn _ ->
+    |> Ecto.Multi.run(:inventory_tracking, fn _, _ ->
       ProductModel.update(product, %{inventory_tracking: inventory_tracking})
     end)
-    |> Ecto.Multi.run(:stock, fn _ -> StockModel.update(stock_params, stock_item) end)
+    |> Ecto.Multi.run(:stock, fn _, _ -> StockModel.update(stock_params, stock_item) end)
     |> Repo.transaction()
     |> case do
       {:ok, multi_result} ->

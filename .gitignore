@@ -30,3 +30,7 @@ erl_crash.dump
 /uploads/images/
 
 **/.DS_Store
+node_modules
+
+.bash_history
+.ssh

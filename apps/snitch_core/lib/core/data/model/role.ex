@@ -30,7 +30,7 @@ defmodule Snitch.Data.Model.Role do
   @spec create(map) :: {:ok, Role.t()} | {:error, Ecto.Changeset.t()}
   def create(%{permissions: permissions} = params) when permissions != [] do
     Multi.new()
-    |> Multi.run(:role, fn _ ->
+    |> Multi.run(:role, fn _, _ ->
       QH.create(Role, params, Repo)
     end)
     |> permissions_multi(params)
@@ -58,7 +58,7 @@ defmodule Snitch.Data.Model.Role do
   def update(%{permissions: _} = params, instance) do
     Multi.new()
     |> remove_associations(instance)
-    |> Multi.run(:role, fn _ ->
+    |> Multi.run(:role, fn _, _ ->
       QH.update(Role, params, instance, Repo)
     end)
     |> permissions_multi(params)
@@ -120,7 +120,7 @@ defmodule Snitch.Data.Model.Role do
 
   # to associcate role with permissions
   defp permissions_multi(multi, params) do
-    Multi.run(multi, :permission, fn %{role: role} ->
+    Multi.run(multi, :permission, fn _, %{role: role} ->
       role_permissions = associate_role_permissions(role, params[:permissions])
       {count, _} = Repo.insert_all(RolePermission, role_permissions)
       {:ok, count}
@@ -151,7 +151,7 @@ defmodule Snitch.Data.Model.Role do
 
   # removes role associations from permisssions
   defp remove_associations(multi, instance) do
-    Multi.run(multi, :remove_permissions, fn _ ->
+    Multi.run(multi, :remove_permissions, fn _, _ ->
       {count, _} =
         Repo.delete_all(from(role_p in RolePermission, where: role_p.role_id == ^instance.id))
 

@@ -216,7 +216,8 @@ defmodule Snitch.Data.Schema.Product do
     current_time = DateTime.utc_now() |> DateTime.to_unix()
 
     from(p in product_query,
-      update: [set: [state: "deleted", deleted_at: ^current_time, taxon_id: nil]]
+      update: [set: [state: "deleted", deleted_at: ^current_time, taxon_id: nil]],
+      select: p.id
     )
   end
 

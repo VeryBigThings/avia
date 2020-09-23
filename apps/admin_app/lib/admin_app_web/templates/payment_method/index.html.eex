@@ -4,7 +4,7 @@
       <h2>Payment</h2>
    </div>
    <div class="col-2 p-0 float-right text-right">
-      <%= link( raw("<i class='fas fa-plus'></i> Add a method"), to: payment_method_path(@conn, :new),
+      <%= link( raw("<i class='fas fa-plus'></i> Add a method"), to: Routes.payment_method_path(@conn, :new),
          class: "btn btn-primary float-right")%>
    </div>
 </div>
@@ -28,11 +28,11 @@
                <i class="fa fa-cog"></i>
                </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                  <%= link("Edit", to: payment_method_path(@conn, :edit, payment_method.id),
+                  <%= link("Edit", to: Routes.payment_method_path(@conn, :edit, payment_method.id),
                      class: "dropdown-item")
                      %>
                   <div class="dropdown-divider"></div>
-                  <%= link("Delete", to: payment_method_path(@conn, :delete, payment_method.id),
+                  <%= link("Delete", to: Routes.payment_method_path(@conn, :delete, payment_method.id),
                      method: :delete, data: [confirm: "Are you sure you want to delete?"],
                      class: "dropdown-item")
                      %>
@@ -42,5 +42,5 @@
         </tr>
       </tbody>
     <% end %>
-  </table>     
+  </table>
 </div>

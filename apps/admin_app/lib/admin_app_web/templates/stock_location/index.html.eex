@@ -4,7 +4,7 @@
          <h2>Stock Locations</h2>
       </div>
       <div class="col-2 p-0 float-right text-right">
-         <%= link(raw("<i class='fas fa-plus'></i> Add Stock Location"), to: stock_location_path(@conn, :new),
+         <%= link(raw("<i class='fas fa-plus'></i> Add Stock Location"), to: Routes.stock_location_path(@conn, :new),
             class: "btn btn-primary float-right") %>
       </div>
    </div>
@@ -33,8 +33,8 @@
                   <i class="fa fa-cog"></i>
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" >
-                     <%= link("Edit", to: stock_location_path(@conn, :edit, stock_location.id), class: "dropdown-item") %>
-                     <%= link("Delete", to: stock_location_path(@conn, :delete, stock_location.id),
+                     <%= link("Edit", to: Routes.stock_location_path(@conn, :edit, stock_location.id), class: "dropdown-item") %>
+                     <%= link("Delete", to: Routes.stock_location_path(@conn, :delete, stock_location.id),
                         method: :delete, data: [confirm: "Are you sure to delete"], class: "dropdown-item") %>
                   </div>
                </div>

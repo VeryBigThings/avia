@@ -30,7 +30,7 @@ defmodule Snitch.Data.Model.CardPaymentTest do
              CardPayment.update(card_payment, card_params, payment_params)
 
     assert updated_payment.state == payment_params.state
-    assert Money.reduce(updated_payment.amount) == payment.amount
+    assert Money.normalize(updated_payment.amount) == payment.amount
     assert updated_card_payment.cvv_response == card_params.cvv_response
     assert updated_card_payment.avs_response == card_params.avs_response
   end

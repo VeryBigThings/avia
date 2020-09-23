@@ -24,7 +24,7 @@ defmodule AdminAppWeb.ZoneController do
       {:ok, _response} ->
         conn
         |> put_flash(:info, "Zone created!!")
-        |> redirect(to: zone_path(conn, :index))
+        |> redirect(to: Routes.Routes.zone_path(conn, :index))
 
       {:error, _, changset, _} ->
         conn
@@ -44,7 +44,7 @@ defmodule AdminAppWeb.ZoneController do
       nil ->
         conn
         |> put_flash(:info, "Zone not found")
-        |> redirect(to: zone_path(conn, :index))
+        |> redirect(to: Routes.Routes.zone_path(conn, :index))
     end
   end
 
@@ -60,12 +60,12 @@ defmodule AdminAppWeb.ZoneController do
            |> Repo.transaction() do
       conn
       |> put_flash(:info, "Zone updated!!")
-      |> redirect(to: zone_path(conn, :index))
+      |> redirect(to: Routes.Routes.zone_path(conn, :index))
     else
       nil ->
         conn
         |> put_flash(:info, "Zone not found")
-        |> redirect(to: zone_path(conn, :index))
+        |> redirect(to: Routes.Routes.zone_path(conn, :index))
 
       {:error, _, changeset, _} ->
         conn
@@ -81,12 +81,12 @@ defmodule AdminAppWeb.ZoneController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Deleted successfully!!")
-        |> redirect(to: zone_path(conn, :index))
+        |> redirect(to: Routes.Routes.zone_path(conn, :index))
 
       {:error, _} ->
         conn
         |> put_flash(:error, "not found")
-        |> redirect(to: zone_path(conn, :index))
+        |> redirect(to: Routes.Routes.zone_path(conn, :index))
     end
   end
 

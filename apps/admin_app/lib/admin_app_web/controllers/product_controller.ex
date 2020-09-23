@@ -61,7 +61,7 @@ defmodule AdminAppWeb.ProductController do
       save_publish_redirect_handler(conn, product, params)
     else
       {:error, changeset} ->
-        conn = %{conn | request_path: product_path(conn, :new)}
+        conn = %{conn | request_path: Routes.product_path(conn, :new)}
         conn = %{conn | params: conn.params |> Map.put("taxon_id", Map.get(params, "taxon_id"))}
 
         render(conn, "new.html",
@@ -106,7 +106,7 @@ defmodule AdminAppWeb.ProductController do
       tracking_level = product_params["inventory_tracking"]
       Inventory.set_inventory_tracking(product, tracking_level, params)
 
-      redirect(conn, to: product_path(conn, :edit, product.id))
+      redirect(conn, to: Routes.product_path(conn, :edit, product.id))
     end
   end
 
@@ -115,7 +115,7 @@ defmodule AdminAppWeb.ProductController do
   end
 
   def save_publish_redirect_handler(conn, product, %{"publish_redirection" => "false"} = _params) do
-    redirect(conn, to: product_path(conn, :edit, product.id))
+    redirect(conn, to: Routes.product_path(conn, :edit, product.id))
   end
 
   def save_publish_redirect_handler(conn, _product, params) do
@@ -264,12 +264,12 @@ defmodule AdminAppWeb.ProductController do
            }),
          {:ok, _product} = updated_product <- Repo.update(changeset) do
       ESProductStore.update_product_to_es(parent_product)
-      redirect(conn, to: product_path(conn, :edit, params["product_id"]))
+      redirect(conn, to: Routes.product_path(conn, :edit, params["product_id"]))
     else
       _ ->
         conn
         |> put_flash(:error, "Failed to create variant")
-        |> redirect(to: product_path(conn, :edit, params["product_id"]))
+        |> redirect(to: Routes.Routes.product_path(conn, :edit, params["product_id"]))
     end
   end
 
@@ -277,12 +277,12 @@ defmodule AdminAppWeb.ProductController do
     with {:ok, _product} = deleted_variant <- ProductModel.delete(id) do
       conn
       |> put_flash(:info, "Variant deleted successfully")
-      |> redirect(to: product_path(conn, :edit, parent_id))
+      |> redirect(to: Routes.Routes.product_path(conn, :edit, parent_id))
     else
       _ ->
         conn
         |> put_flash(:error, "Failed to delete variant")
-        |> redirect(to: product_path(conn, :edit, parent_id))
+        |> redirect(to: Routes.Routes.product_path(conn, :edit, parent_id))
     end
   end
 
@@ -369,7 +369,7 @@ defmodule AdminAppWeb.ProductController do
 
     conn
     |> put_flash(:info, "Your request is accepted. Data will be emailed shortly")
-    |> redirect(to: page_path(conn, :index))
+    |> redirect(to: Routes.page_path(conn, :index))
   end
 
   def load_resources(conn, _opts) do
@@ -400,7 +400,7 @@ defmodule AdminAppWeb.ProductController do
       |> Map.put(:query_params, rummage_params)
       |> Map.put(:query_string, Plug.Conn.Query.encode(rummage_params))
 
-    redirect(updated_conn, to: product_path(updated_conn, :index, rummage_params))
+    redirect(updated_conn, to: Routes.product_path(updated_conn, :index, rummage_params))
   end
 
   def index_property(conn, _params) do
@@ -423,7 +423,7 @@ defmodule AdminAppWeb.ProductController do
          {:ok, %Property{} = _property} <-
            Model.Property.get(params["product_property"]["property_id"]),
          {:ok, _product_property} <- Model.ProductProperty.create(params["product_property"]) do
-      redirect(conn, to: product_path(conn, :edit, params["product_id"]))
+      redirect(conn, to: Routes.product_path(conn, :edit, params["product_id"]))
     else
       {:error, changeset} ->
         render(conn, "property_new.html", changeset: changeset)
@@ -442,7 +442,9 @@ defmodule AdminAppWeb.ProductController do
              property_id: params["product_property"]["property_id"]
            }),
          {:ok, _} = Model.ProductProperty.update(product_property, params["product_property"]) do
-      redirect(conn, to: product_path(conn, :edit, params["product_property"]["product_id"]))
+      redirect(conn,
+        to: Routes.product_path(conn, :edit, params["product_property"]["product_id"])
+      )
     else
       {:error, changeset} ->
         render(conn, "property_edit.html", changeset: changeset, conn: conn)
@@ -459,7 +461,7 @@ defmodule AdminAppWeb.ProductController do
       conn
       |> put_flash(:info, "Product property deleted successfully")
 
-      redirect(conn, to: product_path(conn, :edit, params["product_id"]))
+      redirect(conn, to: Routes.product_path(conn, :edit, params["product_id"]))
     end
   end
 end

@@ -21,8 +21,9 @@ defmodule SnitchApiWeb do
     quote do
       use Phoenix.Controller, log: false, namespace: SnitchApiWeb
       import Plug.Conn
-      import SnitchApiWeb.Router.Helpers
       import SnitchApiWeb.Gettext
+
+      alias SnitchApiWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -35,9 +36,10 @@ defmodule SnitchApiWeb do
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
 
-      import SnitchApiWeb.Router.Helpers
       import SnitchApiWeb.ErrorHelpers
       import SnitchApiWeb.Gettext
+
+      alias SnitchApiWeb.Router.Helpers, as: Routes
     end
   end
 

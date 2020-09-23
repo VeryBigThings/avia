@@ -4,7 +4,7 @@ defmodule Snitch.Domain.Splitter.WeightTest do
 
   # TODO: Build the packages by hand, possibly using `Factory.Shipping.shipment!`
   # not using `Shipment.default_packages/1`
-  import Mox, only: [expect: 4, verify_on_exit!: 1]
+  import Mox, only: [verify_on_exit!: 1]
   import Snitch.Tools.Helper.{Order, Shipment, Stock, Zone}
 
   alias Snitch.Data.Schema.{Address, Order, StockItem, StockLocation, Product}
@@ -297,7 +297,7 @@ defmodule Snitch.Domain.Splitter.WeightTest do
       manifest
       |> variants_with_manifest(context)
       |> Enum.zip(context.weights)
-      |> Enum.map(fn {variant, weight} -> %{variant | weight: Decimal.new(weight)} end)
+      |> Enum.map(fn {variant, weight} -> %{variant | weight: Decimal.cast(weight)} end)
 
     {_, vs} = Repo.insert_all(Product, variants, returning: true)
     vs

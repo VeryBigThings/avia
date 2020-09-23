@@ -9,6 +9,6 @@ defmodule Snitch.Data.Schema.ZoneTest do
     zone = Zone.create_changeset(%Zone{}, params)
 
     assert %Ecto.Changeset{errors: errors} = zone
-    assert errors == [zone_type: {"is invalid", [validation: :inclusion]}]
+    assert [zone_type: {"is invalid", _}] = errors
   end
 end

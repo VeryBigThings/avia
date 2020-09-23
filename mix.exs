@@ -3,13 +3,16 @@ defmodule Snitch.Mixfile do
 
   def project do
     [
+      version: "0.0.1",
       apps_path: "apps",
-      elixir: "~> 1.7.2",
+      elixir: "~> 1.10.4",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test, "coveralls.json": :test, "coveralls.html": :test],
-      docs: docs()
+      docs: docs(),
+      releases: releases(),
+      build_path: System.get_env("BUILD_PATH") || "_build"
     ]
   end
 
@@ -20,11 +23,10 @@ defmodule Snitch.Mixfile do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:jason, "~> 1.0"},
-      {:ex_doc, "~> 0.16", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.8", only: :test},
-      {:inch_ex, "~> 0.5.6", only: [:docs, :dev]},
-      {:distillery, "~> 2.0", runtime: false}
+      {:jason, "~> 1.2"},
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false},
+      {:excoveralls, "~> 0.13", only: :test},
+      {:inch_ex, "~> 2.0", only: [:docs, :dev]}
     ]
   end
 
@@ -43,5 +45,20 @@ defmodule Snitch.Mixfile do
       SnitchApi: ~r/^SnitchApi.?/,
       SnitchAdmin: ~r/^AdminApp.?/
     ]
+  end
+
+  defp releases() do
+    [
+      nue: [
+        include_executables_for: [:unix],
+        applications: [snitch_core: :permanent, snitch_api: :permanent, admin_app: :permanent],
+        steps: [:assemble, &copy_bin_files/1]
+      ]
+    ]
+  end
+
+  defp copy_bin_files(release) do
+    File.cp_r("rel/bin", Path.join(release.path, "bin"))
+    release
   end
 end

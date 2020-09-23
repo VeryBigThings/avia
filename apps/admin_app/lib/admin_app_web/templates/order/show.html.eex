@@ -32,21 +32,21 @@
                 Order Actions
               </button>
               <div class="dropdown-menu">
-                <%= link "Pending", to: order_package_path(@conn, :update_package,
+                <%= link "Pending", to: Routes.order_package_path(@conn, :update_package,
                     @order.id, [state: :processing]), method: :put, class: "dropdown-item" %>
-                <%= link "Ready", to: order_package_path(@conn, :update_package,
+                <%= link "Ready", to: Routes.order_package_path(@conn, :update_package,
                     @order.id, [state: :ready]), method: :put, class: "dropdown-item" %>
-                <%= link "Ship", to: order_package_path(@conn, :update_package,
+                <%= link "Ship", to: Routes.order_package_path(@conn, :update_package,
                     @order.id, [state: :shipped]), method: :put, class: "dropdown-item" %>
                 <div class="dropdown-divider"></div>
                 <%= if check_for_cod(@order) do %>
                   <% cod_status = cod_status(@order)%>
-                  <%= link cod_status.display, to: order_cod_update_path(@conn, :cod_payment_update,
+                  <%= link cod_status.display, to: Routes.order_cod_update_path(@conn, :cod_payment_update,
                     @order.id, [state: cod_status.state]), method: :put, class: "dropdown-item" %>
                 <% end %>
-                 <%= link "Mark as Delivered", to: order_package_path(@conn, :update_package,
+                 <%= link "Mark as Delivered", to: Routes.order_package_path(@conn, :update_package,
                     @order.id, [state: :delivered]), method: :put, class: "dropdown-item" %>
-                <%= link "Mark as Complete", to: order_state_path(@conn, :update_state,
+                <%= link "Mark as Complete", to: Routes.order_state_path(@conn, :update_state,
                     @order.id, [state: :complete]), method: :put, class: "dropdown-item" %>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                      <%= for line_item <- @order.line_items do %>
                      <div class="media mt-3 lineitem-detail">
                         <a class="pr-3" href="#">
-                          <img src="/images/empty-img.png" alt="Default">
+                        <%= img_tag(AdminAppWeb.ProductView.get_product_display_image(line_item.product), class: "card-img-top") %>
                         </a>
                         <div class="media-body">
                           <div class="mt-0 text-capitalize"><%= line_item.product.name %></div>
@@ -137,7 +137,7 @@
                           <td class="col-8 text-left">
                             <div class="media lineitem-detail">
                                 <a class="pr-2 mr-1" href="#" >
-                                <img href="#" src="/images/empty-img.png" alt="Default">
+                                <%= img_tag(AdminAppWeb.ProductView.get_product_display_image(line_item.product), class: "card-img-top") %>
                                 </a>
                                 <div class="media-body">
                                   <a class="mt-0 text-capitalize name"> <%= line_item.product.name %></a>

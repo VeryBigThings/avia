@@ -21,7 +21,7 @@ defmodule SnitchApiWeb.UserController do
     with {:ok, %User{} = user} <- Accounts.create_user(params) do
       conn
       |> put_status(200)
-      |> put_resp_header("location", user_path(conn, :show, user))
+      |> put_resp_header("location", Routes.user_path(conn, :show, user))
       |> render("show.json-api", data: user)
     end
   end

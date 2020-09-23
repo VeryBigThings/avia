@@ -15,7 +15,6 @@ defmodule Snitch.DataCase do
   use ExUnit.CaseTemplate
 
   alias Ecto.Adapters.SQL.Sandbox
-  alias Ecto.Changeset
   alias Snitch.Repo
 
   using do
@@ -47,10 +46,12 @@ defmodule Snitch.DataCase do
       assert "password is too short" in errors_on(changeset).password
       assert %{password: ["password is too short"]} = errors_on(changeset)
   """
+
   def errors_on(changeset) do
-    Changeset.traverse_errors(changeset, fn {message, opts} ->
-      Enum.reduce(opts, message, fn {key, value}, acc ->
-        String.replace(acc, "%{#{key}}", to_string(value))
+    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+      Regex.replace(~r"%{(\w+)}", message, fn _, key ->
+        value = opts[String.to_atom(key)] || key
+        to_string(value)
       end)
     end)
   end

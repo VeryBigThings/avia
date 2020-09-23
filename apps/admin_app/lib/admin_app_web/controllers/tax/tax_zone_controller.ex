@@ -29,7 +29,7 @@ defmodule AdminAppWeb.Tax.TaxZoneController do
 
   def create(conn, %{"tax_zone" => params}) do
     with {:ok, tax_zone} <- TaxZone.create(params) do
-      redirect(conn, to: tax_zone_path(conn, :edit, tax_zone.id))
+      redirect(conn, to: Routes.tax_zone_path(conn, :edit, tax_zone.id))
     else
       {:error, changeset} ->
         conn
@@ -48,7 +48,7 @@ defmodule AdminAppWeb.Tax.TaxZoneController do
         conn
         |> put_flash(:error, "tax zone not found")
 
-        redirect(conn, to: tax_zone_path(conn, :index))
+        redirect(conn, to: Routes.tax_zone_path(conn, :index))
     end
   end
 
@@ -56,7 +56,7 @@ defmodule AdminAppWeb.Tax.TaxZoneController do
     tax_zone = id |> TaxZone.get() |> get(conn)
 
     with {:ok, _config} <- TaxZone.update(tax_zone, params) do
-      redirect(conn, to: tax_zone_path(conn, :index))
+      redirect(conn, to: Routes.tax_zone_path(conn, :index))
     else
       {:error, changeset} ->
         render(conn, "edit.html",
@@ -70,12 +70,12 @@ defmodule AdminAppWeb.Tax.TaxZoneController do
     with {:ok, _data} <- id |> String.to_integer() |> TaxZone.delete() do
       conn
       |> put_flash(:info, "tax zone deleted")
-      |> redirect(to: tax_zone_path(conn, :index))
+      |> redirect(to: Routes.Routes.tax_zone_path(conn, :index))
     else
       {:error, message} ->
         conn
         |> put_flash(:error, message)
-        |> redirect(to: tax_zone_path(conn, :index))
+        |> redirect(to: Routes.Routes.tax_zone_path(conn, :index))
     end
   end
 
@@ -84,6 +84,6 @@ defmodule AdminAppWeb.Tax.TaxZoneController do
   defp get({:error, message}, conn) do
     conn
     |> put_flash(:error, message)
-    |> redirect(to: tax_zone_path(conn, :index))
+    |> redirect(to: Routes.Routes.tax_zone_path(conn, :index))
   end
 end

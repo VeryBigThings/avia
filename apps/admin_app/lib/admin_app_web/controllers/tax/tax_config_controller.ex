@@ -16,7 +16,7 @@ defmodule AdminAppWeb.Tax.TaxConfigController do
     config = id |> TaxConfig.get() |> get(conn)
 
     with {:ok, _config} <- TaxConfig.update(config, params) do
-      redirect(conn, to: tax_config_path(conn, :index))
+      redirect(conn, to: Routes.tax_config_path(conn, :index))
     else
       {:error, changeset} ->
         render(conn, "edit.html",
@@ -31,6 +31,6 @@ defmodule AdminAppWeb.Tax.TaxConfigController do
   defp get({:error, message}, conn) do
     conn
     |> put_flash(:error, message)
-    |> redirect(to: tax_config_path(conn, :index))
+    |> redirect(to: Routes.Routes.tax_config_path(conn, :index))
   end
 end

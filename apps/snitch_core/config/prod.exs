@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # import_config "prod.secret.exs"
 
@@ -12,10 +12,7 @@ config :ex_aws,
   secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, :instance_role],
   s3: [region: "eu-west-2"]
 
-config :snitch_core, Snitch.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  url: System.get_env("DATABASE_URL"),
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-  ssl: false
+# Change SSL settings after testing locally !!!
+config :snitch_core, Snitch.Repo, ssl: false
 
 config :snitch_core, :defaults, currency: :USD

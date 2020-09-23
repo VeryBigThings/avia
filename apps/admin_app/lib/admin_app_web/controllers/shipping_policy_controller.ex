@@ -27,7 +27,7 @@ defmodule AdminAppWeb.ShippingPolicyController do
       {:error, _} ->
         conn
         |> put_flash(:error, "Not found")
-        |> redirect(to: shipping_policy_path(conn, :new))
+        |> redirect(to: Routes.shipping_policy_path(conn, :new))
 
       {:ok, category} ->
         render(conn, "edit.html",
@@ -45,12 +45,12 @@ defmodule AdminAppWeb.ShippingPolicyController do
       {:ok, category} ->
         conn
         |> put_flash(:info, "Shipping Category updated with rules!")
-        |> redirect(to: shipping_policy_path(conn, :edit, category.id))
+        |> redirect(to: Routes.shipping_policy_path(conn, :edit, category.id))
 
       {:error, _changeset} ->
         conn
         |> put_flash(:error, "Some error occured")
-        |> redirect(to: shipping_policy_path(conn, :edit, category.id))
+        |> redirect(to: Routes.shipping_policy_path(conn, :edit, category.id))
     end
   end
 

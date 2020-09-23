@@ -264,15 +264,15 @@ defmodule Snitch.Domain.Taxonomy do
   def create_taxon(parent_taxon, %{image: image} = taxon_params) do
     multi =
       Multi.new()
-      |> Multi.run(:struct, fn _ ->
+      |> Multi.run(:struct, fn _, _ ->
         taxon_struct = %Taxon{name: taxon_params.name}
         add_taxon(parent_taxon, taxon_struct, :child)
       end)
-      |> Multi.run(:image, fn %{struct: struct} ->
+      |> Multi.run(:image, fn _, %{struct: struct} ->
         params = %{"image" => Map.put(image, :url, ImageModel.image_url(image.filename, struct))}
         QH.create(Image, params, Repo)
       end)
-      |> Multi.run(:association, fn %{image: image, struct: struct} ->
+      |> Multi.run(:association, fn _, %{image: image, struct: struct} ->
         params = Map.put(%{}, :taxon_image, %{image_id: image.id})
 
         Taxon.update_changeset(
@@ -301,10 +301,10 @@ defmodule Snitch.Domain.Taxonomy do
   """
   def create_taxonomy(name) do
     Multi.new()
-    |> Multi.run(:taxonomy, fn _ ->
+    |> Multi.run(:taxonomy, fn _, _ ->
       %Taxonomy{name: name} |> Repo.insert()
     end)
-    |> Multi.run(:root_taxon, fn %{taxonomy: taxonomy} ->
+    |> Multi.run(:root_taxon, fn _, %{taxonomy: taxonomy} ->
       taxon = %Taxon{name: name, taxonomy_id: taxonomy.id} |> add_root
       {:ok, taxon}
     end)
@@ -318,8 +318,8 @@ defmodule Snitch.Domain.Taxonomy do
     case get_taxon(taxon_id) do
       %Taxon{} = taxon ->
         Multi.new()
-        |> Multi.run(:delete_products, fn _ -> ProductModel.delete_by_category(taxon) end)
-        |> Multi.run(:category, fn _ -> do_delete_taxon(taxon) end)
+        |> Multi.run(:delete_products, fn _, _ -> ProductModel.delete_by_category(taxon) end)
+        |> Multi.run(:category, fn _, _ -> do_delete_taxon(taxon) end)
         |> Repo.transaction()
 
       nil ->

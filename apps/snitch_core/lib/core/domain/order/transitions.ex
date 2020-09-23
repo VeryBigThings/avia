@@ -193,7 +193,7 @@ defmodule Snitch.Domain.Order.Transitions do
     packages = Map.fetch!(Repo.preload(order, [:packages]), :packages)
 
     if validate_shipping_preferences(packages, shipping_preferences) do
-      function = fn _ ->
+      function = fn _, _ ->
         shipping_preferences
         |> Stream.map(fn %{package_id: package_id, shipping_method_id: shipping_method_id} ->
           packages
@@ -309,7 +309,7 @@ defmodule Snitch.Domain.Order.Transitions do
         %Context{valid?: true, struct: %Order{} = order, multi: multi} = context
       ) do
     multi =
-      Multi.run(multi, :add_email, fn _ ->
+      Multi.run(multi, :add_email, fn _, _ ->
         MailManager.send_mail(order)
         {:ok, "mail_sent"}
       end)

@@ -8,9 +8,11 @@ use Mix.Config
 # Configures the endpoint
 config :snitch_api, SnitchApiWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "VAvkjDkSJ/5nLB4aI+77rZ/PyR3foxuD6u1p1X01M3hpc0MJrRDwRNZ0/ERHfcUb",
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   render_errors: [view: SnitchApiWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: SnitchApi.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: SnitchApi.PubSub
+
+config :phoenix, :json_library, Jason
 
 # Configures Elixir's Logger
 config :logger, :console,

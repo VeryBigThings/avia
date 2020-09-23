@@ -13,7 +13,7 @@
   </header>
   <div class="login col-10 col-sm-8 col-lg-3 m-auto pb-3 px-0">
     <h4 class="pt-3 signin mb-4 mt-2">Sign in to continue</h4>
-    <%= form_for @changeset, session_path(@conn, :create), [as: :session],
+    <%= form_for @changeset, Routes.session_path(@conn, :create), [as: :session],
       fn f -> %>
       <div class="row">
         <%= input f, :email %>
@@ -22,10 +22,10 @@
         <%= input f, :password %>
       </div>
       <p class="text-lowercase text-capitalize mb-3 forgot">
-        <%= link "Forgot your password?", to: session_path(@conn, :password_reset) %>
+        <%= link "Forgot your password?", to: Routes.session_path(@conn, :password_reset) %>
       </p>
-      <%= submit "Sign in", class: "btn btn-primary submit-btn col-12" %>    
+      <%= submit "Sign in", class: "btn btn-primary submit-btn col-12" %>
     <% end %>
-    <a href="#" class="trouble">Trouble signing in?</a>   
+    <a href="#" class="trouble">Trouble signing in?</a>
   </div>
 </div>

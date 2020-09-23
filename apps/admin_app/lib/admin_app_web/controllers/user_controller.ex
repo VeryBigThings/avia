@@ -22,7 +22,7 @@ defmodule AdminAppWeb.UserController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Account created!")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: Routes.user_path(conn, :index))
 
       {:error, changeset} ->
         conn
@@ -55,7 +55,7 @@ defmodule AdminAppWeb.UserController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "User updated successfully")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: Routes.user_path(conn, :index))
 
       {:error, changeset} ->
         conn
@@ -71,12 +71,12 @@ defmodule AdminAppWeb.UserController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "User deleted successfully!")
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: Routes.user_path(conn, :index))
 
       {:error, msg} ->
         conn
         |> put_flash(:error, msg)
-        |> redirect(to: user_path(conn, :index))
+        |> redirect(to: Routes.user_path(conn, :index))
     end
   end
 

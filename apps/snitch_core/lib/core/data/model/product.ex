@@ -109,7 +109,7 @@ defmodule Snitch.Data.Model.Product do
       |> Repo.all()
 
     Product
-    |> join(:left, [p], v in Variation, v.child_product_id == p.id)
+    |> join(:left, [p], v in Variation, on: v.child_product_id == p.id)
     |> where(
       [p, v],
       p.state == "active" and p.deleted_at == ^0 and p.id not in ^parent_product_ids
@@ -216,8 +216,7 @@ defmodule Snitch.Data.Model.Product do
         from(p in product_by_category_query, select: count(p.id))
         |> Repo.one()
 
-      {delete_product_count, products_ids} =
-        Repo.update_all(product_delete_query, [], returning: [:id])
+      {delete_product_count, products_ids} = Repo.update_all(product_delete_query, [])
 
       if(total_products == delete_product_count) do
         {:ok, products_ids}
@@ -272,10 +271,10 @@ defmodule Snitch.Data.Model.Product do
   @spec add_images(Product.t(), map) :: {:ok, map} | {:error, any()}
   def add_images(product, params) do
     Multi.new()
-    |> Multi.run(:struct, fn _ ->
+    |> Multi.run(:struct, fn _, _ ->
       QH.update(Product, params, product, Repo)
     end)
-    |> Multi.run(:store_image, fn %{struct: product} ->
+    |> Multi.run(:store_image, fn _, %{struct: product} ->
       store_images(product, params)
     end)
     |> ImageModel.persist()
@@ -299,7 +298,7 @@ defmodule Snitch.Data.Model.Product do
     Multi.new()
     |> get_product(product_id)
     |> get_image(image_id)
-    |> Multi.run(:delete_image, fn _ ->
+    |> Multi.run(:delete_image, fn _, _ ->
       QH.delete(Image, image_id, Repo)
     end)
     |> Multi.delete_all(:delete, query)
@@ -336,7 +335,7 @@ defmodule Snitch.Data.Model.Product do
   end
 
   defp get_image(multi, image_id) do
-    Multi.run(multi, :image, fn _ ->
+    Multi.run(multi, :image, fn _, _ ->
       case QH.get(Image, image_id, Repo) do
         {:error, _} ->
           {:error, "image not found"}
@@ -348,7 +347,7 @@ defmodule Snitch.Data.Model.Product do
   end
 
   defp get_product(multi, product_id) do
-    Multi.run(multi, :product, fn _ ->
+    Multi.run(multi, :product, fn _, _ ->
       case get(product_id) do
         {:error, _} ->
           {:error, "product not found"}
@@ -360,7 +359,7 @@ defmodule Snitch.Data.Model.Product do
   end
 
   defp remove_image_from_store(multi) do
-    Multi.run(multi, :remove_from_upload, fn %{image: image, product: product} ->
+    Multi.run(multi, :remove_from_upload, fn _, %{image: image, product: product} ->
       case ImageModel.delete_image(image.name, product) do
         :ok ->
           {:ok, "success"}

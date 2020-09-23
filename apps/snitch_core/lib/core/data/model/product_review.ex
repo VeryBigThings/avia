@@ -37,11 +37,11 @@ defmodule Snitch.Data.Model.ProductReview do
           | {:error, Ecto.Changeset.t()}
   def add(params) do
     Multi.new()
-    |> Multi.run(:review, fn _ ->
+    |> Multi.run(:review, fn _, _ ->
       params = parse_review_params(params)
       QH.create(Review, params, Repo)
     end)
-    |> Multi.run(:associate_product, fn %{review: review} ->
+    |> Multi.run(:associate_product, fn _, %{review: review} ->
       %{product_id: product_id} = params
       params = %{product_id: product_id, review_id: review.id}
       return = QH.create(ProductReview, params, Repo)

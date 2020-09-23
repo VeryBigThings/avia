@@ -1,5 +1,5 @@
 <div class="col-xs-12" id="content" data-hook="">
-<%= link("Add New", to: product_path(@conn, :new_property, @conn.params["id"]), class: "btn btn-primary")%>
+<%= link("Add New", to: Routes.product_path(@conn, :new_property, @conn.params["id"]), class: "btn btn-primary")%>
   </div>
   <%= if get_product_properties(@conn.params["id"]) != [] do %>
     <table class="table" id="listing_product_property" data-hook="">

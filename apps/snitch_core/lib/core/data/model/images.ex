@@ -14,14 +14,14 @@ defmodule Snitch.Data.Model.Image do
   def create(module, %{"image" => image} = params, association) do
     multi =
       Multi.new()
-      |> Multi.run(:struct, fn _ ->
+      |> Multi.run(:struct, fn _, _ ->
         QH.create(module, params, Repo)
       end)
-      |> Multi.run(:image, fn %{struct: struct} ->
+      |> Multi.run(:image, fn _, %{struct: struct} ->
         params = %{"image" => Map.put(image, :url, image_url(image.filename, struct))}
         QH.create(Image, params, Repo)
       end)
-      |> Multi.run(:association, fn %{image: image, struct: struct} ->
+      |> Multi.run(:association, fn _, %{image: image, struct: struct} ->
         params = Map.put(%{}, association, %{image_id: image.id})
         QH.update(module, params, struct, Repo)
       end)
@@ -38,11 +38,11 @@ defmodule Snitch.Data.Model.Image do
     old_image = struct.image
 
     Multi.new()
-    |> Multi.run(:image, fn _ ->
+    |> Multi.run(:image, fn _, _ ->
       params = %{"image" => Map.put(image, :url, image_url(image.filename, struct))}
       QH.create(Image, params, Repo)
     end)
-    |> Multi.run(:struct, fn %{image: image} ->
+    |> Multi.run(:struct, fn _, %{image: image} ->
       params = Map.put(params, association, %{image_id: image.id})
       QH.update(module, params, struct, Repo)
     end)
@@ -53,7 +53,7 @@ defmodule Snitch.Data.Model.Image do
 
   def delete(struct, image, changeset) do
     Multi.new()
-    |> Multi.run(:delete_struct, fn _ ->
+    |> Multi.run(:delete_struct, fn _, _ ->
       Repo.delete(changeset)
     end)
     |> delete_image_multi(image, struct)
@@ -66,7 +66,7 @@ defmodule Snitch.Data.Model.Image do
 
   def delete_image_multi(multi, image, struct) do
     multi
-    |> Multi.run(:remove_from_upload, fn _ ->
+    |> Multi.run(:remove_from_upload, fn _, _ ->
       struct = %{struct | tenant: Repo.get_prefix()}
 
       case delete_image(image.name, struct) do
@@ -77,7 +77,7 @@ defmodule Snitch.Data.Model.Image do
           {:error, "not_found"}
       end
     end)
-    |> Multi.run(:delete_image, fn _ ->
+    |> Multi.run(:delete_image, fn _, _ ->
       QH.delete(Image, image.id, Repo)
     end)
   end
@@ -93,7 +93,7 @@ defmodule Snitch.Data.Model.Image do
   end
 
   def upload_image_multi(multi, %{filename: name, path: path, type: type} = image) do
-    Multi.run(multi, :image_upload, fn %{struct: struct} ->
+    Multi.run(multi, :image_upload, fn _, %{struct: struct} ->
       image = %Plug.Upload{filename: name, path: path, content_type: type}
       struct = %{struct | tenant: Repo.get_prefix()}
 

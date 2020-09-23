@@ -3,7 +3,6 @@ defmodule Snitch.Data.Schema.User do
   Models a User
   """
   use Snitch.Data.Schema
-  alias Comeonin.Argon2
   alias Snitch.Data.Schema.{Order, Role, WishListItem}
   import Ecto.Query
 
@@ -29,7 +28,7 @@ defmodule Snitch.Data.Schema.User do
     field(:sign_in_count, :integer, default: 0)
     field(:failed_attempts, :integer, default: 0)
     field(:reset_password_token, :string)
-    field(:reset_password_sent_at, :naive_datetime)
+    field(:reset_password_sent_at, :naive_datetime_usec)
     # field :snitch_api_key,         :string
     # field :remember_token,         :string
 
@@ -50,16 +49,16 @@ defmodule Snitch.Data.Schema.User do
     # field :login,                  :string
 
     # field :locked_at,              :string
-    # field :remember_created_at,    :naive_datetime
-    # field :deleted_at,             :naive_datetime
-    # field :confirmed_at,           :naive_datetime
-    # field :confirmation_sent_at,   :naive_datetime
+    # field :remember_created_at,    :naive_datetime_usec
+    # field :deleted_at,             :naive_datetime_usec
+    # field :confirmed_at,           :naive_datetime_usec
+    # field :confirmation_sent_at,   :naive_datetime_usec
     timestamps()
   end
 
   @required_fields ~w(first_name last_name email password password_confirmation role_id)a
   @create_fields [:is_admin | @required_fields]
-  @password_fields ~w(reset_password_token reset_password_sent_at)
+  @password_fields ~w(reset_password_token reset_password_sent_at)a
   @update_fields ~w(sign_in_count failed_attempts is_admin )a ++
                    @create_fields ++ @password_fields
 
@@ -140,6 +139,7 @@ defmodule Snitch.Data.Schema.User do
         changeset
         |> change(Argon2.add_hash(password))
         |> delete_change(:password_confirmation)
+        |> delete_change(:password)
 
       :error ->
         changeset

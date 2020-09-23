@@ -13,7 +13,7 @@
       <tr>
         <td><b>FRONTEND URL</b></td>
         <td><%= @general_configuration.frontend_url %></td>
-      </tr> 
+      </tr>
       <tr>
         <td>
           <b>BACKEND URL</b>
@@ -25,18 +25,18 @@
       <tr>
         <td><b> SEO TITLE </b></td>
         <td><%= @general_configuration.seo_title %></td>
-      </tr> 
+      </tr>
       <tr>
-        <td><b> SENDER MAIL </b></td> 
+        <td><b> SENDER MAIL </b></td>
         <td><%= @general_configuration.sender_mail %></td>
-      </tr> 
+      </tr>
       <tr>
-        <td><b>CURRENCY</b></td> 
+        <td><b>CURRENCY</b></td>
         <td><%= @general_configuration.currency %></td>
       </tr>
       <%= if @general_configuration.image != nil do %>
         <tr>
-          <td><b>STORE LOGO</b></td> 
+          <td><b>STORE LOGO</b></td>
           <td>
             <%= img_tag(get_image_url(@general_configuration.image, @general_configuration), style: "width: 200px; height: 200px", class: "img-thumbnail") %>
           </td>
@@ -45,8 +45,7 @@
     </tbody>
   <table>
   <div class = "col">
-    <%= link("Edit", to: general_settings_path(@conn, :edit, @general_configuration.id), class: "btn btn-info")
+    <%= link("Edit", to: Routes.general_settings_path(@conn, :edit, @general_configuration.id), class: "btn btn-info")
     %>
   </div>
 </div>
-

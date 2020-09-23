@@ -4,8 +4,8 @@
       <h2>Product Brands</h2>
    </div>
    <div class="col-2 p-0 float-right text-right">
-      <%= link(raw("<i class='fas fa-plus'></i> Add a brand"), to: product_brand_path(@conn, :new), 
-         class: "btn btn-primary")%>  
+      <%= link(raw("<i class='fas fa-plus'></i> Add a brand"), to: Routes.product_brand_path(@conn, :new),
+         class: "btn btn-primary")%>
    </div>
 </div>
 <div class="row m-0 list">
@@ -31,8 +31,8 @@
                <i class="fa fa-cog"></i>
                </a>
                <div class="dropdown-menu dropdown-menu-right">
-                  <%= link("Edit", to: product_brand_path(@conn, :edit, item.id), class: "dropdown-item")%>
-                  <%= link("Delete", to: product_brand_path(@conn, :delete, item.id), method: :delete, data: [confirm: "Are you sure?"], class: "dropdown-item")%>
+                  <%= link("Edit", to: Routes.product_brand_path(@conn, :edit, item.id), class: "dropdown-item")%>
+                  <%= link("Delete", to: Routes.product_brand_path(@conn, :delete, item.id), method: :delete, data: [confirm: "Are you sure?"], class: "dropdown-item")%>
                </div>
             </div>
          </div>

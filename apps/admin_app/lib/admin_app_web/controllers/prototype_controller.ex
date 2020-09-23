@@ -38,7 +38,7 @@ defmodule AdminAppWeb.PrototypeController do
       {:error, _} ->
         conn
         |> put_flash(:info, "Prototype not found")
-        |> redirect(to: prototype_path(conn, :index))
+        |> redirect(to: Routes.Routes.prototype_path(conn, :index))
     end
   end
 
@@ -51,7 +51,7 @@ defmodule AdminAppWeb.PrototypeController do
       {:error, :product_prototype_not_found} ->
         conn
         |> put_flash(:info, "Prototype not found")
-        |> redirect(to: prototype_path(conn, :index))
+        |> redirect(to: Routes.Routes.prototype_path(conn, :index))
 
       {:error, changeset} ->
         render(conn, "edit.html", changeset: %{changeset | action: :edit})
@@ -63,12 +63,12 @@ defmodule AdminAppWeb.PrototypeController do
       {:ok, prototype} ->
         conn
         |> put_flash(:info, "Product prototype #{prototype.name} deleted successfully")
-        |> redirect(to: prototype_path(conn, :index))
+        |> redirect(to: Routes.Routes.prototype_path(conn, :index))
 
       {:error, _} ->
         conn
         |> put_flash(:error, "Failed to delete Product Protoype")
-        |> redirect(to: variation_theme_path(conn, :index))
+        |> redirect(to: Routes.variation_theme_path(conn, :index))
     end
   end
 

@@ -211,7 +211,7 @@ defmodule Snitch.Core.Domain.TaxonomyTest do
       {:ok, _} = Taxonomy.add_taxon(root, taxon, :child)
 
       {:error, changeset} = Taxonomy.add_taxon(root, taxon, :child)
-      assert changeset.errors[:slug] == {"category with this name alreay exist", []}
+      assert {"category with this name alreay exist", _} = changeset.errors[:slug]
     end
   end
 
@@ -296,7 +296,7 @@ defmodule Snitch.Core.Domain.TaxonomyTest do
       create_taxonomy()
 
       product_category = Taxonomy.get_taxon_by_name("Table Covers")
-      products = insert_list(3, :product, taxon: product_category)
+      insert_list(3, :product, taxon: product_category)
 
       delete_category = Taxonomy.get_taxon_by_name("Kitchen & Tables")
 

@@ -20,8 +20,8 @@
          <i class="fa fa-cog"></i>
          </a>
          <div class="dropdown-menu dropdown-menu-right">
-            <%= link("Edit", to: variation_theme_path(@conn, :edit, @theme.id), class: "dropdown-item")%>
-            <%= link("Delete", to: variation_theme_path(@conn, :delete, @theme.id), method: :delete,
+            <%= link("Edit", to: Routes.variation_theme_path(@conn, :edit, @theme.id), class: "dropdown-item")%>
+            <%= link("Delete", to: Routes.variation_theme_path(@conn, :delete, @theme.id), method: :delete,
                data: [confirm: "Are you sure?"], class: "dropdown-item")%>
          </div>
       </div>

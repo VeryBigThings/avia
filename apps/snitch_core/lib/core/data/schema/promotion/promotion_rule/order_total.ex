@@ -50,8 +50,8 @@ defmodule Snitch.Data.Schema.PromotionRule.OrderTotal do
   defp satisfies_rule?(order_total, rule_data) do
     order_total_in_range?(
       order_total,
-      Decimal.new(rule_data["lower_range"]),
-      Decimal.new(rule_data["upper_range"])
+      Decimal.cast(rule_data["lower_range"]),
+      Decimal.cast(rule_data["upper_range"])
     )
   end
 
@@ -59,7 +59,7 @@ defmodule Snitch.Data.Schema.PromotionRule.OrderTotal do
     currency = order_total.currency
     lower_range = Money.new!(currency, lower_range)
 
-    case Money.cmp(order_total, lower_range) do
+    case Money.compare(order_total, lower_range) do
       :gt ->
         true
 
@@ -74,7 +74,7 @@ defmodule Snitch.Data.Schema.PromotionRule.OrderTotal do
     upper_range = Money.new!(currency, upper_range)
 
     value_lower =
-      case Money.cmp(order_total, lower_range) do
+      case Money.compare(order_total, lower_range) do
         :gt ->
           true
 
@@ -83,7 +83,7 @@ defmodule Snitch.Data.Schema.PromotionRule.OrderTotal do
       end
 
     value_upper =
-      case Money.cmp(order_total, upper_range) do
+      case Money.compare(order_total, upper_range) do
         :lt ->
           true
 
