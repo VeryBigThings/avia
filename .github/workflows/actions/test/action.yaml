@@ -35,7 +35,7 @@ runs:
       shell: bash
 
     - name: "Reset database"
-      run: MIX_ENV=test mix ecto.reset
+      run: MIX_ENV=test mix cmd --app snitch_core mix ecto.reset
       shell: bash
 
     - name: Run tests
@@ -50,7 +50,7 @@ runs:
       run: |
         mix release --overwrite
 
-        DATABASE_URL="postgresql://postgres:postgres@localhost/nue_test" _build/prod/rel/nue/bin/migrate_all.sh
+        DB_URL="postgresql://postgres:postgres@localhost/nue_test" _build/prod/rel/nue/bin/migrate_all.sh
 
         _build/prod/rel/nue/bin/nue eval "{:ok, _} = Application.ensure_all_started(:nue)"
         _build/prod/rel/nue/bin/migrate_all.sh

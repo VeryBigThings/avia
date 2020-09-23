@@ -24,7 +24,7 @@ spec:
             [
               "/bin/bash",
               "-c",
-              "/opt/app/bin/check_config.sh && /opt/app/bin/migrate.sh",
+              "/opt/app/bin/check_config.sh && /opt/app/bin/migrate_all.sh",
             ]
           envFrom:
             - secretRef:

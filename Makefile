@@ -54,6 +54,35 @@ seed-db:
 
 reseed-db: reset-db seed-db
 
+# ------------
+# --- KUBE ---
+# ------------
+
+## Builds the prod/release Docker image
+kube-build: require-APP_NAME require-APP_TAG
+	@docker build . --ssh default --target release --build-arg MIX_ENV=prod --build-arg APP_NAME --tag ${APP_TAG}
+
+## Deploys the local image to the cluster
+kube-deploy: require-RELEASE_LEVEL
+	@kubectl apply -k config/k8s/overlays/${RELEASE_LEVEL}
+
+## Connects to running app
+kube-shell: require-RELEASE_LEVEL
+	@kubectl exec --namespace ${RELEASE_LEVEL} --stdin --tty deployment/${DEPLOYMENT_NAME} -- bash
+
+## Shows app logs
+kube-logs: require-RELEASE_LEVEL
+	@kubectl logs --namespace ${RELEASE_LEVEL} --follow deployment/${DEPLOYMENT_NAME}
+
+kube-migration-logs: require-RELEASE_LEVEL
+	@kubectl logs --namespace ${RELEASE_LEVEL} --follow deployment/${DEPLOYMENT_NAME} -c migration-runner
+
+kube-psql: require-RELEASE_LEVEL
+	@kubectl run --namespace ${RELEASE_LEVEL} psql-${APP_NAME} --generator=run-pod/v1 --rm --stdin --tty --image verybigthings/postgresql-client:11.7 -- sh || kubectl --namespace ${RELEASE_LEVEL} exec -it psql-${APP_NAME} sh
+
+kube-new-shell: require-RELEASE_LEVEL
+	@kubectl run --namespace ${RELEASE_LEVEL} aws-cli--${APP_NAME} --generator=run-pod/v1 --rm --stdin --tty --image verybigthings/kube-shell:5 --serviceaccount=${DEPLOYMENT_NAME}-app-role-- sh
+
 # -----------------------
 # --- DOCKER DEVSTACK ---
 # -----------------------
