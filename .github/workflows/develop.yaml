@@ -18,10 +18,13 @@ jobs:
           POSTGRES_PASSWORD: "postgres"
         ports:
           - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+        ports:
+          - 9200:9200
     env:
-      CACHE_VERSION: v5
+      CACHE_VERSION: v1
     steps:
       - uses: actions/checkout@v2
 
@@ -56,9 +59,7 @@ jobs:
       - name: Deploy
         uses: ./.github/workflows/actions/deploy
         with:
-          aws-access-key-id: ${{ secrets.DEVELOP_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.DEVELOP_AWS_SECRET_ACCESS_KEY }}
-          cluster-name: nue-develop-cluster
+          cluster-name: VbtCluster
           github-token: ${{ secrets.GITHUB_TOKEN }}
           keybase-paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
           keybase-username: ${{ secrets.KEYBASE_USERNAME }}

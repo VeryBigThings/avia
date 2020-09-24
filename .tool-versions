@@ -1,2 +1,4 @@
 elixir 1.10.4
 erlang 22.3.4.2
+postgres 12.4
+elasticsearch 6.3.2

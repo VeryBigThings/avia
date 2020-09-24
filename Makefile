@@ -2,10 +2,22 @@
 		dev \
 		test \
 		compile \
-		compile-warnings-as-errors \
+		check-compile \
+		check-release \
+		check-migrations \
+		check-ci \
 		reset-db \
 		seed-db \
+		demo-db \
 		reseed-db \
+
+		kube-build \
+		kube-deploy \
+		kube-shell \
+		kube-logs \
+		kube-migration-logs \
+		kube-psql \
+		kube-new-shell \
 
 		devstack \
 		devstack-build \
@@ -33,26 +45,38 @@ require-%:
 # -----------------
 
 dev:
-	mix ecto.setup && iex -S mix phx.server
+	mix cmd --app snitch_core mix ecto.setup && iex -S mix phx.server
 
 test:
 	mix test
 
 compile:
-	@mix do deps.get, compile
+	@mix do deps.get, compile --warnings-as-errors
 
-compile-warnings-as-errors:
-	@mix compile --warnings-as-errors
+check-compile: compile
+	@MIX_ENV=test mix compile --warnings-as-errors
+	@mix format --check-formatted
+	@mix credo list
+
+check-migrations:
+	@MIX_ENV=test mix ecto.reset
+	@MIX_ENV=test mix ecto.rollback.all
+	@MIX_ENV=test mix ecto.migrate
+
+check-release:
+	@MIX_ENV=test mix release --overwrite
+	@DATABASE_URL="postgres://postgres:postgres:@db/snitch_dev" _build/test/rel/nue/bin/migrate_all.sh
+
+check-ci: check-compile test check-migrations check-release
 
 reset-db:
-	mix ecto.reset
+	mix cmd --app snitch_core mix ecto.reset
 
-seed-db:
-	mix cmd --app snitch_core mix ecto.reset && \
-		mix cmd --app snitch_core mix elasticsearch.build products --cluster Snitch.Tools.ElasticsearchCluster && \
-		mix cmd --app snitch_core mix ecto.load.demo
+demo-db: reset-db
+	mix cmd --app snitch_core mix elasticsearch.build products --cluster Snitch.Tools.ElasticsearchCluster && \
+	mix cmd --app snitch_core mix ecto.load.demo
 
-reseed-db: reset-db seed-db
+reseed-db: reset-db
 
 # ------------
 # --- KUBE ---
