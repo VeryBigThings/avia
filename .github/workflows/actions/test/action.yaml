@@ -25,9 +25,8 @@ runs:
 
     - name: Compile project
       run: |
-        MIX_ENV=test mix compile --warnings-as-errors
-        MIX_ENV=dev mix compile --warnings-as-errors
-        MIX_ENV=prod mix compile --warnings-as-errors
+        MIX_ENV=test mix compile
+        MIX_ENV=dev mix compile
       shell: bash
 
     - name: Check code format
@@ -47,11 +46,5 @@ runs:
       shell: bash
 
     - name: Check OTP release
-      run: |
-        mix release --overwrite
-
-        DB_URL="postgresql://postgres:postgres@localhost/nue_test" _build/prod/rel/nue/bin/migrate_all.sh
-
-        _build/prod/rel/nue/bin/nue eval "{:ok, _} = Application.ensure_all_started(:nue)"
-        _build/prod/rel/nue/bin/migrate_all.sh
+      run: mix release --overwrite
       shell: bash

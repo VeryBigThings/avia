@@ -37,3 +37,8 @@ banmed-*.tar
 
 # Kubernetes secrets
 config/k8s/overlays/*/secrets.env
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

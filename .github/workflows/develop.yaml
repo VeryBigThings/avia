@@ -3,7 +3,7 @@ name: "Test, build & deploy - develop env"
 on:
   push:
     branches:
-      - develop
+      - *
 
 jobs:
   test:
@@ -59,9 +59,6 @@ jobs:
       - name: Deploy
         uses: ./.github/workflows/actions/deploy
         with:
-          cluster-name: VbtCluster
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          keybase-paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
-          keybase-username: ${{ secrets.KEYBASE_USERNAME }}
           release-level: develop
           ssh-private-key: ${{ secrets.VBT_DEPLOY_SSH_PRIVATE_KEY }}
