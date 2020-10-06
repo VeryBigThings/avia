@@ -4,6 +4,90 @@ inputs:
   ssh-private-key:
     description: "SSH private key used to fetch private deps"
     required: true
+  AVIA_DOCS:
+    description: "Required by the test suite"
+    required: true
+  ADMIN_PORT:
+    description: "Required by the test suite"
+    required: true
+  API_PORT:
+    description: "Required by the test suite"
+    required: true
+  AWS_ACCESS_KEY_ID:
+    description: "Required by the test suite"
+    required: true
+  AWS_REGION:
+    description: "Required by the test suite"
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    description: "Required by the test suite"
+    required: true
+  BACKEND_URL:
+    description: "Required by the test suite"
+    required: true
+  BUCKET_NAME:
+    description: "Required by the test suite"
+    required: true
+  DB_URL:
+    description: "Required by the test suite"
+    required: true
+  ELASTIC_HOST:
+    description: "Required by the test suite"
+    required: true
+  ETSY_CONSUMER_KEY:
+    description: "Required by the test suite"
+    required: true
+  ETSY_CONSUMER_SECRET:
+    description: "Required by the test suite"
+    required: true
+  FRONTEND_CHECKOUT_URL:
+    description: "Required by the test suite"
+    required: true
+  FRONTEND_URL:
+    description: "Required by the test suite"
+    required: true
+  HOST:
+    description: "Required by the test suite"
+    required: true
+  HOSTED_PAYMENT_URL:
+    description: "Required by the test suite"
+    required: true
+  PASSWORD_RESET_SALT:
+    description: "Required by the test suite"
+    required: true
+  POOL_SIZE:
+    description: "Required by the test suite"
+    required: true
+  SENDGRID_API_KEY:
+    description: "Required by the test suite"
+    required: true
+  SENDGRID_SENDER_EMAIL:
+    description: "Required by the test suite"
+    required: true
+  SESSION_COOKIE_NAME:
+    description: "Required by the test suite"
+    required: true
+  SESSION_COOKIE_SIGNING_SALT:
+    description: "Required by the test suite"
+    required: true
+  SESSION_COOKIE_ENCRYPTION_SALT:
+    description: "Required by the test suite"
+    required: true
+  SUPPORT_URL:
+    description: "Required by the test suite"
+    required: true
+  SECRET_KEY_BASE:
+    description: "Required by the test suite"
+    required: true
+  TEST_DB_URL:
+    description: "Required by the test suite"
+    required: true
+  TOKEN_MAXIMUM_AGE:
+    description: "Required by the test suite"
+    required: true
+  WKHTML_PATH:
+    description: "Required by the test suite"
+    required: true
 
 runs:
   using: "composite"

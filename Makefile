@@ -11,13 +11,13 @@
 		demo-db \
 		reseed-db \
 
-		kube-build \
-		kube-deploy \
-		kube-shell \
-		kube-logs \
-		kube-migration-logs \
-		kube-psql \
-		kube-new-shell \
+		ops-init \
+		ops-deploy \
+		ops-ssh \
+		ops-logs \
+		ops-envs \
+		ops-open-url \
+		ops-open-console \
 
 		devstack \
 		devstack-build \
@@ -78,9 +78,39 @@ demo-db: reset-db
 
 reseed-db: reset-db
 
-# ----------------------------
-# ---AWS Elastic Beanstalk ---
-# ----------------------------
+# -----------------------------
+# --- AWS Elastic Beanstalk ---
+# -----------------------------
+
+ops-init: require-ENV
+	eb init nue-${ENV} && \
+		eb codesource local && \
+		eb use nue-${ENV}-env && \
+		eb ssh --setup
+
+ops-deploy: require-ENV
+	eb deploy nue-${ENV}-env
+
+ops-logs: require-ENV
+	eb logs nue-${ENV}-env
+
+ops-ssh: require-ENV
+	eb ssh -n 1 nue-${ENV}-env
+
+ops-psql: require-ENV
+	eb ssh --command "psql $DB_URL" nue-${ENV}-env
+
+ops-health: require-ENV
+	eb health nue-${ENV}-env
+
+ops-envs: require-ENV
+	eb printenv nue-${ENV}-env
+
+ops-open-url: require-ENV
+	eb open nue-${ENV}-env
+
+ops-open-console: require-ENV
+	eb console nue-${ENV}-env
 
 
 # -----------------------
