@@ -3,7 +3,8 @@ name: "Test, build & deploy - develop env"
 on:
   push:
     branches:
-      - *
+      - develop
+      - adapt-to-beanstalk
 
 jobs:
   test:
