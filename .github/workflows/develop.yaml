@@ -55,6 +55,34 @@ jobs:
         uses: ./.github/workflows/actions/test
         with:
           ssh-private-key: ${{ secrets.VBT_DEPLOY_SSH_PRIVATE_KEY }}
+          AVIA_DOCS:  ${{ secrets.AVIA_DOCS }}
+          ADMIN_PORT:  ${{ secrets.ADMIN_PORT }}
+          API_PORT:  ${{ secrets.API_PORT }}
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION:  ${{ secrets.AWS_REGION }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          BACKEND_URL:  ${{ secrets.BACKEND_URL }}
+          BUCKET_NAME:  ${{ secrets.BUCKET_NAME }}
+          DB_URL:  ${{ secrets.DB_URL }}
+          ELASTIC_HOST:  ${{ secrets.ELASTIC_HOST }}
+          ETSY_CONSUMER_KEY:  ${{ secrets.ETSY_CONSUMER_KEY }}
+          ETSY_CONSUMER_SECRET:  ${{ secrets.ETSY_CONSUMER_SECRET }}
+          FRONTEND_CHECKOUT_URL:  ${{ secrets.FRONTEND_CHECKOUT_URL }}
+          FRONTEND_URL:  ${{ secrets.FRONTEND_URL }}
+          HOST:  ${{ secrets.HOST }}
+          HOSTED_PAYMENT_URL:  ${{ secrets.HOSTED_PAYMENT_URL }}
+          PASSWORD_RESET_SALT:  ${{ secrets.PASSWORD_RESET_SALT }}
+          POOL_SIZE:  ${{ secrets.POOL_SIZE }}
+          SENDGRID_API_KEY:  ${{ secrets.SENDGRID_API_KEY }}
+          SENDGRID_SENDER_EMAIL:  ${{ secrets.SENDGRID_SENDER_EMAIL }}
+          SESSION_COOKIE_NAME:  ${{ secrets.SESSION_COOKIE_NAME }}
+          SESSION_COOKIE_SIGNING_SALT:  ${{ secrets.SESSION_COOKIE_SIGNING_SALT }}
+          SESSION_COOKIE_ENCRYPTION_SALT:  ${{ secrets.SESSION_COOKIE_ENCRYPTION_SALT }}
+          SUPPORT_URL:  ${{ secrets.SUPPORT_URL }}
+          SECRET_KEY_BASE:  ${{ secrets.SECRET_KEY_BASE }}
+          TEST_DB_URL:  ${{ secrets.TEST_DB_URL }}
+          TOKEN_MAXIMUM_AGE:  ${{ secrets.TOKEN_MAXIMUM_AGE }}
+          WKHTML_PATH:  ${{ secrets.WKHTML_PATH }}
 
   build:
     needs: test
