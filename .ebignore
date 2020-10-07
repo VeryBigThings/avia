@@ -1,3 +1,2 @@
-/deps
-/_build
+Dockerfile
 docker-compose.yml

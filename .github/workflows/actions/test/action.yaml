@@ -4,91 +4,35 @@ inputs:
   ssh-private-key:
     description: "SSH private key used to fetch private deps"
     required: true
-  AVIA_DOCS:
-    description: "Required by the test suite"
-    required: true
-  ADMIN_PORT:
-    description: "Required by the test suite"
-    required: true
-  API_PORT:
-    description: "Required by the test suite"
-    required: true
-  AWS_ACCESS_KEY_ID:
-    description: "Required by the test suite"
-    required: true
-  AWS_REGION:
-    description: "Required by the test suite"
-    required: true
-  AWS_SECRET_ACCESS_KEY:
-    description: "Required by the test suite"
-    required: true
-  BACKEND_URL:
-    description: "Required by the test suite"
-    required: true
-  BUCKET_NAME:
-    description: "Required by the test suite"
-    required: true
-  DB_URL:
-    description: "Required by the test suite"
-    required: true
-  ELASTIC_HOST:
-    description: "Required by the test suite"
-    required: true
-  ETSY_CONSUMER_KEY:
-    description: "Required by the test suite"
-    required: true
-  ETSY_CONSUMER_SECRET:
-    description: "Required by the test suite"
-    required: true
-  FRONTEND_CHECKOUT_URL:
-    description: "Required by the test suite"
-    required: true
-  FRONTEND_URL:
-    description: "Required by the test suite"
-    required: true
-  HOST:
-    description: "Required by the test suite"
-    required: true
-  HOSTED_PAYMENT_URL:
-    description: "Required by the test suite"
-    required: true
-  PASSWORD_RESET_SALT:
-    description: "Required by the test suite"
-    required: true
-  POOL_SIZE:
-    description: "Required by the test suite"
-    required: true
-  SENDGRID_API_KEY:
-    description: "Required by the test suite"
-    required: true
-  SENDGRID_SENDER_EMAIL:
-    description: "Required by the test suite"
-    required: true
-  SESSION_COOKIE_NAME:
-    description: "Required by the test suite"
-    required: true
-  SESSION_COOKIE_SIGNING_SALT:
-    description: "Required by the test suite"
-    required: true
-  SESSION_COOKIE_ENCRYPTION_SALT:
-    description: "Required by the test suite"
-    required: true
-  SUPPORT_URL:
-    description: "Required by the test suite"
-    required: true
-  SECRET_KEY_BASE:
-    description: "Required by the test suite"
-    required: true
-  TEST_DB_URL:
-    description: "Required by the test suite"
-    required: true
-  TOKEN_MAXIMUM_AGE:
-    description: "Required by the test suite"
-    required: true
-  WKHTML_PATH:
-    description: "Required by the test suite"
-    required: true
-
+env:
+  AVIA_DOCS: https://www.aviacommerce.org/docs/getting-started.html
+  ADMIN_PORT: 4000
+  API_PORT: 3000
+  AWS_ACCESS_KEY_ID: api_key
+  AWS_REGION: aws_region
+  AWS_SECRET_ACCESS_KEY: secret_api_key
+  BACKEND_URL: http://localhost:4000
+  BUCKET_NAME: bucket_name
+  DB_URL: postgres://postgres:postgres:@db/snitch_dev
+  ELASTIC_HOST: http://elasticsearch:9200/
+  ETSY_CONSUMER_KEY: api_key
+  ETSY_CONSUMER_SECRET: api_key
+  FRONTEND_CHECKOUT_URL: http://localhost:4200/checkout/
+  FRONTEND_URL: http://localhost:4200
+  HOST: localhost
+  HOSTED_PAYMENT_URL: http://localhost:3000/api/v1/hosted-payment/
+  PASSWORD_RESET_SALT: password_reset_salt
+  POOL_SIZE: 10
+  SENDGRID_API_KEY: api_key
+  SENDGRID_SENDER_EMAIL: noreplay@nue.com
+  SESSION_COOKIE_NAME: nue_session
+  SESSION_COOKIE_SIGNING_SALT: session_cookie_salt
+  SESSION_COOKIE_ENCRYPTION_SALT: session_cookie_encryption
+  SUPPORT_URL: https://admin.aviacommerce.org
+  SECRET_KEY_BASE: oZiDNlntvnC+q7EAIKVUV/AYTJ30UQZh/eUwcFK5h7As0Rhc6Zuf//0fvx9pMZUY
+  TEST_DB_URL: postgres://postgres:postgres:@db/snitch_test
+  TOKEN_MAXIMUM_AGE: 36000
+  WKHTML_PATH: /usr/local/bin/wkhtmltopdf
 runs:
   using: "composite"
   steps:

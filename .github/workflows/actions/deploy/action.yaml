@@ -3,16 +3,7 @@ description: "Deploy app"
 inputs:
   app-name:
     description: "App name. Has to match app name in mix.exs"
-    default: "banmed"
-  aws-access-key-id:
-    description: "Aws access key id"
-    required: true
-  aws-region:
-    description: "Aws region"
-    default: "us-east-1"
-  aws-secret-access-key:
-    description: "Aws secret access key"
-    required: true
+    default: "nue"
   docker-registry:
     description: "Docker image name"
     default: "docker.pkg.github.com"
@@ -24,10 +15,7 @@ inputs:
     required: true
   package-path:
     description: "Path to published package. Same as repo name"
-    default: "verybigthings/banmed_wfm_backend"
-  release-level:
-    description: "Application release level"
-    required: true
+    default: "verybigthings/nue"
   ssh-private-key:
     description: "SSH private key used to fetch private deps"
     required: true
@@ -36,17 +24,9 @@ runs:
   using: "composite"
   steps:
     # Set env vars
-    - run: echo ::set-env name=AWS_ACCESS_KEY_ID::${{ inputs.aws-access-key-id }}
-      shell: bash
-    - run: echo ::set-env name=AWS_SECRET_ACCESS_KEY::${{ inputs.aws-secret-access-key }}
-      shell: bash
-    - run: echo ::set-env name=AWS_REGION::${{ inputs.aws-region }}
-      shell: bash
     - run: echo ::set-env name=SSH_AUTH_SOCK::/tmp/ssh_agent.sock
       shell: bash
     - run: echo ::set-env name=DOCKER_IMAGE::${{ inputs.docker-registry }}/${{ inputs.package-path }}/${{ inputs.app-name }}:${{ inputs.release-level }}-${GITHUB_SHA::7}
-      shell: bash
-    - run: echo ::set-env name=DEPLOYMENT_NAME::nue-${{ inputs.release-level }}-backend
       shell: bash
 
     - name: Setup SSH Keys and known_hosts
