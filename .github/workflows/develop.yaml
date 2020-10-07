@@ -51,7 +51,7 @@ jobs:
       SESSION_COOKIE_ENCRYPTION_SALT: session_cookie_encryption
       SUPPORT_URL: https://admin.aviacommerce.org
       SECRET_KEY_BASE: oZiDNlntvnC+q7EAIKVUV/AYTJ30UQZh/eUwcFK5h7As0Rhc6Zuf//0fvx9pMZUY
-      TEST_DB_URL: postgres://postgres:@localhost/snitch_test
+      TEST_DB_URL: postgres://postgres:postgres@localhost/snitch_test
       TOKEN_MAXIMUM_AGE: 36000
       WKHTML_PATH: /usr/local/bin/wkhtmltopdf
     steps:
