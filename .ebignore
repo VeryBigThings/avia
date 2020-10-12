@@ -1,6 +1,4 @@
 _build/
-apps/
-config/
 deps/
 rel/
 .cache/
@@ -14,13 +12,9 @@ rel/
 .env.development
 .formatter.exs
 .gitignore
-.iex.exs
 .tool-versions
 docker-compose.yml
-Dockerfile
 entrypoint.sh
 LICENSE
 Makefile
-mix.exs
-mix.lock
 README.md

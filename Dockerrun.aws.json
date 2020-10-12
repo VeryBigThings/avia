@@ -1,9 +1,5 @@
 {
     "AWSEBDockerrunVersion": "1",
-    "Image": {
-        "Name": "pozhega/nue:latest",
-        "Update": "true"
-    },
     "Ports": [
       {
         "ContainerPort": "4000"

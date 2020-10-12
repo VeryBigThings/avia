@@ -117,8 +117,9 @@ ops-open-console: require-ENV
 
 ## Builds the development Docker image
 devstack-build:
-	@docker build --ssh default .\
-		--target build \
+	@docker build \
+	    --file Dockerfile-dev \
+	    --ssh default .\
 		--build-arg MIX_ENV=dev \
 		--build-arg APP_NAME=nue \
 		--tag nue:latest
@@ -144,8 +145,8 @@ devstack-run: devstack-build
 
 ## Builds the production Docker image
 prodstack-build:
-	@docker build --ssh default .\
-		--target release \
+	@docker build \
+	    --ssh default .\
 		--build-arg MIX_ENV=prod \
 		--build-arg APP_NAME=nue \
 		--tag nue:release

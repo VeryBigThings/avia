@@ -1,7 +1,9 @@
 version: "3"
 services:
   web:
-    image: "nue:latest"
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
     ports:
       - "4000:4000"
       - "3000:3000"
