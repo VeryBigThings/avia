@@ -36,10 +36,6 @@ runs:
       run: make test
       shell: bash
 
-    - name: Check migrations reversibility
-      run: MIX_ENV=test mix ecto.rollback.all
-      shell: bash
-
     - name: Check OTP release
       run: MIX_ENV=prod mix release --overwrite
       shell: bash
