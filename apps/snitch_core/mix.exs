@@ -163,9 +163,10 @@ defmodule Snitch.Core.Mixfile do
   defp aliases do
     [
       "ecto.load.demo": "run priv/repo/demo/demo.exs",
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seed/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.rebuild": ["ecto.drop", "ecto.create --quiet", "ecto.migrate"],
+      "ecto.seed": ["run priv/repo/seed/seeds.exs"],
       "ecto.load.demo": ["run priv/repo/demo/demo.exs"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
       "test.multi": [

@@ -9,7 +9,6 @@
 		reset-db \
 		seed-db \
 		demo-db \
-		reseed-db \
 
 		ops-init \
 		ops-deploy \
@@ -74,10 +73,9 @@ reset-db:
 	mix cmd --app snitch_core mix ecto.reset
 
 demo-db: reset-db
-	mix cmd --app snitch_core mix elasticsearch.build products --cluster Snitch.Tools.ElasticsearchCluster && \
-	mix cmd --app snitch_core mix ecto.load.demo
-
-reseed-db: reset-db
+    mix cmd --app snitch_core mix ecto.seed && \
+		mix cmd --app snitch_core mix elasticsearch.build products --cluster Snitch.Tools.ElasticsearchCluster && \
+		mix cmd --app snitch_core mix ecto.load.demo
 
 # -----------------------------
 # --- AWS Elastic Beanstalk ---
