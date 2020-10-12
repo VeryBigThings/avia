@@ -146,10 +146,11 @@ devstack-run: devstack-build
 ## Builds the production Docker image
 prodstack-build:
 	@docker build \
-	    --ssh default .\
+	    --ssh default \
 		--build-arg MIX_ENV=prod \
 		--build-arg APP_NAME=nue \
-		--tag nue:release
+		--tag nue:release \
+		--no-cache .
 
 # ------------
 # --- HELP ---

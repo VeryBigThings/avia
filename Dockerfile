@@ -2,21 +2,19 @@
 
 FROM verybigthings/elixir:1.10.4
 
-ARG APP_NAME=nue
-ARG APP_USER=user
-ARG WORKDIR=/opt/app
+ENV APP_NAME nue
+ENV APP_USER user
+ENV MIX_ENV prod
+ENV PHOENIX_VERSION 1.5.4
+ENV WORKDIR /opt/app
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 
-ENV APP_NAME=$APP_NAME
-ENV APP_USER=$APP_USER
 ENV CACHE_DIR=/opt/cache
 ENV BUILD_PATH=$CACHE_DIR/_build
 ENV HEX_HOME=$CACHE_DIR/hex
 ENV MIX_HOME=$CACHE_DIR/mix
 ENV REBAR_CACHE_DIR=$CACHE_DIR/rebar
-ENV WORKDIR=$WORKDIR
-ENV PHOENIX_VERSION 1.5.4
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
 
 RUN apt-get update && apt-get install -y \
   gcc \
@@ -42,7 +40,7 @@ WORKDIR $WORKDIR
 COPY . .
 
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com > ~/.ssh/known_hosts
-RUN --mount=type=ssh MIX_ENV=prod mix do deps.get, deps.compile, compile
+RUN --mount=type=ssh mix do deps.get, deps.compile, compile
 
 RUN cd apps/admin_app/assets && \
   yarn install && \
@@ -50,7 +48,7 @@ RUN cd apps/admin_app/assets && \
   cd - && \
   mix phx.digest
 
-RUN MIX_ENV=prod mix do release
+RUN mix do release
 
 RUN rm -r *
 COPY ${BUILD_PATH}/prod/rel/${APP_NAME} .

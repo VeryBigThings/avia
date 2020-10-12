@@ -32,10 +32,6 @@ runs:
       run: mix format --check-formatted
       shell: bash
 
-    - name: "Reset database"
-      run: MIX_ENV=test mix cmd --app snitch_core mix ecto.reset
-      shell: bash
-
     - name: Run tests
       run: make test
       shell: bash
@@ -45,5 +41,5 @@ runs:
       shell: bash
 
     - name: Check OTP release
-      run: mix release --overwrite
+      run: MIX_ENV=prod mix release --overwrite
       shell: bash
