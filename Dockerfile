@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:experimental
-
 FROM verybigthings/elixir:1.10.4
 
 ENV APP_NAME nue
@@ -15,6 +13,7 @@ ENV BUILD_PATH=$CACHE_DIR/_build
 ENV HEX_HOME=$CACHE_DIR/hex
 ENV MIX_HOME=$CACHE_DIR/mix
 ENV REBAR_CACHE_DIR=$CACHE_DIR/rebar
+
 
 RUN apt-get update && apt-get install -y \
   gcc \
@@ -39,8 +38,7 @@ WORKDIR $WORKDIR
 
 COPY . .
 
-RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com > ~/.ssh/known_hosts
-RUN --mount=type=ssh mix do deps.get, deps.compile, compile
+RUN mix do deps.get, deps.compile, compile
 
 RUN cd apps/admin_app/assets && \
   yarn install && \
