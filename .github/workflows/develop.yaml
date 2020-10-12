@@ -35,7 +35,7 @@ jobs:
       BACKEND_URL: http://localhost:4000
       BUCKET_NAME: bucket_name
       DB_URL: postgres://postgres:postgres:@db/snitch_dev
-      ELASTIC_HOST: http://elasticsearch:9200/
+      ELASTIC_HOST: http://localhost:9200/
       ETSY_CONSUMER_KEY: api_key
       ETSY_CONSUMER_SECRET: api_key
       FRONTEND_CHECKOUT_URL: frontend_checkout_url
