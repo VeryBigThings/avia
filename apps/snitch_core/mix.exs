@@ -118,7 +118,8 @@ defmodule Snitch.Core.Mixfile do
       {:elasticsearch, "~> 1.0"},
 
       # Caching
-      {:cachex, "~> 3.3"}
+      {:cachex, "~> 3.3"},
+      {:provider, github: "VeryBigThings/provider"}
     ]
   end
 

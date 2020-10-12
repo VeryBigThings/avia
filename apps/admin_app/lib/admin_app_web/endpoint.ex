@@ -67,6 +67,28 @@ defmodule AdminAppWeb.Endpoint do
   """
   def init(_key, config) do
     if config[:load_from_system_env] do
+      config =
+        config
+        |> Keyword.put(:docs_url, System.fetch_env!("AVIA_DOCS"))
+        |> Keyword.put(:password_reset_salt, System.fetch_env!("PASSWORD_RESET_SALT"))
+        |> Keyword.put(:secret_key_base, System.fetch_env!("SECRET_KEY_BASE"))
+        |> Keyword.put(:sendgrid_sender_mail, System.fetch_env!("SENDGRID_SENDER_EMAIL"))
+        |> Keyword.put(
+          :session_cookie_encryption_salt,
+          System.fetch_env!("SESSION_COOKIE_ENCRYPTION_SALT")
+        )
+        |> Keyword.put(:session_cookie_name, System.fetch_env!("SESSION_COOKIE_NAME"))
+        |> Keyword.put(
+          :session_cookie_signing_salt,
+          System.fetch_env!("SESSION_COOKIE_SIGNING_SALT")
+        )
+        |> Keyword.put(:support_url, System.fetch_env!("SUPPORT_URL"))
+        |> Keyword.put(:token_maximum_age, System.fetch_env!("TOKEN_MAXIMUM_AGE"))
+        |> Keyword.put(:url,
+          host: System.fetch_env!("HOST"),
+          port: System.fetch_env!("ADMIN_PORT")
+        )
+
       port =
         System.get_env("ADMIN_PORT") ||
           raise "expected the ADMIN_PORT environment variable to be set"

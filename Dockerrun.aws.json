@@ -1,17 +1,12 @@
 {
     "AWSEBDockerrunVersion": "1",
-    "Authentication": {
-        "Bucket": "DOC-EXAMPLE-BUCKET",
-        "Key": "mydockercfg"
-      },
     "Image": {
-        "Name": "pozhega/nue:release",
+        "Name": "pozhega/nue:latest",
         "Update": "true"
     },
     "Ports": [
       {
-        "ContainerPort": "4000",
-        "HostPort": "80"
+        "ContainerPort": "4000"
       },
       {
         "ContainerPort": "3000",

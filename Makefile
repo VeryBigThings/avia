@@ -23,7 +23,8 @@
 		devstack-build \
 		devstack-clean \
 		devstack-shell \
-		devstack-run
+		devstack-run \
+		prodstack-build \
 
 DEFAULT_GOAL: help
 
@@ -95,10 +96,7 @@ ops-logs: require-ENV
 	eb logs nue-${ENV}-env
 
 ops-ssh: require-ENV
-	eb ssh -n 1 nue-${ENV}-env
-
-ops-psql: require-ENV
-	eb ssh --command "psql $DB_URL" nue-${ENV}-env
+	eb ssh -n 1 --command "sudo docker exec -it $(sudo docker ps -q -f ancestor=aws_beanstalk/current-app) /bin/bash" nue-${ENV}-env
 
 ops-health: require-ENV
 	eb health nue-${ENV}-env
@@ -143,6 +141,14 @@ devstack-run: devstack-build
 		docker-compose exec web mix deps.get && \
 		docker-compose exec web mix ecto.setup && \
 		docker-compose exec web iex -S mix phx.server
+
+## Builds the production Docker image
+prodstack-build:
+	@docker build --ssh default .\
+		--target release \
+		--build-arg MIX_ENV=prod \
+		--build-arg APP_NAME=nue \
+		--tag nue:release
 
 # ------------
 # --- HELP ---

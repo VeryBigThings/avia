@@ -15,7 +15,6 @@ import Config
 # which you typically run after static files are built.
 config :admin_app, AdminAppWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: {:system, "HOST"}, port: {:system, "ADMIN_PORT"}],
   server: true,
   cache_static_manifest: "priv/static/cache_manifest.json",
   version: Application.spec(:admin_app, :vsn),

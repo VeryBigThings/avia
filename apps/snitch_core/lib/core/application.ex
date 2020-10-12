@@ -9,6 +9,8 @@ defmodule Snitch.Application do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    config_elasticsearch()
+
     {:ok, pid} =
       Supervisor.start_link(
         [
@@ -23,5 +25,11 @@ defmodule Snitch.Application do
       )
 
     {:ok, pid}
+  end
+
+  defp config_elasticsearch do
+    old_config = Application.get_env(:snitch_core, Snitch.Tools.ElasticsearchCluster)
+    new_config = Keyword.put(old_config, :url, System.fetch_env!("ELASTIC_HOST"))
+    Application.put_env(:snitch_core, Snitch.Tools.ElasticsearchCluster, new_config)
   end
 end

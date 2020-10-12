@@ -64,6 +64,18 @@ defmodule SnitchApiWeb.Endpoint do
   """
   def init(_key, config) do
     if config[:load_from_system_env] do
+      config
+      |> Keyword.put(:secret_key_base, System.fetch_env!("SECRET_KEY_BASE"))
+      |> Keyword.put(:session_cookie_name, System.fetch_env!("SESSION_COOKIE_NAME"))
+      |> Keyword.put(
+        :session_cookie_signing_salt,
+        System.fetch_env!("SESSION_COOKIE_SIGNING_SALT")
+      )
+      |> Keyword.put(
+        :session_cookie_encryption_salt,
+        System.fetch_env!("SESSION_COOKIE_ENCRYPTION_SALT")
+      )
+
       port =
         System.get_env("API_PORT") || raise "expected the PORT environment variable to be set"
 

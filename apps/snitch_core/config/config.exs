@@ -34,7 +34,7 @@ config :triplex,
   migrations_path: "migrations"
 
 config :snitch_core, Snitch.Tools.ElasticsearchCluster,
-  url: System.get_env("ELASTIC_HOST"),
+  url: nil,
   api: Elasticsearch.API.HTTP,
   json_library: Poison,
   indexes: %{
