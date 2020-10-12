@@ -104,6 +104,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: nue-dev
           environment_name: nue-dev-env
-          version_label: ${GITHUB_SHA::7}
+          version_label: ${{ github.sha }}
           region: us-east-1
           deployment_package: deploy.zip
