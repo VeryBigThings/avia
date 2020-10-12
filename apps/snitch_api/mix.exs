@@ -58,8 +58,7 @@ defmodule SnitchApi.Mixfile do
       # html parser
       {:floki, "~> 0.28"},
       {:jason, "~> 1.1"},
-      {:sentry, "~> 7.2"},
-      {:vbt, git: "git@github.com:VeryBigThings/elixir_common_private"}
+      {:sentry, "~> 7.2"}
     ]
   end
 end
