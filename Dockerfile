@@ -38,7 +38,7 @@ WORKDIR $WORKDIR
 
 COPY . .
 
-RUN mix do deps.get, deps.compile, compile
+RUN MIX_ENV=prod mix do deps.get, deps.compile, compile
 
 RUN cd apps/admin_app/assets && \
   yarn install && \
@@ -46,7 +46,7 @@ RUN cd apps/admin_app/assets && \
   cd - && \
   mix phx.digest
 
-RUN mix do release
+RUN MIX_ENV=prod mix do release
 
 RUN rm -r *
 COPY ${BUILD_PATH}/prod/rel/${APP_NAME} .
