@@ -16,6 +16,13 @@ defmodule Snitch.Data.Model.User do
     QH.update(UserSchema, query_fields, instance, Repo)
   end
 
+  @spec update_info(UserSchema.t(), map()) :: {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
+  def update_info(user, params) do
+    user
+    |> UserSchema.update_info_changeset(params)
+    |> Repo.update()
+  end
+
   @spec delete(non_neg_integer) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def delete(id) do
     with {:ok, %UserSchema{} = user} <- get(id),

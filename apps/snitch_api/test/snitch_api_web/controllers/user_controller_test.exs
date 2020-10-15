@@ -81,6 +81,22 @@ defmodule SnitchApiWeb.UserControllerTest do
       {:ok, conn: conn, user: registered_user}
     end
 
+    test "updates user account information", %{conn: conn, user: user} do
+      params = %{first_name: "Changed", last_name: "Names"}
+
+      resp = update_user_request(conn, user, params)
+
+      assert %{"first_name" => "Changed", "last_name" => "Names"} = resp["attributes"]
+    end
+
+    test "tries to update email", %{conn: conn, user: user} do
+      params = %{email: "change@email.test"}
+
+      resp = update_user_request(conn, user, params)
+
+      assert resp["attributes"]["email"] != params.email
+    end
+
     test "fetching logged in user", %{conn: conn, user: user} do
       conn = get(conn, user_path(conn, :current_user))
 
@@ -97,4 +113,7 @@ defmodule SnitchApiWeb.UserControllerTest do
       assert json_response(conn, 200)["data"]
     end
   end
+
+  defp update_user_request(conn, user, params),
+    do: json_response(patch(conn, user_path(conn, :update, user.id), params), 200)["data"]
 end

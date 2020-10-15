@@ -4,7 +4,6 @@ defmodule SnitchApiWeb.UserController do
   alias Snitch.Data.Schema.User
   alias SnitchApi.Accounts
   alias SnitchApi.Guardian
-  alias Snitch.Core.Tools.MultiTenancy.Repo
   alias Snitch.Data.Model.User, as: UserModel
 
   plug(SnitchApiWeb.Plug.DataToAttributes)
@@ -28,7 +27,7 @@ defmodule SnitchApiWeb.UserController do
 
   def update(conn, %{"id" => id} = params) do
     with {:ok, user} <- Accounts.get_user(id),
-         {:ok, user} <- Accounts.update_user(user, params) do
+         {:ok, user} <- Accounts.update_info(user, params) do
       render(conn, "show.json-api", data: user)
     end
   end

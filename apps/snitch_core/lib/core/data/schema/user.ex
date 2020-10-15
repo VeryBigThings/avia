@@ -76,6 +76,14 @@ defmodule Snitch.Data.Schema.User do
     |> common_changeset()
   end
 
+  @spec update_info_changeset(t, map) :: Ecto.Changeset.t()
+  def update_info_changeset(user, params) do
+    user
+    |> cast(params, [:first_name, :last_name])
+    |> validate_length(:first_name, min: 1)
+    |> validate_length(:last_name, min: 1)
+  end
+
   @doc """
   Returns a `User` changeset to create to update `user`.
   """
@@ -83,7 +91,7 @@ defmodule Snitch.Data.Schema.User do
   def update_changeset(user, params) do
     user
     |> cast(params, @update_fields)
-    |> validate_required([:first_name, :last_name])
+    |> validate_required([:first_name, :last_name, :email])
     |> common_changeset()
   end
 
