@@ -26,6 +26,13 @@ defmodule SnitchApiWeb.UserController do
     end
   end
 
+  def update(conn, %{"id" => id} = params) do
+    with {:ok, user} <- Accounts.get_user(id),
+         {:ok, user} <- Accounts.update_user(user, params) do
+      render(conn, "show.json-api", data: user)
+    end
+  end
+
   def login(conn, %{"email" => email, "password" => password}) do
     case Accounts.token_sign_in(email, password) do
       {:ok, token, _claims} ->
