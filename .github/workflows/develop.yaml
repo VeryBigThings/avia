@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - develop
-      - adapt-to-beanstalk
+      - beanstalk
 
 jobs:
   build:
@@ -13,20 +13,27 @@ jobs:
 
     steps:
 
-      - name: Checkout source code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+
+      - name: Deploy
+        uses: ./.github/workflows/actions/deploy
+        with:
+          ssh-private-key: ${{ secrets.VBT_DEPLOY_SSH_PRIVATE_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-level: develop
 
       - name: Generate deployment package
-        run: zip -r deploy.zip . -x "docker-compose.yml"
+        run: zip -r deploy.zip . -x "docker-compose.yml" -x "Dockerfile" -x "Dockerfile-dev"
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v13
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: nue-dev
-          environment_name: nue-dev-env
+          aws_access_key: 'AKIAUV7N7ZAHKMMHPI5A'
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY2 }}
+          application_name: nue-develop
+          environment_name: NueDevelop-env
           version_description: ${{ github.sha }}
           version_label: ${{ github.sha }}
           region: us-east-1
           deployment_package: deploy.zip
+          use_existing_version_if_available: true

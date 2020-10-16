@@ -1,12 +1,16 @@
 {
-    "AWSEBDockerrunVersion": "1",
-    "Ports": [
-      {
-        "ContainerPort": "4000"
-      },
-      {
-        "ContainerPort": "3000",
-        "HostPort": "3000"
-      }
-    ]
+  "AWSEBDockerrunVersion": "1",
+  "Authentication": {
+    "bucket": "docker-nue-creds",
+    "key": "config.json"
+  },
+  "Image": {
+    "Name": "docker.pkg.github.com/verybigthings/nue/nue:{TAG}",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "4000"
+    }
+  ]
 }

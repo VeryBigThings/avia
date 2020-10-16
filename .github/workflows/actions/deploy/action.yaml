@@ -1,0 +1,66 @@
+name: 'Deploy'
+description: 'Deploy app'
+inputs:
+  app-name:
+    description: 'App name. Has to match app name in mix.exs'
+    default: 'nue'
+  github-username:
+    description: 'Github user for login to docker registry'
+    default: 'deploy-vbt'
+  github-token:
+    description: 'Github token for login to docker registry'
+    required: true
+  docker-registry:
+    description: 'Docker image name'
+    default: 'docker.pkg.github.com'
+  package-path:
+    description: 'Path to published package. Same as repo name'
+    default: 'verybigthings/nue'
+  ssh-private-key:
+    description: 'SSH private key used to fetch private deps'
+    required: true
+  release-level:
+    description: 'Application release level'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+     # Set env vars
+    - run: echo ::set-env name=SSH_AUTH_SOCK::/tmp/ssh_agent.sock
+      shell: bash
+    - run: echo ::set-env name=DOCKER_IMAGE::${{ inputs.docker-registry }}/${{ inputs.package-path }}/${{ inputs.app-name }}:${{ inputs.release-level }}-${{ github.sha }}
+      shell: bash
+
+    - name: Setup SSH Keys and known_hosts
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        ssh-add - <<< "${{ inputs.ssh-private-key }}"
+      shell: bash
+
+    - name: Login to Github docker registry
+      run: echo ${{ inputs.github-token }} | docker login ${{ inputs.docker-registry }} -u ${{ inputs.github-username }} --password-stdin
+      shell: bash
+
+    - name: Build docker image
+      run: |
+        docker build . \
+        --tag ${DOCKER_IMAGE} \
+        --target release \
+        --build-arg MIX_ENV=prod \
+        --build-arg APP_NAME=${{ inputs.app-name }} \
+        --build-arg RELEASE_LEVEL=${{ inputs.release-level }} \
+        --ssh default
+      shell: bash
+      env:
+        DOCKER_BUILDKIT: 1
+
+    - name: Push image to Docker registry
+      run: docker push ${DOCKER_IMAGE}
+      shell: bash
+
+    - name: Replace docker image tag in Dockerrun.aws.json
+      run: sed -i 's/{TAG}/${{ inputs.release-level }}-${{ github.sha }}/g' Dockerrun.aws.json
+      shell: bash
