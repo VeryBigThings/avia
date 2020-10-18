@@ -18,5 +18,5 @@ set =e
 echo "Running migrations"
 script_dir=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 args="$@"
-$script_dir/nue eval "Snitch.Tasks.ReleaseTasks.migrate()"
+/opt/app/bin/nue eval "Snitch.Tasks.ReleaseTasks.migrate()"
 echo "Migrations run successfully"
