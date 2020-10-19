@@ -9,12 +9,12 @@
 #### User info update updates user account information
 ##### Request
 * __Method:__ PATCH
-* __Path:__ /api/v1/users/419
+* __Path:__ /api/v1/users/1
 * __Request headers:__
 ```
 accept: application/vnd.api+json
 content-type: application/vnd.api+json
-authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4NTM4LCJpYXQiOjE2MDMxNDkzMzgsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiI1YzUwMTI5YS02NDhiLTQyYmYtOTAxOS1iYjY4ZDIzM2FlZGEiLCJuYmYiOjE2MDMxNDkzMzcsInN1YiI6IjQxOSIsInR5cCI6ImFjY2VzcyJ9.ej5CizWRWDfGt31aoocEkVy8t_FslzHhkqRXxYpitz6T4-grDPpIwBjzNrEfPlGuSVKPVSbZIzRwYcgAI6KV0g
+authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4ODQ2LCJpYXQiOjE2MDMxNDk2NDYsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiJlMjFjYjM5NC0xOWM3LTQxNGItYWJkZC01NDdkMzljMjA4MWIiLCJuYmYiOjE2MDMxNDk2NDUsInN1YiI6IjEiLCJ0eXAiOiJhY2Nlc3MifQ.J28UaLJSYH9ZLHv_X_WXZDWtK1mD75FtulcDSqTTUDTzSYQoOZ4zAMOi-EkEITG5EZY-sIZdGWg_1LCvc4w6zw
 ```
 * __Request body:__
 ```json
@@ -30,7 +30,7 @@ authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfY
 ```
 content-type: application/vnd.api+json; charset=utf-8
 cache-control: max-age=0, private, must-revalidate
-x-request-id: Fj-H1EBP6O9MC2EAAAyh
+x-request-id: Fj-IHAyCcjBcmAwAAAOi
 ```
 * __Response body:__
 ```json
@@ -41,14 +41,14 @@ x-request-id: Fj-H1EBP6O9MC2EAAAyh
   "data": {
     "type": "user",
     "links": {
-      "self": "/users/419"
+      "self": "/users/1"
     },
-    "id": "419",
+    "id": "1",
     "attributes": {
       "name": "Changed Names",
       "last_name": "Names",
       "first_name": "Changed",
-      "email": "minion-8@snitch.com"
+      "email": "minion-0@snitch.com"
     }
   }
 }
@@ -57,12 +57,12 @@ x-request-id: Fj-H1EBP6O9MC2EAAAyh
 #### User info update tries to update with empty fields
 ##### Request
 * __Method:__ PATCH
-* __Path:__ /api/v1/users/415
+* __Path:__ /api/v1/users/3
 * __Request headers:__
 ```
 accept: application/vnd.api+json
 content-type: application/vnd.api+json
-authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4NTM3LCJpYXQiOjE2MDMxNDkzMzcsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiJlYmZhNmYzMy1mYTg0LTQ0ZTItYWRkNy1kZTY0YTQ2MDJmNDgiLCJuYmYiOjE2MDMxNDkzMzYsInN1YiI6IjQxNSIsInR5cCI6ImFjY2VzcyJ9.p2lsAbw4R1Cfktq4-ZLZZUw16MnDtFoU-nLyfBLLiJbryJmD1hY2ebGF9QdioR_9p1lrwLEXZo1SSVK0rOyg9A
+authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4ODQ2LCJpYXQiOjE2MDMxNDk2NDYsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiIwYTg5MTdmMi1hODY1LTRlNGEtYjU1NC1kYjVlOTI1NzljMjEiLCJuYmYiOjE2MDMxNDk2NDUsInN1YiI6IjMiLCJ0eXAiOiJhY2Nlc3MifQ.pE6UhtRTZAcNWoShIYDLy-80lSvZqd9WCgb1QCfvvrllDkB47e13ouSsRRfzO7NEYriwgkU8QhgZ24nPrkjNDQ
 ```
 * __Request body:__
 ```json
@@ -78,7 +78,7 @@ authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfY
 ```
 content-type: application/json; charset=utf-8
 cache-control: max-age=0, private, must-revalidate
-x-request-id: Fj-H1DlIVVQ7bFQAAAvB
+x-request-id: Fj-IHBKGq1KhQM8AAAhB
 ```
 * __Response body:__
 ```json
@@ -94,12 +94,12 @@ x-request-id: Fj-H1DlIVVQ7bFQAAAvB
 #### User info update tries to update email
 ##### Request
 * __Method:__ PATCH
-* __Path:__ /api/v1/users/418
+* __Path:__ /api/v1/users/10
 * __Request headers:__
 ```
 accept: application/vnd.api+json
 content-type: application/vnd.api+json
-authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4NTM4LCJpYXQiOjE2MDMxNDkzMzgsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiI3NWVjODRjNS04NTJkLTQ4MDgtODliYS1hMTNjN2RmYWY3M2QiLCJuYmYiOjE2MDMxNDkzMzcsInN1YiI6IjQxOCIsInR5cCI6ImFjY2VzcyJ9.vlPYSBj1YKgb97sHwX_TDC8fn35MBMH9Mlkd8p3WHrWQXpqI0jMddcPsNJj0R3iG0lIB3tm6jbb_3QaQDpMSfw
+authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4ODQ2LCJpYXQiOjE2MDMxNDk2NDYsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiI3MGVmNTY2NS1kNmE4LTQyYzItYjM5NC0wMzNlMzU3NDllMTQiLCJuYmYiOjE2MDMxNDk2NDUsInN1YiI6IjEwIiwidHlwIjoiYWNjZXNzIn0.9KfgscYGE8-nA0FzX0A0yuEgQNX2x4HLbKNKldQVcujVHSWMqUDYuc35cYdwfjZXSwJSh8nRMyfEgG-mm7tO_w
 ```
 * __Request body:__
 ```json
@@ -114,7 +114,7 @@ authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfY
 ```
 content-type: application/vnd.api+json; charset=utf-8
 cache-control: max-age=0, private, must-revalidate
-x-request-id: Fj-H1D_fnC3bwzAAAAyB
+x-request-id: Fj-IHBm1hhScLSEAAAmh
 ```
 * __Response body:__
 ```json
@@ -125,14 +125,14 @@ x-request-id: Fj-H1D_fnC3bwzAAAAyB
   "data": {
     "type": "user",
     "links": {
-      "self": "/users/418"
+      "self": "/users/10"
     },
-    "id": "418",
+    "id": "10",
     "attributes": {
-      "name": "Snitch-7 Elixir-7",
-      "last_name": "Elixir-7",
-      "first_name": "Snitch-7",
-      "email": "minion-7@snitch.com"
+      "name": "Snitch-13 Elixir-13",
+      "last_name": "Elixir-13",
+      "first_name": "Snitch-13",
+      "email": "minion-13@snitch.com"
     }
   }
 }
@@ -142,12 +142,12 @@ x-request-id: Fj-H1D_fnC3bwzAAAAyB
 #### Change password when logged in changes user password
 ##### Request
 * __Method:__ PATCH
-* __Path:__ /api/v1/users/416/change_password
+* __Path:__ /api/v1/users/7/change_password
 * __Request headers:__
 ```
 accept: application/vnd.api+json
 content-type: application/vnd.api+json
-authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4NTM3LCJpYXQiOjE2MDMxNDkzMzcsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiJhOTUxMjk5MS00NWNiLTQyZGItOGVlNi1jYmUxYTVlMTk5MWMiLCJuYmYiOjE2MDMxNDkzMzYsInN1YiI6IjQxNiIsInR5cCI6ImFjY2VzcyJ9.sc6r_vvWkZHpNVfz-sKYMyf3ILoFp0lZzKfsPw3OHSh-QH8h1TRcPBcfu3_sY3mJNyLb9OY0IpcJw9wggEp4zg
+authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4ODQ2LCJpYXQiOjE2MDMxNDk2NDYsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiI4Njc3Y2Q2ZS0zZWMzLTQ2N2YtYTEzNS05ODcyNjU5ZGM5YzYiLCJuYmYiOjE2MDMxNDk2NDUsInN1YiI6IjciLCJ0eXAiOiJhY2Nlc3MifQ.-8UXK_0A80mQGQaejp7KS29_ApbxXsltJgQIzWA85t4d9kEbQ-tY4oylu6Tgx8PIQKf0mBmZ0N2z0GmATVRQWA
 ```
 * __Request body:__
 ```json
@@ -163,7 +163,7 @@ authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfY
 ```
 content-type: application/vnd.api+json; charset=utf-8
 cache-control: max-age=0, private, must-revalidate
-x-request-id: Fj-H1DtwaGE5bMQAAAEl
+x-request-id: Fj-IHBfNBQ1_lSYAAAAj
 ```
 * __Response body:__
 ```json
@@ -174,14 +174,14 @@ x-request-id: Fj-H1DtwaGE5bMQAAAEl
   "data": {
     "type": "user",
     "links": {
-      "self": "/users/416"
+      "self": "/users/7"
     },
-    "id": "416",
+    "id": "7",
     "attributes": {
-      "name": "Snitch-4 Elixir-4",
-      "last_name": "Elixir-4",
-      "first_name": "Snitch-4",
-      "email": "minion-4@snitch.com"
+      "name": "Snitch-10 Elixir-10",
+      "last_name": "Elixir-10",
+      "first_name": "Snitch-10",
+      "email": "minion-10@snitch.com"
     }
   }
 }
@@ -190,12 +190,12 @@ x-request-id: Fj-H1DtwaGE5bMQAAAEl
 #### Change password when logged in enters too short password
 ##### Request
 * __Method:__ PATCH
-* __Path:__ /api/v1/users/417/change_password
+* __Path:__ /api/v1/users/5/change_password
 * __Request headers:__
 ```
 accept: application/vnd.api+json
 content-type: application/vnd.api+json
-authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4NTM4LCJpYXQiOjE2MDMxNDkzMzgsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiI1ZWRlY2MwYS01OWE1LTQzYTQtYTBjZS1hMjVlMjIxZmU2NDgiLCJuYmYiOjE2MDMxNDkzMzcsInN1YiI6IjQxNyIsInR5cCI6ImFjY2VzcyJ9.3ra04IoXPIvVoTe2cr27oX-p6wyS_mTOLTnVk6eRqcInQKP92kuTd4LnyfNK5YaY9bEsCh8d6jfqUjgjDWDjNg
+authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4ODQ2LCJpYXQiOjE2MDMxNDk2NDYsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiIxYzc4ZTUzMS02OGNlLTRlY2EtYWUwMS00ZWYyOGM3NTE2NDciLCJuYmYiOjE2MDMxNDk2NDUsInN1YiI6IjUiLCJ0eXAiOiJhY2Nlc3MifQ.57DNE4KqdPofDRQK9UK482pj9UJNm7HvaCWZiQx8H6Q_Agd67JV-kd0KoifKTr8qZyPZyaXgZLdkiOCuvGzX5A
 ```
 * __Request body:__
 ```json
@@ -211,7 +211,7 @@ authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfY
 ```
 content-type: application/json; charset=utf-8
 cache-control: max-age=0, private, must-revalidate
-x-request-id: Fj-H1D9AKBv_ZKcAAAxh
+x-request-id: Fj-IHBZ5fYhMC2EAAAlB
 ```
 * __Response body:__
 ```json
@@ -227,12 +227,12 @@ x-request-id: Fj-H1D9AKBv_ZKcAAAxh
 #### Change password when logged in passwords don't match
 ##### Request
 * __Method:__ PATCH
-* __Path:__ /api/v1/users/424/change_password
+* __Path:__ /api/v1/users/9/change_password
 * __Request headers:__
 ```
 accept: application/vnd.api+json
 content-type: application/vnd.api+json
-authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4NTM4LCJpYXQiOjE2MDMxNDkzMzgsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiJkMmJiZTAxNS02ZTY4LTQyYmMtYWQwMC0zYjk2MGM3MmVjZDQiLCJuYmYiOjE2MDMxNDkzMzcsInN1YiI6IjQyNCIsInR5cCI6ImFjY2VzcyJ9.6XADKEHNQdYHkmck6ZA4Gdst6bD6rw4odMxhfYjCbSO3hi_yGZbBIgntR-4UFRt8tPUNyPX8TfP6YPV2eElx3A
+authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfYXBpIiwiZXhwIjoxNjA1NTY4ODQ2LCJpYXQiOjE2MDMxNDk2NDYsImlzcyI6InNuaXRjaF9hcGkiLCJqdGkiOiJlMWM1YzAxMS1lMmIzLTQ0NDMtOGNlZi0wNWU0MTFmZjIxOTUiLCJuYmYiOjE2MDMxNDk2NDUsInN1YiI6IjkiLCJ0eXAiOiJhY2Nlc3MifQ.YB8eNPtXSqq5OnZwhwEJJht8wF2OHptxKF7pPV49bB13rlWWW3bwM5-GBK1qwI83xWatGZewxqaJh4pL52QE7Q
 ```
 * __Request body:__
 ```json
@@ -248,7 +248,7 @@ authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJzbml0Y2hfY
 ```
 content-type: application/json; charset=utf-8
 cache-control: max-age=0, private, must-revalidate
-x-request-id: Fj-H1EOggxucLSEAAANi
+x-request-id: Fj-IHBkJyQ05W2kAAAGk
 ```
 * __Response body:__
 ```json

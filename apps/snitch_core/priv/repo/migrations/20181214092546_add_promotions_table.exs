@@ -6,13 +6,13 @@ defmodule Snitch.Repo.Migrations.AddPromotionsTable do
       add(:code, :string)
       add(:name, :string)
       add(:description, :string)
-      add(:starts_at, :utc_datetime)
-      add(:expires_at, :utc_datetime)
+      add(:starts_at, :utc_datetime_usec)
+      add(:expires_at, :utc_datetime_usec)
       add(:usage_limit, :integer, default: 0)
       add(:current_usage_count, :integer, default: 0)
       add(:match_policy, :string, default: "all")
       add(:active?, :boolean, default: false)
-      add(:archived_at, :utc_datetime)
+      add(:archived_at, :utc_datetime_usec)
 
       timestamps()
     end
