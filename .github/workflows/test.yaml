@@ -1,9 +1,9 @@
-name: "Test, build & deploy - develop env"
+name: "Test"
 
 on:
   push:
     branches:
-      - develop
+      - '*'
 
 jobs:
   test:
@@ -48,20 +48,3 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.VBT_DEPLOY_SSH_PRIVATE_KEY }}
 
-  build:
-    needs: test
-    name: Build, push, and deploy
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Deploy
-        uses: ./.github/workflows/actions/deploy
-        with:
-          cluster-name: VbtCluster
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          keybase-paperkey: ${{ secrets.KEYBASE_PAPERKEY }}
-          keybase-username: ${{ secrets.KEYBASE_USERNAME }}
-          release-level: develop
-          ssh-private-key: ${{ secrets.VBT_DEPLOY_SSH_PRIVATE_KEY }}
