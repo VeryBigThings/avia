@@ -65,42 +65,72 @@ defmodule SnitchApiWeb.UserControllerTest do
     end
   end
 
-  describe "Authenticated routing" do
-    setup %{conn: conn, user: user} do
-      user = JaSerializer.Params.to_attributes(user)
-      {:ok, registered_user} = Accounts.create_user(user)
-
-      # create the token
-      {:ok, token, _claims} = SnitchApi.Guardian.encode_and_sign(registered_user)
-
-      # add authorization header to request
-      conn = conn |> put_req_header("authorization", "Bearer #{token}")
-      conn = Plug.Conn.assign(conn, :current_user, registered_user)
-
-      # pass the connection and the user to the test
-      {:ok, conn: conn, user: registered_user}
-    end
+  describe "Update user account information" do
+    setup %{conn: conn, user: user}, do: authorize_conn(conn, user)
 
     test "updates user account information", %{conn: conn, user: user} do
       params = %{first_name: "Changed", last_name: "Names"}
+      refute user.first_name == "Changed"
+      refute user.last_name == "Names"
 
-      resp = update_user_request(conn, user, params)
+      assert resp = update_user_req(conn, user, params)
 
-      assert %{"first_name" => "Changed", "last_name" => "Names"} = resp["attributes"]
+      assert %{"first_name" => "Changed", "last_name" => "Names"} = resp["data"]["attributes"]
+    end
+
+    test "tries to update with empty fields", %{conn: conn, user: user} do
+      params = %{first_name: "Changed", last_name: ""}
+
+      assert resp = update_user_req(conn, user, params, 422)
+
+      assert %{"last_name" => ["should be at least 1 character(s)"]} = resp["errors"]
     end
 
     test "tries to update email", %{conn: conn, user: user} do
       params = %{email: "change@email.test"}
 
-      resp = update_user_request(conn, user, params)
+      assert resp = update_user_req(conn, user, params)
 
-      assert resp["attributes"]["email"] != params.email
+      assert resp["data"]["attributes"]["email"] != params.email
     end
+  end
+
+  describe "Change password when logged in" do
+    setup %{conn: conn, user: user}, do: authorize_conn(conn, user)
+
+    test "changes user password", %{conn: conn, user: user} do
+      change_params = %{password: "new_password", password_confirmation: "new_password"}
+      login_params = %{email: user.email, password: "new_password"}
+      assert login_req(conn, login_params, 404)
+
+      assert change_password_req(conn, user, change_params)
+
+      assert login_req(conn, login_params)
+    end
+
+    test "enters too short password", %{conn: conn, user: user} do
+      params = %{password: "short", password_confirmation: "short"}
+
+      assert resp = change_password_req(conn, user, params, 422)
+
+      assert %{"password" => ["should be at least 8 character(s)"]} = resp["errors"]
+    end
+
+    test "passwords don't match", %{conn: conn, user: user} do
+      params = %{password: "new_password", password_confirmation: "mismatch_password"}
+
+      assert resp = change_password_req(conn, user, params, 422)
+
+      assert %{"password_confirmation" => ["does not match confirmation"]} = resp["errors"]
+    end
+  end
+
+  describe "Authenticated routing" do
+    setup %{conn: conn, user: user}, do: authorize_conn(conn, user)
 
     test "fetching logged in user", %{conn: conn, user: user} do
       conn = get(conn, user_path(conn, :current_user))
-
-      assert Map.get(user, :id) == json_response(conn, 200)["data"]["id"]
+      assert user.id == json_response(conn, 200)["data"]["id"]
     end
 
     test "logging out user", %{conn: conn} do
@@ -114,6 +144,28 @@ defmodule SnitchApiWeb.UserControllerTest do
     end
   end
 
-  defp update_user_request(conn, user, params),
-    do: json_response(patch(conn, user_path(conn, :update, user.id), params), 200)["data"]
+  defp update_user_req(conn, user, params, status \\ 200),
+    do: json_response(patch(conn, user_path(conn, :update, user.id), params), status)
+
+  defp change_password_req(conn, user, params, status \\ 200),
+    do: json_response(patch(conn, user_path(conn, :change_password, user.id), params), status)
+
+  defp login_req(conn, params, status \\ 200),
+    do: json_response(post(conn, user_path(conn, :login), params), status)
+
+  defp authorize_conn(conn, user_params) do
+    {:ok, user} =
+      user_params
+      |> JaSerializer.Params.to_attributes()
+      |> Accounts.create_user()
+
+    {:ok, token, _claims} = SnitchApi.Guardian.encode_and_sign(user)
+
+    conn =
+      conn
+      |> put_req_header("authorization", "Bearer #{token}")
+      |> Plug.Conn.assign(:current_user, user)
+
+    {:ok, conn: conn, user: user}
+  end
 end

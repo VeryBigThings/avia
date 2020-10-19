@@ -39,10 +39,12 @@ defmodule SnitchApiWeb.Router do
     pipe_through([:api, :authenticated])
 
     # user sign_in_out_up
-    resources("/users", UserController, only: [:show, :update])
     get("/authenticated", UserController, :authenticated)
     post("/logout", UserController, :logout)
+    resources("/users", UserController, only: [:show, :update])
     get("/current_user", UserController, :current_user)
+    patch("/users/:id/change_password", UserController, :change_password)
+
     resources("/wishlistsho_items", WishListItemController, only: [:index, :create, :delete])
     resources("/orders", OrderController, only: [:index, :show])
     resources("/line_items", LineItemController, only: [:create, :update, :show])

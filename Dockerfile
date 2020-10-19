@@ -17,7 +17,7 @@ ENV PHOENIX_VERSION 1.5.4
 ENV REBAR_CACHE_DIR=$CACHE_DIR/rebar
 ENV WORKDIR=$WORKDIR
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \  
   curl \
   gcc \
   git \

@@ -19,6 +19,10 @@ defmodule Snitch.Domain.Account do
   @spec update_info(UserSchema.t(), map) :: {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
   def update_info(user, params), do: User.update_info(user, params)
 
+  @spec change_password(UserSchema.t(), map) ::
+          {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
+  def change_password(user, params), do: User.change_password(user, params)
+
   @spec authenticate(String.t(), String.t()) :: {:ok, UserSchema.t()} | {:error, :not_found}
   def authenticate(email, password) do
     user =

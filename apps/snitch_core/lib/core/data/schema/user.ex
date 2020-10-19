@@ -15,8 +15,8 @@ defmodule Snitch.Data.Schema.User do
     has_many(:orders, Order)
     has_many(:wishlist_items, WishListItem)
 
-    field(:first_name, :string)
-    field(:last_name, :string)
+    field(:first_name, :string, default: "")
+    field(:last_name, :string, default: "")
     field(:email, :string)
     field(:password, :string, virtual: true)
     field(:password_confirmation, :string, virtual: true)
@@ -82,6 +82,15 @@ defmodule Snitch.Data.Schema.User do
     |> cast(params, [:first_name, :last_name])
     |> validate_length(:first_name, min: 1)
     |> validate_length(:last_name, min: 1)
+  end
+
+  @spec change_password_changeset(t, map) :: Ecto.Changeset.t()
+  def change_password_changeset(user, params) do
+    user
+    |> cast(params, [:password, :password_confirmation])
+    |> validate_confirmation(:password)
+    |> validate_length(:password, min: @password_min_length)
+    |> put_pass_hash()
   end
 
   @doc """

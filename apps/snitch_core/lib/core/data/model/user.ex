@@ -23,6 +23,14 @@ defmodule Snitch.Data.Model.User do
     |> Repo.update()
   end
 
+  @spec change_password(UserSchema.t(), map()) ::
+          {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
+  def change_password(user, params) do
+    user
+    |> UserSchema.change_password_changeset(params)
+    |> Repo.update()
+  end
+
   @spec delete(non_neg_integer) :: {:ok, Ecto.Schema.t()} | {:error, Ecto.Changeset.t()}
   def delete(id) do
     with {:ok, %UserSchema{} = user} <- get(id),

@@ -26,8 +26,19 @@ defmodule SnitchApiWeb.UserController do
   end
 
   def update(conn, %{"id" => id} = params) do
-    with {:ok, user} <- Accounts.get_user(id),
+    user = Guardian.Plug.current_resource(conn)
+
+    with :ok <- user_authorized?(user, id),
          {:ok, user} <- Accounts.update_info(user, params) do
+      render(conn, "show.json-api", data: user)
+    end
+  end
+
+  def change_password(conn, %{"id" => id} = params) do
+    user = Guardian.Plug.current_resource(conn)
+
+    with :ok <- user_authorized?(user, id),
+         {:ok, user} <- Accounts.change_password(user, params) do
       render(conn, "show.json-api", data: user)
     end
   end
@@ -43,9 +54,7 @@ defmodule SnitchApiWeb.UserController do
     end
   end
 
-  def login(_conn, _params) do
-    {:error, :no_credentials}
-  end
+  def login(_conn, _params), do: {:error, :no_credentials}
 
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
@@ -68,4 +77,6 @@ defmodule SnitchApiWeb.UserController do
     user = conn.assigns[:current_user]
     render(conn, "show.json-api", data: user)
   end
+
+  defp user_authorized?(user, id), do: VBT.validate(id == "#{user.id}", :unauthorized)
 end

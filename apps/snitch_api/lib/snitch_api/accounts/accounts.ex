@@ -66,7 +66,10 @@ defmodule SnitchApi.Accounts do
   end
 
   @spec update_info(User.t(), map()) :: {:ok, User.t()} | {:error}
-  def update_info(user, attrs \\ %{}), do: Account.update_info(user, attrs)
+  def update_info(user, attrs), do: Account.update_info(user, attrs)
+
+  @spec change_password(User.t(), map()) :: {:ok, User.t()} | {:error}
+  def change_password(user, attrs), do: Account.change_password(user, attrs)
 
   def token_sign_in(email, password) do
     case Account.authenticate(email, password) do
