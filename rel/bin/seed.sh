@@ -1,2 +1,2 @@
 #!/bin/sh
-release_ctl eval --mfa "Snitch.Tasks.ReleaseTasks.seed/0" -- "$@"
+/opt/app/bin/nue eval "Snitch.Tasks.ReleaseTasks.seed()"

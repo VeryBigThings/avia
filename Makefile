@@ -36,7 +36,7 @@ STAGING?=https://git.heroku.com/nue-stage.git
 PRODUCTION?=https://git.heroku.com/nue-prod.git
 PGDATABASE?=nue_dev
 
-APP_NAME?=`grep 'app:' mix.exs | sed -e 's/\[//g' -e 's/ //g' -e 's/app://' -e 's/[:,]//g'`
+APP_NAME?=nue
 HEROKU_REGISTRY=registry.heroku.com
 
 export LOCAL_USER_ID ?= $(shell id -u $$USER)

@@ -111,3 +111,12 @@ RUN chown -R ${APP_USER}: ${WORKDIR}
 USER ${APP_USER}
 
 CMD trap 'exit' INT; ${WORKDIR}/bin/${APP_NAME} start
+
+
+############################################################################
+## RELEASE PHASE - run migrations on Heroku before production application ##
+############################################################################
+FROM release AS release-phase
+
+CMD trap 'exit' INT; \
+  /opt/app/bin/migrate_all.sh
