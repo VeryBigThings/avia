@@ -61,7 +61,8 @@ defmodule AdminApp.Mixfile do
       # import from store
       {:oauther, "~> 1.1"},
       {:honeydew, "~> 1.4"},
-      {:sentry, "~> 7.2"}
+      {:sentry, "~> 7.2"},
+      {:vbt, git: "git@github.com:VeryBigThings/elixir_common_private"}
     ]
   end
 end
