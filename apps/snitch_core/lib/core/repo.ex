@@ -7,6 +7,7 @@ defmodule Snitch.Repo do
     def init(_type, config),
       do: {:ok, Keyword.put(config, :url, System.fetch_env!("TEST_DATABASE_URL"))}
   else
-    def init(_type, config), do: {:ok, Keyword.put(config, :url, System.fetch_env!("DATABASE_URL"))}
+    def init(_type, config),
+      do: {:ok, Keyword.put(config, :url, System.fetch_env!("DATABASE_URL"))}
   end
 end

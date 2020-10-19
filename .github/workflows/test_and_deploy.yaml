@@ -118,7 +118,7 @@ jobs:
     needs: test
     name: Build, push, and deploy develop
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/heroku'
 
     env:
       HEROKU_APP_NAME: nue-develop
