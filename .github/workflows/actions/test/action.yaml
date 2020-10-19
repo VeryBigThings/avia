@@ -24,10 +24,7 @@ runs:
       shell: bash
 
     - name: Compile project
-      run: |
-        MIX_ENV=test mix compile
-        MIX_ENV=dev mix compile
-        MIX_ENV=prod mix compile
+      run: MIX_ENV=test mix compile
       shell: bash
 
     - name: Check code format
@@ -40,7 +37,7 @@ runs:
 
     - name: Check OTP release
       run: |
-        mix release --overwrite
+        MIX_ENV=prod mix release --overwrite
 
         _build/prod/rel/nue/bin/nue eval "{:ok, _} = Application.ensure_all_started(:nue)"
         _build/prod/rel/nue/bin/migrate_all.sh
