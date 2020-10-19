@@ -34,8 +34,4 @@ banmed-*.tar
 /.psql_history
 /.config
 /tmp/
-
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+.cache
