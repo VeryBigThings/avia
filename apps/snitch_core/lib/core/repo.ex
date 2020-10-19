@@ -5,8 +5,8 @@ defmodule Snitch.Repo do
 
   if Mix.env() == :test do
     def init(_type, config),
-      do: {:ok, Keyword.put(config, :url, System.fetch_env!("TEST_DB_URL"))}
+      do: {:ok, Keyword.put(config, :url, System.fetch_env!("TEST_DATABASE_URL"))}
   else
-    def init(_type, config), do: {:ok, Keyword.put(config, :url, System.fetch_env!("DB_URL"))}
+    def init(_type, config), do: {:ok, Keyword.put(config, :url, System.fetch_env!("DATABASE_URL"))}
   end
 end

@@ -1,7 +1,7 @@
 import Config
 
 config :snitch_core, Snitch.Repo,
-  url: System.fetch_env!("DB_URL"),
+  url: System.fetch_env!("DATABASE_URL"),
   pool_size: String.to_integer(System.fetch_env!("POOL_SIZE"))
 
 config :snitch_core, Snitch.Tools.ElasticsearchCluster, url: System.fetch_env!("ELASTIC_HOST")
