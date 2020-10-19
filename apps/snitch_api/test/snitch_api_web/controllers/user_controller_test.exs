@@ -65,7 +65,7 @@ defmodule SnitchApiWeb.UserControllerTest do
     end
   end
 
-  describe "Update user account information" do
+  describe "User info update" do
     setup %{conn: conn, user: user}, do: authorize_conn(conn, user)
 
     test "updates user account information", %{conn: conn, user: user} do
@@ -73,7 +73,11 @@ defmodule SnitchApiWeb.UserControllerTest do
       refute user.first_name == "Changed"
       refute user.last_name == "Names"
 
-      assert resp = update_user_req(conn, user, params)
+      assert resp =
+               conn
+               |> update_user_req(user, params)
+               |> doc()
+               |> json_response(200)
 
       assert %{"first_name" => "Changed", "last_name" => "Names"} = resp["data"]["attributes"]
     end
@@ -81,7 +85,11 @@ defmodule SnitchApiWeb.UserControllerTest do
     test "tries to update with empty fields", %{conn: conn, user: user} do
       params = %{first_name: "Changed", last_name: ""}
 
-      assert resp = update_user_req(conn, user, params, 422)
+      assert resp =
+               conn
+               |> update_user_req(user, params)
+               |> doc()
+               |> json_response(422)
 
       assert %{"last_name" => ["should be at least 1 character(s)"]} = resp["errors"]
     end
@@ -89,7 +97,11 @@ defmodule SnitchApiWeb.UserControllerTest do
     test "tries to update email", %{conn: conn, user: user} do
       params = %{email: "change@email.test"}
 
-      assert resp = update_user_req(conn, user, params)
+      assert resp =
+               conn
+               |> update_user_req(user, params)
+               |> doc()
+               |> json_response(200)
 
       assert resp["data"]["attributes"]["email"] != params.email
     end
@@ -101,17 +113,25 @@ defmodule SnitchApiWeb.UserControllerTest do
     test "changes user password", %{conn: conn, user: user} do
       change_params = %{password: "new_password", password_confirmation: "new_password"}
       login_params = %{email: user.email, password: "new_password"}
-      assert login_req(conn, login_params, 404)
+      assert json_response(login_req(conn, login_params), 404)
 
-      assert change_password_req(conn, user, change_params)
+      assert resp =
+               conn
+               |> change_password_req(user, change_params)
+               |> doc()
+               |> json_response(200)
 
-      assert login_req(conn, login_params)
+      assert json_response(login_req(conn, login_params), 200)
     end
 
     test "enters too short password", %{conn: conn, user: user} do
       params = %{password: "short", password_confirmation: "short"}
 
-      assert resp = change_password_req(conn, user, params, 422)
+      assert resp =
+               conn
+               |> change_password_req(user, params)
+               |> doc()
+               |> json_response(422)
 
       assert %{"password" => ["should be at least 8 character(s)"]} = resp["errors"]
     end
@@ -119,7 +139,11 @@ defmodule SnitchApiWeb.UserControllerTest do
     test "passwords don't match", %{conn: conn, user: user} do
       params = %{password: "new_password", password_confirmation: "mismatch_password"}
 
-      assert resp = change_password_req(conn, user, params, 422)
+      assert resp =
+               conn
+               |> change_password_req(user, params)
+               |> doc()
+               |> json_response(422)
 
       assert %{"password_confirmation" => ["does not match confirmation"]} = resp["errors"]
     end
@@ -144,14 +168,13 @@ defmodule SnitchApiWeb.UserControllerTest do
     end
   end
 
-  defp update_user_req(conn, user, params, status \\ 200),
-    do: json_response(patch(conn, user_path(conn, :update, user.id), params), status)
+  defp update_user_req(conn, user, params),
+    do: patch(conn, user_path(conn, :update, user.id), params)
 
-  defp change_password_req(conn, user, params, status \\ 200),
-    do: json_response(patch(conn, user_path(conn, :change_password, user.id), params), status)
+  defp change_password_req(conn, user, params),
+    do: patch(conn, user_path(conn, :change_password, user.id), params)
 
-  defp login_req(conn, params, status \\ 200),
-    do: json_response(post(conn, user_path(conn, :login), params), status)
+  defp login_req(conn, params), do: post(conn, user_path(conn, :login), params)
 
   defp authorize_conn(conn, user_params) do
     {:ok, user} =

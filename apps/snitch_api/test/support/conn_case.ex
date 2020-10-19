@@ -22,6 +22,7 @@ defmodule SnitchApiWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import SnitchApiWeb.Router.Helpers
+      import Bureaucrat.Helpers
 
       # The default endpoint for testing
       @endpoint SnitchApiWeb.Endpoint
