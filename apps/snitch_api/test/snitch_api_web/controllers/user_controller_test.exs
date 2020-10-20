@@ -82,7 +82,7 @@ defmodule SnitchApiWeb.UserControllerTest do
       assert %{"first_name" => "Changed", "last_name" => "Names"} = resp["data"]["attributes"]
     end
 
-    test "tries to update with empty fields", %{conn: conn, user: user} do
+    test "can't update with empty fields", %{conn: conn, user: user} do
       params = %{first_name: "Changed", last_name: ""}
 
       assert resp =
@@ -94,7 +94,7 @@ defmodule SnitchApiWeb.UserControllerTest do
       assert %{"last_name" => ["should be at least 1 character(s)"]} = resp["errors"]
     end
 
-    test "tries to update email", %{conn: conn, user: user} do
+    test "can't update email", %{conn: conn, user: user} do
       params = %{email: "change@email.test"}
 
       assert resp =
