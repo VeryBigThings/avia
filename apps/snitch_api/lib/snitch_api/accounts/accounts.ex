@@ -35,6 +35,10 @@ defmodule SnitchApi.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  @spec get_user(integer()) :: {:ok, User.t()} | {:error, String.t()}
+  def get_user(id),
+    do: if(is_nil(user = Repo.get(User, id)), do: {:error, "User not found."}, else: {:ok, user})
+
   @doc """
   Creates a user.
 
@@ -57,6 +61,12 @@ defmodule SnitchApi.Accounts do
     |> Map.put("role_id", role_id)
     |> Account.register()
   end
+
+  @spec update_info(User.t(), map()) :: {:ok, User.t()} | {:error}
+  def update_info(user, attrs), do: Account.update_info(user, attrs)
+
+  @spec change_password(User.t(), map()) :: {:ok, User.t()} | {:error}
+  def change_password(user, attrs), do: Account.change_password(user, attrs)
 
   def token_sign_in(email, password) do
     case Account.authenticate(email, password) do

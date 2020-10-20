@@ -118,7 +118,8 @@ defmodule Snitch.Core.Mixfile do
       {:elasticsearch, "~> 1.0"},
 
       # Caching
-      {:cachex, "~> 3.3"}
+      {:cachex, "~> 3.3"},
+      {:provider, github: "VeryBigThings/provider"}
     ]
   end
 
@@ -139,7 +140,7 @@ defmodule Snitch.Core.Mixfile do
     [
       extras: ~w(README.md),
       main: "readme",
-      source_ref: "v#{@version}",
+      source_ref: "#{@version}",
       source_url: "https://github.com/aviabird/snitch",
       groups_for_modules: groups_for_modules()
     ]
@@ -162,9 +163,10 @@ defmodule Snitch.Core.Mixfile do
   defp aliases do
     [
       "ecto.load.demo": "run priv/repo/demo/demo.exs",
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seed/seeds.exs"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       "ecto.rebuild": ["ecto.drop", "ecto.create --quiet", "ecto.migrate"],
+      "ecto.seed": ["run priv/repo/seed/seeds.exs"],
       "ecto.load.demo": ["run priv/repo/demo/demo.exs"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"],
       "test.multi": [

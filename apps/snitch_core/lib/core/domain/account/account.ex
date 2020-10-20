@@ -6,6 +6,16 @@ defmodule Snitch.Domain.Account do
   alias Snitch.Data.Schema.User, as: UserSchema
   alias Snitch.Core.Tools.MultiTenancy.Repo
 
+  @type update_info_params :: %{
+          optional(:first_name) => String.t(),
+          optional(:last_name) => String.t()
+        }
+
+  @type change_password_params :: %{
+          optional(:password) => String.t(),
+          optional(:password_confirmation) => String.t()
+        }
+
   @doc """
   Registers a `user` with supplied `params`.
 
@@ -15,6 +25,14 @@ defmodule Snitch.Domain.Account do
   def register(params) do
     User.create(params)
   end
+
+  @spec update_info(UserSchema.t(), update_info_params()) ::
+          {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
+  def update_info(user, params), do: User.update_info(user, params)
+
+  @spec change_password(UserSchema.t(), change_password_params()) ::
+          {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
+  def change_password(user, params), do: User.change_password(user, params)
 
   @spec authenticate(String.t(), String.t()) :: {:ok, UserSchema.t()} | {:error, :not_found}
   def authenticate(email, password) do

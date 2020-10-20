@@ -19,39 +19,30 @@ runs:
         ssh-add - <<< "${{ inputs.ssh-private-key }}"
       shell: bash
 
+    - name: Install wkhtmltopdf deps
+      run: |
+        wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+        tar vxf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+        sudo cp wkhtmltox/bin/wk* /usr/local/bin/
+      shell: bash
+
     - name: Fetch deps
       run: mix deps.get
       shell: bash
 
     - name: Compile project
-      run: |
-        MIX_ENV=test mix compile --warnings-as-errors
-        MIX_ENV=dev mix compile --warnings-as-errors
-        MIX_ENV=prod mix compile --warnings-as-errors
+      run: MIX_ENV=test mix compile
       shell: bash
 
     - name: Check code format
       run: mix format --check-formatted
       shell: bash
 
-    - name: "Reset database"
-      run: MIX_ENV=test mix cmd --app snitch_core mix ecto.reset
-      shell: bash
-
     - name: Run tests
       run: make test
       shell: bash
 
-    - name: Check migrations reversibility
-      run: MIX_ENV=test mix ecto.rollback.all
-      shell: bash
-
     - name: Check OTP release
       run: |
-        mix release --overwrite
-
-        DB_URL="postgresql://postgres:postgres@localhost/nue_test" _build/prod/rel/nue/bin/migrate_all.sh
-
-        _build/prod/rel/nue/bin/nue eval "{:ok, _} = Application.ensure_all_started(:nue)"
-        _build/prod/rel/nue/bin/migrate_all.sh
+        MIX_ENV=prod mix release --overwrite
       shell: bash
