@@ -100,6 +100,14 @@ devstack-run: devstack-build
 		docker-compose exec web mix ecto.setup && \
 		docker-compose exec web iex -S mix phx.server
 
+prodstack-build:
+	@docker build \
+		--target release \
+		--ssh default .\
+		--build-arg MIX_ENV=prod \
+		--build-arg APP_NAME=nue \
+		--tag nue:release
+
 # ------------
 # --- HELP ---
 # ------------

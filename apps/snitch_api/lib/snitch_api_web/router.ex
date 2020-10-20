@@ -45,7 +45,7 @@ defmodule SnitchApiWeb.Router do
     get("/current_user", UserController, :current_user)
     patch("/users/:id/change_password", UserController, :change_password)
 
-    resources("/wishlistsho_items", WishListItemController, only: [:index, :create, :delete])
+    resources("/wishlist_items", WishListItemController, only: [:index, :create, :delete])
     resources("/orders", OrderController, only: [:index, :show])
     resources("/line_items", LineItemController, only: [:create, :update, :show])
     delete("/line_items", LineItemController, :delete)

@@ -1,7 +1,7 @@
 version: "3"
 services:
   web:
-    image: "nue:latest"
+    image: "nue:release"
     ports:
       - "4000:4000"
       - "3000:3000"
@@ -9,8 +9,6 @@ services:
       - db
       - elasticsearch
     volumes:
-      - .:/opt/app
-      - build_cache:/opt/cache
       - $SSH_AUTH_SOCK:${SSH_AUTH_SOCK}
       - /tmp/.X11-unix:/tmp/.X11-unix
     env_file: .env.development
