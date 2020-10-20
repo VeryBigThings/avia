@@ -1,5 +1,5 @@
-#!/bin/sh
-echo "Running migrations"
+#!/bin/bash
 script_dir=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 args="$@"
-/opt/app/bin/nue eval "Snitch.Tasks.ReleaseTasks.migrate()"
+echo "Running migrations"
+$script_dir/nue eval "Snitch.Tasks.ReleaseTasks.migrate()"
