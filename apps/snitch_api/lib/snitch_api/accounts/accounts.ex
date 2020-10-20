@@ -35,12 +35,9 @@ defmodule SnitchApi.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
-  def get_user(id) do
-    case Repo.get(User, id) do
-      nil -> {:error, "User not found."}
-      user -> {:ok, user}
-    end
-  end
+  @spec get_user(integer()) :: {:ok, User.t()} | {:error, String.t()}
+  def get_user(id),
+    do: if(is_nil(user = Repo.get(User, id)), do: {:error, "User not found."}, else: {:ok, user})
 
   @doc """
   Creates a user.

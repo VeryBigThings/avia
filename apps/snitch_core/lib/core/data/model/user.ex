@@ -6,6 +6,16 @@ defmodule Snitch.Data.Model.User do
   alias Snitch.Data.Schema.User, as: UserSchema
   import Ecto.Query
 
+  @type update_info_params :: %{
+          optional(:first_name) => String.t(),
+          optional(:last_name) => String.t()
+        }
+
+  @type change_password_params :: %{
+          optional(:password) => String.t(),
+          optional(:password_confirmation) => String.t()
+        }
+
   @spec create(map) :: {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
   def create(query_fields) do
     QH.create(UserSchema, query_fields, Repo)
@@ -16,14 +26,15 @@ defmodule Snitch.Data.Model.User do
     QH.update(UserSchema, query_fields, instance, Repo)
   end
 
-  @spec update_info(UserSchema.t(), map()) :: {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
+  @spec update_info(UserSchema.t(), update_info_params()) ::
+          {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
   def update_info(user, params) do
     user
     |> UserSchema.update_info_changeset(params)
     |> Repo.update()
   end
 
-  @spec change_password(UserSchema.t(), map()) ::
+  @spec change_password(UserSchema.t(), change_password_params()) ::
           {:ok, UserSchema.t()} | {:error, Ecto.Changeset.t()}
   def change_password(user, params) do
     user
