@@ -9,7 +9,6 @@
 		reset-db \
 		seed-db \
 		demo-db \
-		reseed-db \
 		devstack \
 		devstack-build \
 		devstack-clean \
@@ -117,8 +116,8 @@ set-remotes: require-DEVELOPMENT require-STAGING require-PRODUCTION
 ## Builds the development Docker image
 devstack-build:
 	@docker build \
-			--file Dockerfile-dev \
-			--ssh default .\
+		--target build \
+		--ssh default .\
 		--build-arg MIX_ENV=dev \
 		--build-arg APP_NAME=nue \
 		--tag nue:latest
@@ -145,11 +144,11 @@ devstack-run: devstack-build
 ## Builds the production Docker image
 prodstack-build:
 	@docker build \
-			--ssh default \
+		--target release \
+		--ssh default .\
 		--build-arg MIX_ENV=prod \
 		--build-arg APP_NAME=nue \
-		--tag nue:release \
-		--no-cache .
+		--tag nue:release
 
 
 # -------------------------------

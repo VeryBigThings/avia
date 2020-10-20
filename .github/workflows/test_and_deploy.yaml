@@ -12,7 +12,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.8
+        image: postgres:12.4
         env:
           POSTGRES_USER: "postgres"
           POSTGRES_PASSWORD: "postgres"
@@ -104,8 +104,8 @@ jobs:
       # - name: Reset database
       #   run: MIX_ENV=test mix ecto.reset
 
-      # - name: Run tests
-      #   run: make test
+      - name: Run tests
+        run: make test
 
       # - name: Check migrations reversibility
       #   run: MIX_ENV=test mix ecto.rollback --all

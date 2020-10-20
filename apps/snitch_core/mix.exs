@@ -140,7 +140,7 @@ defmodule Snitch.Core.Mixfile do
     [
       extras: ~w(README.md),
       main: "readme",
-      source_ref: "v#{@version}",
+      source_ref: "#{@version}",
       source_url: "https://github.com/aviabird/snitch",
       groups_for_modules: groups_for_modules()
     ]

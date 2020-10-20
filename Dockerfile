@@ -5,36 +5,40 @@
 
 FROM verybigthings/elixir:1.10.4 AS build
 
-ARG WORKDIR=/opt/app
 ARG APP_USER=user
+ARG WORKDIR=/opt/app
 
-ENV WORKDIR=$WORKDIR
 ENV APP_USER=$APP_USER
 ENV CACHE_DIR=/opt/cache
-ENV MIX_HOME=$CACHE_DIR/mix
-ENV HEX_HOME=$CACHE_DIR/hex
 ENV BUILD_PATH=$CACHE_DIR/_build
+ENV HEX_HOME=$CACHE_DIR/hex
+ENV MIX_HOME=$CACHE_DIR/mix
+ENV PHOENIX_VERSION 1.5.4
 ENV REBAR_CACHE_DIR=$CACHE_DIR/rebar
+ENV WORKDIR=$WORKDIR
 
 RUN apt-get update && apt-get install -y \
-  bash \
+  curl \
+  gcc \
   git \
-  inotify-tools \
-  less \
+  libfontconfig1 \
+  libxext6 \
+  libxrender1 \
+  locales \
+  gnupg \
   make \
-  xfonts-base \
-  xfonts-75dpi \
-  vim
+  postgresql-client \
+  postgresql-contrib \
+  vim \
+  wget
 
-RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb && \
-  dpkg -i wkhtmltox_0.12.5-1.buster_amd64.deb
+RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+RUN tar vxf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+RUN cp wkhtmltox/bin/wk* /usr/local/bin/
 
 WORKDIR $WORKDIR
 
-ENV PHOENIX_VERSION 1.5.5
-
-RUN mix local.hex --force && \
-  mix local.rebar --force
+RUN mix local.hex --force && mix local.rebar --force
 RUN mix archive.install hex phx_new $PHOENIX_VERSION --force
 
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com > ~/.ssh/known_hosts
@@ -52,10 +56,8 @@ CMD ["/bin/bash", "-c", "while true; do sleep 10; done;"]
 FROM build AS pre-release
 
 ARG APP_NAME
-ARG RELEASE_LEVEL
 
 ENV APP_NAME=${APP_NAME}
-ENV RELEASE_LEVEL=${RELEASE_LEVEL}
 
 COPY . .
 
@@ -79,44 +81,44 @@ ARG APP_NAME
 ARG APP_USER=user
 ARG WORKDIR=/opt/app
 
+ENV APP_NAME=${APP_NAME}
+ENV APP_USER=$APP_USER
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV WORKDIR=$WORKDIR
-ENV APP_USER=$APP_USER
 
 RUN apt-get update && apt-get install -y \
-  bash \
+  gcc \
   git \
-  fontconfig \
-  libpq-dev \
-  libjson-c-dev \
-  libjpeg62-turbo \
+  libfontconfig1 \
+  libxext6 \
   libxrender1 \
-  xfonts-base \
-  xfonts-75dpi \
-  curl \
-  wget
+  locales \
+  gnupg \
+  make \
+  wget \
+  xz-utils
 
-RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.buster_amd64.deb && \
-  dpkg -i wkhtmltox_0.12.5-1.buster_amd64.deb
+RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+RUN tar vxf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+RUN cp wkhtmltox/bin/wk* /usr/local/bin/
 
-ENV APP_NAME=${APP_NAME}
-# Copy over the build artifact from the previous step and create a non root user
 RUN useradd --create-home ${APP_USER}
 WORKDIR $WORKDIR
 
 COPY --from=pre-release /opt/cache/_build/prod/rel/${APP_NAME} .
+
+RUN chmod +x ./bin/*
 
 RUN chown -R ${APP_USER}: ${WORKDIR}
 USER ${APP_USER}
 
 CMD trap 'exit' INT; ${WORKDIR}/bin/${APP_NAME} start
 
+############################################################################
+###### RELEASE PHASE - run migrations before production application ########
+############################################################################
 
-############################################################################
-## RELEASE PHASE - run migrations on Heroku before production application ##
-############################################################################
 FROM release AS release-phase
 
-CMD trap 'exit' INT; \
-  /opt/app/bin/migrate_all.sh
+CMD trap 'exit' INT; /opt/app/bin/migrate_all.sh

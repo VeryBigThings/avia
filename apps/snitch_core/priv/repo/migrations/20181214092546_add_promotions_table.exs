@@ -12,7 +12,7 @@ defmodule Snitch.Repo.Migrations.AddPromotionsTable do
       add(:current_usage_count, :integer, default: 0)
       add(:match_policy, :string, default: "all")
       add(:active?, :boolean, default: false)
-      add(:archived_at, :utc_datetime)
+      add(:archived_at, :utc_datetime_usec)
 
       timestamps()
     end
